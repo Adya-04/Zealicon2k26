@@ -45,7 +45,7 @@ fun SecodaryButton(
     Box(
         modifier = modifier
             .padding(start = 20.dp, end = 20.dp)
-            .height(66.dp)
+            .height(60.dp)
             .shadow(
                 elevation = 5.dp,
                 shape = RoundedCornerShape(16.dp),
@@ -70,6 +70,13 @@ fun SecodaryButton(
             .border(width = 2.dp, color = ButtonBorderColor2, shape = RoundedCornerShape(18.dp))
             .fillMaxWidth()
     ) {
+        Image(
+            modifier = Modifier
+                .align(Alignment.CenterEnd),
+            painter = painterResource(R.drawable.button_graphics_3),
+            contentDescription = "button_graphics"
+        )
+
         Row(
             modifier = Modifier
                 .align(Alignment.Center)
@@ -84,12 +91,5 @@ fun SecodaryButton(
                 color = ButtonBackgroundColor
             )
         }
-
-        Image(
-            modifier = Modifier
-                .align(Alignment.CenterEnd),
-            painter = painterResource(R.drawable.button_graphics_3),
-            contentDescription = "button_graphics"
-        )
     }
 }

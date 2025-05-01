@@ -19,6 +19,14 @@ val ButtonRippleColor = Color.White
 val BackgroundColor = Color(0xFFFFF1CC)
 val ButtonBackgroundColor2 = Color(0xFFFFF1CC)
 val ButtonBorderColor2 = Color(0xFF4DF5387C)
+val HeadingTextColor = Color(0xFF942724)
+val TextFieldBackgroundColor = Color.White
+val TextFieldBorderColor = Color(0xFFFFE1E0)
+val TextFieldPlaceholderColor = Color(0xFFB2942724)
+val PhotoBorderColor = Color(0xFFF1C364)
+val BorderRed = Color(0xFF942724)
+val BorderDark = Color(0xFF942724)
+val BorderLight = Color(0xFF942724)
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
