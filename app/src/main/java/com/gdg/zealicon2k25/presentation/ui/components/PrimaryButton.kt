@@ -43,7 +43,7 @@ fun PrimaryButton(
     Box(
         modifier = modifier
             .padding(start = 20.dp, end = 20.dp)
-            .height(66.dp)
+            .height(60.dp)
             .shadow(
                 elevation = 5.dp,
                 shape = RoundedCornerShape(16.dp),
