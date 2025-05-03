@@ -27,6 +27,8 @@ val PhotoBorderColor = Color(0xFFF1C364)
 val BorderRed = Color(0xFF942724)
 val BorderDark = Color(0xFF942724)
 val BorderLight = Color(0xFF942724)
+val SuccessTextColor = Color(0xFF1E4E1E)
+val ErrorTextColor = Color(0xFFAC0000)
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,

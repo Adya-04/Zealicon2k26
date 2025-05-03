@@ -38,7 +38,8 @@ fun PrimaryButton(
     modifier: Modifier = Modifier,
     text: String,
     enabled: Boolean = true,
-    onClick: () -> Unit,
+    arrow: Boolean = true,
+    onClick: () -> Unit
 ) {
     Box(
         modifier = modifier
@@ -81,12 +82,14 @@ fun PrimaryButton(
                 fontWeight = FontWeight.Black,
                 color = Color.White
             )
-            Image(
-                modifier = Modifier.padding(start = 3.dp),
-                alignment = Alignment.BottomEnd,
-                painter = painterResource(R.drawable.arrow_right_small),
-                contentDescription = "arrow"
-            )
+            if(arrow){
+                Image(
+                    modifier = Modifier.padding(start = 3.dp),
+                    alignment = Alignment.BottomEnd,
+                    painter = painterResource(R.drawable.arrow_right_small),
+                    contentDescription = "arrow"
+                )
+            }
         }
         Image(
             alignment = Alignment.BottomEnd,

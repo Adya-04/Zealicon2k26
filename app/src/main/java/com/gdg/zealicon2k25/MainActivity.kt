@@ -11,20 +11,19 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.gdg.zealicon2k25.presentation.ui.LoginScreen
+import com.gdg.zealicon2k25.presentation.ui.PurchaseZealScreen
+import com.gdg.zealicon2k25.presentation.ui.RegisterScreen
+import com.gdg.zealicon2k25.presentation.ui.VerifyOTPScreen
+import com.gdg.zealicon2k25.presentation.ui.WelcomeScreen
 import com.gdg.zealicon2k25.presentation.ui.theme.Zealicon2K25Theme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             Zealicon2K25Theme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+              VerifyOTPScreen()
             }
         }
     }

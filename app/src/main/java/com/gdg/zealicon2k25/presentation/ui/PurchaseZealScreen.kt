@@ -13,6 +13,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -23,6 +27,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
 import com.gdg.zealicon2k25.R
+import com.gdg.zealicon2k25.presentation.ui.components.PaymentErrorBottomSheet
+import com.gdg.zealicon2k25.presentation.ui.components.PaymentSuccessBottomSheet
 import com.gdg.zealicon2k25.presentation.ui.components.PrimaryButton
 import com.gdg.zealicon2k25.presentation.ui.components.SecodaryButton
 import com.gdg.zealicon2k25.presentation.ui.theme.BackgroundColor
@@ -33,6 +39,16 @@ import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 @Composable
 @Preview
 fun PurchaseZealScreen() {
+    var showSheet by remember {
+        mutableStateOf(false)
+    }
+    if(showSheet){
+        PaymentErrorBottomSheet(
+            onDismiss = {
+                showSheet = false
+            }
+        )
+    }
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -92,7 +108,9 @@ fun PurchaseZealScreen() {
             ) {
                 PrimaryButton(
                     text = "Pay Now"
-                ) { }
+                ) {
+                    showSheet = true
+                }
             }
             Row(
                 modifier = Modifier
