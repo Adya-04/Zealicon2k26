@@ -14,6 +14,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
@@ -24,8 +25,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gdg.zealicon2k25.R
 import com.gdg.zealicon2k25.presentation.ui.components.CardBackground
-import com.gdg.zealicon2k25.presentation.ui.components.PrimaryButton
 import com.gdg.zealicon2k25.presentation.ui.components.PrizeCard
+import com.gdg.zealicon2k25.presentation.ui.components.RegisterButton
 import com.gdg.zealicon2k25.presentation.ui.components.SecondaryCardBackground
 import com.gdg.zealicon2k25.presentation.ui.theme.BackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.HeadingTextColor
@@ -37,7 +38,10 @@ fun EventDetailScreen(
 //    eventName:String
 ) {
     Box(
-        modifier = Modifier.fillMaxSize().background(BackgroundColor).padding(top = 16.dp),
+        modifier = Modifier
+            .fillMaxSize()
+            .background(BackgroundColor)
+            .padding(top = 16.dp),
     ) {
         Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
             Row(modifier = Modifier.fillMaxWidth()) {
@@ -135,10 +139,18 @@ fun EventDetailScreen(
                 textAlign = TextAlign.Justify,
                 modifier = Modifier.padding(top = 24.dp, start = 20.dp, end = 20.dp)
             )
-                PrimaryButton(
-                    text = "Register Now",
-                    modifier = Modifier.padding(top = 24.dp, bottom = 32.dp)
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(top = 24.dp, bottom = 32.dp),
+                contentAlignment = Alignment.Center
+            ) {
+                RegisterButton(
+                    modifier = Modifier
                 ) {}
+            }
+
+
         }
     }
 }
