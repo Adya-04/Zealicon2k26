@@ -59,7 +59,7 @@ fun RegisterScreen() {
                 modifier = Modifier
                     .height(189.dp)
                     .fillMaxWidth(),
-                painter = painterResource(R.drawable.register_graphic),
+                painter = painterResource(id = R.drawable.register_graphic),
                 contentDescription = "graphics",
                 contentScale = ContentScale.Crop
             )
@@ -74,6 +74,7 @@ fun RegisterScreen() {
                     color = HeadingTextColor,
                     fontWeight = FontWeight.Bold,
                     fontFamily = FrontSpring,
+                    lineHeight = 1.5.em
                 )
                 Text(
                     modifier = Modifier.padding(top = 24.dp, start = 20.dp),

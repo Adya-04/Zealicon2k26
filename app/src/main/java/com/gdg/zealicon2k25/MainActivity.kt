@@ -14,7 +14,6 @@ import com.gdg.zealicon2k25.presentation.ui.theme.Zealicon2K25Theme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContent {
             Zealicon2K25Theme {
                 EventDetailScreen()

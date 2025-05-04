@@ -30,6 +30,8 @@ val BorderLight = Color(0xFF942724)
 val cardBackground=Color(0xFFFFE7A7)
 val cardBorderColor=Color(0xFFFEDF8C)
 val cardTextColor=Color(0xFF942724)
+val SuccessTextColor = Color(0xFF1E4E1E)
+val ErrorTextColor = Color(0xFFAC0000)
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
