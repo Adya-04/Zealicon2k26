@@ -27,6 +27,9 @@ val PhotoBorderColor = Color(0xFFF1C364)
 val BorderRed = Color(0xFF942724)
 val BorderDark = Color(0xFF942724)
 val BorderLight = Color(0xFF942724)
+val cardBackground=Color(0xFFFFE7A7)
+val cardBorderColor=Color(0xFFFEDF8C)
+val cardTextColor=Color(0xFF942724)
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
