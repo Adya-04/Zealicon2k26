@@ -6,7 +6,9 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.Text
@@ -47,6 +49,7 @@ fun MenuCard(
                 painter = painterResource(vector),
                 contentScale = ContentScale.Crop,
                 contentDescription = "info",
+
                 modifier = Modifier.padding(end = 8.dp, top = 12.dp, start = 12.dp)
             )
             Text(
@@ -55,7 +58,7 @@ fun MenuCard(
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Medium,
                 color = HeadingTextColor,
-                modifier = Modifier.padding(top = 12.dp )
+                modifier = Modifier.padding(top = 12.dp)
             )
         }
         Image(
@@ -63,7 +66,7 @@ fun MenuCard(
             contentDescription = "graphic",
             contentScale = ContentScale.Crop,
             modifier = Modifier.align(Alignment.BottomEnd)
-                .padding(top = padding)
+                .size(90.dp)
         )
     }
 }
