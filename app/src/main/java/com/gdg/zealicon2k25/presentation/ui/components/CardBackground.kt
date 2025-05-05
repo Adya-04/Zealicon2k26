@@ -40,7 +40,7 @@ fun CardBackground(
         )
             .height(64.dp)
             .border(width = 1.dp, color = cardBorderColor, shape = RoundedCornerShape(12.dp))
-            .clip(RoundedCornerShape(18.dp))
+            .clip(RoundedCornerShape(12.dp))
     ) {
         Image(
             painter = painterResource(R.drawable.flower_graphics),

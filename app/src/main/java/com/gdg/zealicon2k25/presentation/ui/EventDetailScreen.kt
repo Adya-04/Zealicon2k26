@@ -41,7 +41,7 @@ fun EventDetailScreen(
         modifier = Modifier
             .fillMaxSize()
             .background(BackgroundColor)
-            .padding(top = 16.dp),
+            .padding(top = 16.dp)
     ) {
         Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
             Row(modifier = Modifier.fillMaxWidth()) {
