@@ -32,6 +32,12 @@ val cardBorderColor=Color(0xFFFEDF8C)
 val cardTextColor=Color(0xFF942724)
 val SuccessTextColor = Color(0xFF1E4E1E)
 val ErrorTextColor = Color(0xFFAC0000)
+val TicketCardBackgroundColor = Color(0xFF942724)
+val TicketCardBorderColor = Color(0x66FFFFFF)
+val BuyButtonTextColor = Color(0xFF590907)
+val MerchCardBackgroundColor = Color(0xFFFFE7A7)
+val EventButtonBackground = Color(0xFFFFE295)
+val EventButtonTextColor = Color(0xFFE9B019)
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,

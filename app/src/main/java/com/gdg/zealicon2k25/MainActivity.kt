@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.gdg.zealicon2k25.presentation.ui.EventDetailScreen
+import com.gdg.zealicon2k25.presentation.ui.HomeScreen
 import com.gdg.zealicon2k25.presentation.ui.theme.Zealicon2K25Theme
 
 class MainActivity : ComponentActivity() {
@@ -16,7 +17,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Zealicon2K25Theme {
-                EventDetailScreen()
+                HomeScreen()
             }
         }
     }
