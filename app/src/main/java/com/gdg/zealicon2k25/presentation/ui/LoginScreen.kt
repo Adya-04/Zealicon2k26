@@ -36,7 +36,9 @@ import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 
 @Composable
 @Preview
-fun LoginScreen() {
+fun LoginScreen(
+    loginOnClick: () -> Unit = {}
+) {
     var email by remember { mutableStateOf("") }
     Box(
         modifier = Modifier
@@ -89,7 +91,9 @@ fun LoginScreen() {
         ) {
             PrimaryButton(
                 text = "Log In"
-            ) { }
+            ) {
+                loginOnClick()
+            }
             Spacer(Modifier.height(52.dp))
         }
 

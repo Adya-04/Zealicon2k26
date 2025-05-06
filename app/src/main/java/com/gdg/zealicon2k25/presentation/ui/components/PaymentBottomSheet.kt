@@ -38,7 +38,8 @@ import com.gdg.zealicon2k25.presentation.ui.theme.SuccessTextColor
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaymentSuccessBottomSheet(
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    homeOnClick: () -> Unit
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState()
     ModalBottomSheet(onDismissRequest = { onDismiss() },
@@ -111,7 +112,10 @@ fun PaymentSuccessBottomSheet(
                 PrimaryButton(
                     text = "Home",
                     arrow = false
-                ) { }
+                ) {
+                    homeOnClick()
+                    onDismiss()
+                }
                 Spacer(Modifier.height(36.dp))
             }
         }

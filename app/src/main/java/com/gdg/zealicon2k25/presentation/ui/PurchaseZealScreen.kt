@@ -38,14 +38,20 @@ import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 
 @Composable
 @Preview
-fun PurchaseZealScreen() {
+fun PurchaseZealScreen(
+    continueWithoutZealOnClick: () -> Unit = {},
+    homeOnClick: () -> Unit = {}
+) {
     var showSheet by remember {
         mutableStateOf(false)
     }
     if(showSheet){
-        PaymentErrorBottomSheet(
+        PaymentSuccessBottomSheet(
             onDismiss = {
                 showSheet = false
+            },
+            homeOnClick = {
+                homeOnClick()
             }
         )
     }
@@ -119,7 +125,9 @@ fun PurchaseZealScreen() {
             ) {
                 SecodaryButton(
                     text = "Continue without ZEAL ID"
-                ) { }
+                ) {
+                    continueWithoutZealOnClick()
+                }
             }
         }
     }

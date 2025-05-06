@@ -8,6 +8,8 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.compose.rememberNavController
+import com.gdg.zealicon2k25.presentation.navigation.RootNavGraph
 import com.gdg.zealicon2k25.presentation.ui.EventDetailScreen
 import com.gdg.zealicon2k25.presentation.ui.MenuScreen
 import com.gdg.zealicon2k25.presentation.ui.theme.Zealicon2K25Theme
@@ -17,7 +19,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         setContent {
             Zealicon2K25Theme {
-                MenuScreen()
+                RootNavGraph(rememberNavController())
             }
         }
     }

@@ -43,7 +43,9 @@ import com.gdg.zealicon2k25.presentation.ui.theme.TextFieldBorderColor
 
 @Composable
 @Preview
-fun RegisterScreen() {
+fun RegisterScreen(
+    registerOnClick: () -> Unit = {}
+) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
     var phone by remember { mutableStateOf("") }
@@ -173,7 +175,9 @@ fun RegisterScreen() {
                 Spacer(modifier = Modifier.height(22.dp))
                 PrimaryButton(
                     text = "Register Now"
-                ) { }
+                ) {
+                    registerOnClick()
+                }
                 Spacer(modifier = Modifier.height(53.dp))
             }
         }
