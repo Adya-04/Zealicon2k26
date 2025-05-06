@@ -162,7 +162,7 @@ fun HomeScreen(
                     )
                     Text(
                         modifier = Modifier.width(248.dp),
-                        text = "You cannot enter the Zealicon-24 without a valid Zeal ID.",
+                        text = "You cannot enter the Zealicon-25 without a valid Zeal ID.",
                         fontSize = 12.sp,
                         color = BackgroundColor,
                         fontWeight = FontWeight.Medium,

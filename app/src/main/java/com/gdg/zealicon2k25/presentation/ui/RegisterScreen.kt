@@ -30,7 +30,10 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.ViewModel
 import com.gdg.zealicon2k25.R
+import com.gdg.zealicon2k25.data.models.OtpRequest
 import com.gdg.zealicon2k25.presentation.ui.components.PrimaryButton
 import com.gdg.zealicon2k25.presentation.ui.components.PrimaryTextField
 import com.gdg.zealicon2k25.presentation.ui.theme.BackgroundColor
@@ -39,12 +42,13 @@ import com.gdg.zealicon2k25.presentation.ui.theme.HeadingTextColor
 import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 import com.gdg.zealicon2k25.presentation.ui.theme.PhotoBorderColor
 import com.gdg.zealicon2k25.presentation.ui.theme.TextFieldBackgroundColor
-import com.gdg.zealicon2k25.presentation.ui.theme.TextFieldBorderColor
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 
 @Composable
 @Preview
 fun RegisterScreen(
-    registerOnClick: () -> Unit = {}
+    registerOnClick: () -> Unit = {},
+    authViewModel: AuthViewModel= hiltViewModel()
 ) {
     var name by remember { mutableStateOf("") }
     var email by remember { mutableStateOf("") }
@@ -177,6 +181,7 @@ fun RegisterScreen(
                     text = "Register Now"
                 ) {
                     registerOnClick()
+                    authViewModel.getOtp(OtpRequest(email))
                 }
                 Spacer(modifier = Modifier.height(53.dp))
             }

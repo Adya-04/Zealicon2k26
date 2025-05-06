@@ -13,7 +13,9 @@ import com.gdg.zealicon2k25.presentation.navigation.RootNavGraph
 import com.gdg.zealicon2k25.presentation.ui.EventDetailScreen
 import com.gdg.zealicon2k25.presentation.ui.MenuScreen
 import com.gdg.zealicon2k25.presentation.ui.theme.Zealicon2K25Theme
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
