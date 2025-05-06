@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -56,20 +57,24 @@ fun MenuScreen() {
                 )
             }
             Row(
-                modifier = Modifier.fillMaxWidth().padding(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(
                     start = 20.dp, end = 20.dp, top = 20.dp, bottom = 10.dp
                 ),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 MenuCard(
-                    modifier = Modifier.weight(1f).fillMaxWidth(),
+                    modifier = Modifier.weight(1f).fillMaxWidth()
+                        .height(143.dp),
                     image = R.drawable.about_us_graphic,
                     text = "About Us",
                     vector = R.drawable.info,
                     padding = 54.dp
                 )
                 MenuCard(
-                    modifier = Modifier.weight(1f).fillMaxWidth(),
+                    modifier = Modifier.weight(1f).fillMaxWidth()
+                        .height(143.dp),
                     image = R.drawable.team_graphic,
                     text = "Team",
                     vector = R.drawable.info,
@@ -83,14 +88,19 @@ fun MenuScreen() {
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 MenuCard(
-                    modifier = Modifier.weight(1f).fillMaxWidth(),
-                    image = R.drawable.about_us_graphic,
+                    modifier = Modifier.weight(1f)
+                        .fillMaxWidth()
+                        .height(143.dp),
+
+                    image = R.drawable.contact_graphic,
                     text = "Contact Us",
                     vector = R.drawable.contact_us,
                     padding = 49.dp
                 )
                 MenuCard(
-                    modifier = Modifier.weight(1f).fillMaxWidth(),
+                    modifier = Modifier.weight(1f)
+                        .fillMaxWidth()
+                        .height(143.dp),
                     image = R.drawable.share_graphic,
                     text = "Share App",
                     vector = R.drawable.share,
@@ -111,7 +121,6 @@ fun MenuScreen() {
             SecodaryButton(
                 text = "Log out"
             ) {
-                // Handle log out
             }
         }
     }
