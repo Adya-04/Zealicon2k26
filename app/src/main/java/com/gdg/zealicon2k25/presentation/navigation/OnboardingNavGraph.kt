@@ -8,8 +8,10 @@ import com.gdg.zealicon2k25.presentation.ui.LoginScreen
 import com.gdg.zealicon2k25.presentation.ui.RegisterScreen
 import com.gdg.zealicon2k25.presentation.ui.VerifyOTPScreen
 import com.gdg.zealicon2k25.presentation.ui.WelcomeScreen
+import com.gdg.zealicon2k25.presentation.viewmodels.AuthViewModel
 
-fun NavGraphBuilder.onboardingNavGraph(navHostController: NavHostController) {
+fun NavGraphBuilder.onboardingNavGraph(navHostController: NavHostController ,
+                                       authViewModel: AuthViewModel) {
     navigation(
         route = NavRoutes.Onboarding.route,
         startDestination = Auth.WelcomeScreen.route
@@ -25,7 +27,8 @@ fun NavGraphBuilder.onboardingNavGraph(navHostController: NavHostController) {
             LoginScreen(
                 loginOnClick = {
                     navHostController.navigate(Auth.VerifyOTP.route)
-                }
+                },
+                authViewModel = authViewModel
             )
         }
 
@@ -33,7 +36,8 @@ fun NavGraphBuilder.onboardingNavGraph(navHostController: NavHostController) {
             RegisterScreen(
                 registerOnClick = {
                     navHostController.navigate(Auth.VerifyOTP.route)
-                }
+                },
+                authViewModel = authViewModel
             )
         }
 
@@ -43,7 +47,8 @@ fun NavGraphBuilder.onboardingNavGraph(navHostController: NavHostController) {
                     navHostController.navigate(NavRoutes.Payment.route){
                         popUpTo(NavRoutes.Onboarding.route)
                     }
-                }
+                },
+                authViewModel = authViewModel
             )
         }
 
