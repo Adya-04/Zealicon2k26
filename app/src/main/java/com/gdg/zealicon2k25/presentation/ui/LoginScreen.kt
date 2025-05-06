@@ -1,10 +1,10 @@
 package com.gdg.zealicon2k25.presentation.ui
 
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -21,25 +21,31 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gdg.zealicon2k25.R
+import com.gdg.zealicon2k25.data.models.LoginRequest
 import com.gdg.zealicon2k25.presentation.ui.components.PrimaryButton
 import com.gdg.zealicon2k25.presentation.ui.components.PrimaryTextField
 import com.gdg.zealicon2k25.presentation.ui.theme.BackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.FrontSpring
 import com.gdg.zealicon2k25.presentation.ui.theme.HeadingTextColor
 import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
+import com.gdg.zealicon2k25.presentation.viewmodels.AuthViewModel
+import com.gdg.zealicon2k25.utils.Common.isValidEmail
 
 @Composable
 @Preview
 fun LoginScreen(
-    loginOnClick: () -> Unit = {}
+    loginOnClick: () -> Unit = {},
+    authViewModel: AuthViewModel
 ) {
     var email by remember { mutableStateOf("") }
+    val context = LocalContext.current
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -84,7 +90,7 @@ fun LoginScreen(
                 )
             }
         }
-        Column (
+        Column(
             modifier = Modifier
                 .align(Alignment.BottomCenter)
                 .fillMaxWidth()
@@ -92,10 +98,27 @@ fun LoginScreen(
             PrimaryButton(
                 text = "Log In"
             ) {
-                loginOnClick()
+                if (email.isBlank()) {
+                    Toast.makeText(
+                        context,
+                        "Email can't be empty",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else if (!isValidEmail(email)) {
+                    Toast.makeText(
+                        context,
+                        "Please provide a valid mail",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                } else {
+                    authViewModel.setmail(email)
+                    loginOnClick()
+                    authViewModel.login(LoginRequest(email))
+                }
             }
             Spacer(Modifier.height(52.dp))
         }
 
     }
 }
+
