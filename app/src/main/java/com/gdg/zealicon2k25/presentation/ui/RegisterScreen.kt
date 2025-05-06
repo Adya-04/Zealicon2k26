@@ -181,7 +181,7 @@ fun RegisterScreen(
                     text = "Register Now"
                 ) {
                     registerOnClick()
-                    authViewModel.getOtp(OtpRequest(email))
+//                    authViewModel.getOtp(OtpRequest(email))
                 }
                 Spacer(modifier = Modifier.height(53.dp))
             }

@@ -84,4 +84,7 @@ dependencies {
 
     //DataStore
     implementation (libs.androidx.datastore.preferences)
+
+    //Cloudinary
+    implementation (libs.cloudinary.android)
 }
