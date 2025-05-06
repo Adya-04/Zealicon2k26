@@ -43,7 +43,9 @@ import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 
 @Composable
 @Preview
-fun EventGridItem() {
+fun EventGridItem(
+    onClick: () -> Unit = {}
+) {
     Box(
         modifier = Modifier
             .height(284.dp)
@@ -57,7 +59,7 @@ fun EventGridItem() {
                 role = Role.Button
 
             ) {
-
+                onClick()
             }
             .clip(RoundedCornerShape(12.dp))
             .background(color = MerchCardBackgroundColor)

@@ -66,7 +66,12 @@ import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBorderColor
 
 @Composable
 @Preview
-fun HomeScreen() {
+fun HomeScreen(
+    menuOnClick: () -> Unit = {},
+    entryPass: () -> Unit = {},
+    eventDetails: () -> Unit = {},
+    buyZealClick: () -> Unit = {}
+) {
     val eventTabs = listOf("Cultural", "Technical", "Registered")
     var selected by remember { mutableStateOf(0) }
     val configuration = LocalConfiguration.current
@@ -95,6 +100,17 @@ fun HomeScreen() {
                     fontFamily = Outfit
                 )
                 Image(
+                    modifier = Modifier.clickable(
+                        enabled = true,
+                        indication = rememberRipple(
+                            bounded = true,
+                            color = ButtonRippleColor
+                        ),
+                        interactionSource = remember { MutableInteractionSource() },
+                        role = Role.Button
+                    ) {
+                        menuOnClick()
+                    },
                     painter = painterResource(R.drawable.menu_button),
                     contentDescription = "menu"
                 )
@@ -112,7 +128,7 @@ fun HomeScreen() {
                         interactionSource = remember { MutableInteractionSource() },
                         role = Role.Button
                     ) {
-
+                        buyZealClick()
                     }
                     .clip(RoundedCornerShape(12.dp))
                     .background(color = TicketCardBackgroundColor)
@@ -174,7 +190,7 @@ fun HomeScreen() {
                             role = Role.Button
 
                         ) {
-
+                            buyZealClick()
                         }
                         .clip(RoundedCornerShape(6.dp))
                         .background(color = BackgroundColor)
@@ -357,7 +373,11 @@ fun HomeScreen() {
                     .height(fixedHeight)
             ) {
                 items(20) {
-                    EventGridItem()
+                    EventGridItem(
+                        onClick = {
+                            eventDetails()
+                        }
+                    )
                 }
                 item {
                     Spacer(modifier = Modifier.height(130.dp))
@@ -380,7 +400,11 @@ fun HomeScreen() {
                 ),
             contentAlignment = Alignment.Center,
         ) {
-            ViewTicketButton()
+            ViewTicketButton(
+                onClick = {
+                    entryPass()
+                }
+            )
         }
     }
 }

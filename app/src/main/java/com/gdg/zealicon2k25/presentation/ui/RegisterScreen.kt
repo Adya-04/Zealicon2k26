@@ -47,6 +47,7 @@ import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 @Composable
 @Preview
 fun RegisterScreen(
+    registerOnClick: () -> Unit = {},
     authViewModel: AuthViewModel= hiltViewModel()
 ) {
     var name by remember { mutableStateOf("") }
@@ -179,6 +180,7 @@ fun RegisterScreen(
                 PrimaryButton(
                     text = "Register Now"
                 ) {
+                    registerOnClick()
                     authViewModel.getOtp(OtpRequest(email))
                 }
                 Spacer(modifier = Modifier.height(53.dp))

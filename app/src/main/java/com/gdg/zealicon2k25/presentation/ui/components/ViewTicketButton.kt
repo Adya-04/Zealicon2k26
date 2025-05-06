@@ -37,7 +37,9 @@ import com.gdg.zealicon2k25.presentation.ui.theme.FrontSpring
 
 @Composable
 @Preview
-fun ViewTicketButton() {
+fun ViewTicketButton(
+    onClick: () -> Unit = {},
+) {
     Box(
         modifier = Modifier
             .width(234.dp)
@@ -57,9 +59,7 @@ fun ViewTicketButton() {
                 role = Role.Button
 
             ) {
-//                if (enabled) {
-//                    onClick()
-//                }
+                onClick()
             }
             .clip(RoundedCornerShape(18.dp))
             .background(color = ButtonBackgroundColor)

@@ -21,8 +21,10 @@ import com.gdg.zealicon2k25.presentation.ui.components.SecodaryButton
 import com.gdg.zealicon2k25.presentation.ui.theme.BackgroundColor
 
 @Composable
-@Preview
-fun WelcomeScreen() {
+fun WelcomeScreen(
+    loginOnClick: () -> Unit,
+    registerOnClick: () -> Unit
+) {
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -54,7 +56,9 @@ fun WelcomeScreen() {
             ) {
                 PrimaryButton(
                     text = "Get your Zeal ID"
-                ) { }
+                ) {
+                    registerOnClick()
+                }
             }
             Row(
                 modifier = Modifier
@@ -63,7 +67,9 @@ fun WelcomeScreen() {
             ) {
                 SecodaryButton(
                     text = "Login"
-                ) { }
+                ) {
+                    loginOnClick()
+                }
             }
         }
     }

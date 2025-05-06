@@ -39,7 +39,9 @@ import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 
 @Composable
 @Preview
-fun VerifyOTPScreen() {
+fun VerifyOTPScreen(
+    verifyOnClick: () -> Unit = {}
+) {
     var otpValue by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
     var isOTPError by remember {
@@ -112,7 +114,9 @@ fun VerifyOTPScreen() {
         ) {
             PrimaryButton(
                 text = "Verify"
-            ) { }
+            ) {
+                verifyOnClick()
+            }
             Spacer(Modifier.height(52.dp))
         }
     }
