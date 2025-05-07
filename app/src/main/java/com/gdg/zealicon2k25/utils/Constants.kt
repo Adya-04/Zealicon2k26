@@ -7,4 +7,5 @@ object Constants {
     const val INIT_TOKEN="initToken"
     const val REFRESH_TOKEN ="RefreshToken"
     const val ACCESS_TOKEN ="AccessToken"
+    const val CLOUDINARY_API_KEY= "322241248527716"
 }

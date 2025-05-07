@@ -165,6 +165,9 @@ fun VerifyOTPScreen(
 
                 is NetworkResult.Success -> {
                     verifyOnClick()
+                    verifyOtpState.data?.let {
+                        authViewModel.saveToken(it.init_token)
+                    }
                 }
             }
 
