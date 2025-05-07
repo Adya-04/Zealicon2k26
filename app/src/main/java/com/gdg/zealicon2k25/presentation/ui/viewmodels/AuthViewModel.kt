@@ -1,4 +1,4 @@
-package com.gdg.zealicon2k25.presentation.viewmodels
+package com.gdg.zealicon2k25.presentation.ui.viewmodels
 
 import android.util.Log
 import androidx.compose.runtime.State
@@ -22,7 +22,9 @@ import com.gdg.zealicon2k25.pref.PrefDatastore
 import com.gdg.zealicon2k25.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -30,12 +32,12 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val prefs: PrefDatastore
-): ViewModel(){
+) : ViewModel() {
     val otpResponseLiveData: StateFlow<NetworkResult<OtpResponse>>
-        get() =authRepository.otpResponseLivedata
+        get() = authRepository.otpResponseLivedata
 
     val loginLiveData: StateFlow<NetworkResult<LoginResponse>>
-        get() =authRepository.login
+        get() = authRepository.login
 
     val verifyOtpState: StateFlow<NetworkResult<VerifyOtpResponse>>
         get() = authRepository.verifyOtpResponse
@@ -46,48 +48,51 @@ class AuthViewModel @Inject constructor(
     val signCloudinaryFlowId: StateFlow<NetworkResult<SignCloudinaryResponse>>
         get() = authRepository.signCloudinaryFlowId
 
-    private var _selfieImageSignature : SignCloudinaryResponse? = null
-    val selfieImageSignature : SignCloudinaryResponse? get() = _selfieImageSignature
+    private var _selfieImageSignature: SignCloudinaryResponse? = null
+    val selfieImageSignature: SignCloudinaryResponse? get() = _selfieImageSignature
 
-    private var _idImageSignature : SignCloudinaryResponse? = null
-    val idImageSignature : SignCloudinaryResponse? get() = _idImageSignature
+    private var _idImageSignature: SignCloudinaryResponse? = null
+    val idImageSignature: SignCloudinaryResponse? get() = _idImageSignature
 
     val signupFlow: StateFlow<NetworkResult<SignupResponse>>
         get() = authRepository.signupFlow
+
+    val resendState: StateFlow<NetworkResult<OtpResponse>>
+        get() = authRepository.resendState
 
     val initToken: Flow<String> = prefs.getToken()
     val accessToken: Flow<String> = prefs.getAccessToken()
     val refreshToken: Flow<String> = prefs.getRefreshToken()
 
-    private var _email : String? = null
-    val email : String? get() = _email
+    private var _email: String? = null
+    val email: String? get() = _email
 
     private var _username: String = ""
-    val username : String get() = _username
+    val username: String get() = _username
 
     private var _userPhone: Long = 0
-    val userPhone : Long get() = _userPhone
+    val userPhone: Long get() = _userPhone
 
     private var _isLogin: Boolean = false
     val isLogin: Boolean get() = _isLogin
 
 
-    fun setSelfieSignature(value: SignCloudinaryResponse){
+    fun setSelfieSignature(value: SignCloudinaryResponse) {
         _selfieImageSignature = value
     }
 
-    fun setIdSignature(value: SignCloudinaryResponse){
+    fun setIdSignature(value: SignCloudinaryResponse) {
         _selfieImageSignature = value
     }
 
-    fun setLogin(value: Boolean){
+    fun setLogin(value: Boolean) {
         _isLogin = value
     }
 
 
     fun setmail(value: String) {
         _email = value
-        Log.d("message12345" , _email.toString())
+        Log.d("message12345", _email.toString())
     }
 
     fun setName(value: String) {
@@ -98,15 +103,15 @@ class AuthViewModel @Inject constructor(
         _userPhone = value
     }
 
-    fun getMail(): String{
+    fun getMail(): String {
         return email.toString()
     }
 
-    fun getName(): String{
+    fun getName(): String {
         return username
     }
 
-    fun getPhone(): Long{
+    fun getPhone(): Long {
         return userPhone
     }
 
@@ -116,9 +121,11 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun saveAccessToken(token: String) {
-        viewModelScope.launch {
-            prefs.saveAccessToken(token)
+    fun getOtp(email: OtpRequest) {
+        fun saveAccessToken(token: String) {
+            viewModelScope.launch {
+                prefs.saveAccessToken(token)
+            }
         }
     }
 
@@ -128,37 +135,44 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun getOtp(email: OtpRequest){
+    fun getOtp(email: OtpRequest) {
         viewModelScope.launch {
-            Log.d("message1","View model called")
+            Log.d("message1", "View model called")
             authRepository.getOtp(email)
         }
     }
 
-    fun login(loginRequest: LoginRequest){
+    fun login(loginRequest: LoginRequest) {
         viewModelScope.launch {
             authRepository.login(loginRequest)
         }
     }
 
-    fun verifyOtp(verifyOtpReq: VerifyOtpReq){
+    fun verifyOtp(verifyOtpReq: VerifyOtpReq) {
         viewModelScope.launch {
-            Log.d("message1","View model called")
+            Log.d("message1", "View model called")
             authRepository.verifyOtp(verifyOtpReq)
         }
     }
 
+    fun resendOtp(email: OtpRequest) {
+        viewModelScope.launch {
+            Log.d("message1", "View model called")
+            authRepository.resendOtp(email)
+        }
+    }
+
     fun signCloudinaryPhoto(
-        initToken:String
-    ){
+        initToken: String
+    ) {
         viewModelScope.launch {
             authRepository.signCloudinaryPhoto(initToken)
         }
     }
 
     fun signCloudinaryId(
-        initToken:String
-    ){
+        initToken: String
+    ) {
         viewModelScope.launch {
             authRepository.signCloudinaryId(initToken)
         }
@@ -167,7 +181,7 @@ class AuthViewModel @Inject constructor(
     fun signup(
         signupRequest: SignupRequest,
         initToken: String
-    ){
+    ) {
         viewModelScope.launch {
             authRepository.signup(
                 signupRequest = signupRequest,
@@ -176,7 +190,7 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun removeSignCloudinaryState(){
-       authRepository.removeSignCloudinaryState()
+    fun removeSignCloudinaryState() {
+        authRepository.removeSignCloudinaryState()
     }
 }
