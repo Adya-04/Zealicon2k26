@@ -5,6 +5,8 @@ import com.gdg.zealicon2k25.data.models.LoginResponse
 import com.gdg.zealicon2k25.data.models.OtpRequest
 import com.gdg.zealicon2k25.data.models.OtpResponse
 import com.gdg.zealicon2k25.data.models.SignCloudinaryResponse
+import com.gdg.zealicon2k25.data.models.SignupRequest
+import com.gdg.zealicon2k25.data.models.SignupResponse
 import com.gdg.zealicon2k25.data.models.VerifyOtpReq
 import com.gdg.zealicon2k25.data.models.VerifyOtpResponse
 import retrofit2.Response
@@ -15,18 +17,29 @@ import retrofit2.http.POST
 import retrofit2.http.Path
 
 interface AuthApi {
-    @POST("auth/send-otp")
+    @POST("api/auth/send-otp")
     suspend fun getOtp(@Body email:OtpRequest): Response<OtpResponse>
 
-    @POST("auth/verify-otp")
+    @POST("api/auth/verify-otp")
     suspend fun verifyOtp(@Body verifyOtpReq: VerifyOtpReq): Response<VerifyOtpResponse>
 
-    @POST("auth/login")
+    @POST("api/auth/login")
     suspend fun login(@Body loginRequest: LoginRequest): Response<LoginResponse>
 
-    @GET("/sign-cloudinary-token/{folder}")
-    suspend fun getCloudinarySignature(
+    @GET("api/auth/sign-cloudinary-token/idCard")
+    suspend fun getCloudinarySignatureIdCard(
         @Header("Authorization") initToken: String,
-        @Path("folder") folder: String
     ): Response<SignCloudinaryResponse>
+
+    @GET("api/auth/sign-cloudinary-token/photo")
+    suspend fun getCloudinarySignaturePhoto(
+        @Header("Authorization") initToken: String,
+    ): Response<SignCloudinaryResponse>
+
+    @POST("api/auth/signup")
+    suspend fun signup(
+        @Header("Authorization") initToken: String,
+        @Body signupRequest: SignupRequest
+    ):Response<SignupResponse>
+
 }

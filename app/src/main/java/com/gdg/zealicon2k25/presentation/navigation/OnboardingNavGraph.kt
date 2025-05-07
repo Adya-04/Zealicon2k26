@@ -5,13 +5,17 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.gdg.zealicon2k25.presentation.ui.LoginScreen
+import com.gdg.zealicon2k25.presentation.ui.PhotoUploadScreen
 import com.gdg.zealicon2k25.presentation.ui.RegisterScreen
 import com.gdg.zealicon2k25.presentation.ui.VerifyOTPScreen
 import com.gdg.zealicon2k25.presentation.ui.WelcomeScreen
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.ImageUploadViewModel
 import com.gdg.zealicon2k25.presentation.viewmodels.AuthViewModel
 
 fun NavGraphBuilder.onboardingNavGraph(navHostController: NavHostController ,
-                                       authViewModel: AuthViewModel) {
+                                       authViewModel: AuthViewModel,
+                                       imageViewModel: ImageUploadViewModel
+) {
     navigation(
         route = NavRoutes.Onboarding.route,
         startDestination = Auth.WelcomeScreen.route
@@ -43,12 +47,25 @@ fun NavGraphBuilder.onboardingNavGraph(navHostController: NavHostController ,
 
         composable(route = Auth.VerifyOTP.route) {
             VerifyOTPScreen(
-                verifyOnClick = {
-                    navHostController.navigate(NavRoutes.Payment.route){
-                        popUpTo(NavRoutes.Onboarding.route)
-                    }
+                verifyToPhoto = {
+                    navHostController.navigate(Auth.PhotoUpload.route)
                 },
+
                 authViewModel = authViewModel
+            )
+        }
+
+        composable(route = Auth.PhotoUpload.route){
+            PhotoUploadScreen(
+                authViewModel = authViewModel,
+                imageViewModel = imageViewModel,
+                registerOnClick = {
+                    navHostController.navigate(NavRoutes.Payment.route){
+                        popUpTo(NavRoutes.Onboarding.route){
+                            inclusive = true
+                        }
+                    }
+                }
             )
         }
 
@@ -60,4 +77,5 @@ sealed class Auth(val route: String) {
     data object Login : Auth("login")
     data object Register : Auth("register")
     data object VerifyOTP : Auth("verify_otp")
+    data object PhotoUpload : Auth("photo_upload")
 }

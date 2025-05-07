@@ -53,7 +53,9 @@ import com.gdg.zealicon2k25.utils.NetworkResult
 @Composable
 @Preview
 fun VerifyOTPScreen(
-    verifyOnClick: () -> Unit = {}, authViewModel: AuthViewModel
+    verifyToPhoto: () -> Unit = {},
+    authViewModel: AuthViewModel,
+    verifyToHome: () -> Unit = {},
 ) {
     var otpValue by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
@@ -164,13 +166,17 @@ fun VerifyOTPScreen(
                 }
 
                 is NetworkResult.Success -> {
-                    verifyOnClick()
+                    if(authViewModel.isLogin){
+                        verifyToHome()
+                    }else{
+                        verifyToPhoto()
+                    }
                     verifyOtpState.data?.let {
                         authViewModel.saveToken(it.init_token)
                     }
                 }
             }
-
+            Spacer(modifier = Modifier.height(52.dp))
         }
     }
     Spacer(Modifier.height(52.dp))
