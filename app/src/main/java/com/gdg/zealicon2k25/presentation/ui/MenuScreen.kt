@@ -1,5 +1,7 @@
 package com.gdg.zealicon2k25.presentation.ui
 
+import android.content.Intent
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -43,6 +45,8 @@ fun MenuScreen(
     aboutUsClick: () -> Unit = {},
     backOnClick: () -> Unit = {}
 ) {
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -145,6 +149,13 @@ fun MenuScreen(
                     vector = R.drawable.share,
                     padding = 15.dp,
                     onClick = {
+                        val sendIntent = Intent().apply {
+                            action = Intent.ACTION_SEND
+                            putExtra(Intent.EXTRA_TEXT, "Check out the Zealicon 2K25 app! Download it now: https://play.google.com/store/apps/..")
+                            type = "text/plain"
+                        }
+                        val shareIntent = Intent.createChooser(sendIntent, null)
+                        context.startActivity(shareIntent)
                     }
                 )
             }
