@@ -1,5 +1,8 @@
 package com.gdg.zealicon2k25.presentation.ui
 
+import android.content.Intent
+import android.net.Uri
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -37,6 +40,8 @@ import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 fun ContactUsScreen(
     backOnClick: () -> Unit = {}
 ){
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier.fillMaxSize()
             .background(BackgroundColor)
@@ -74,7 +79,12 @@ fun ContactUsScreen(
                 painter = painterResource(R.drawable.map),
                 contentDescription = "map",
                 modifier = Modifier.padding(top = 32.dp , end = 20.dp , start = 20.dp)
-                    .height(221.dp)
+                    .height(221.dp).clickable {
+                        val url =
+                            "https://www.google.com/maps/place/JSS+College/@28.6133052,77.3587192,17.67z/data=!4m6!3m5!1s0x390ce56a04d5c921:0x80d0b2139369bc42!8m2!3d28.6133087!4d77.3606258!16s%2Fg%2F11dzt18qmv?entry=ttu&g_ep=EgoyMDI1MDUwMy4wIKXMDSoASAFQAw%3D%3D"
+                        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+                        context.startActivity(intent)
+                    }
             )
             Image(
                 painter = painterResource(R.drawable.star),
