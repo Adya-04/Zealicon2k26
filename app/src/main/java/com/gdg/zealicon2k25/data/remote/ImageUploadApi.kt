@@ -10,7 +10,7 @@ import retrofit2.http.Part
 
 interface ImageUploadApi {
     @Multipart
-    @POST("/dzvns6dx6/image/upload")
+    @POST("v1_1/dzvns6dx6/image/upload")
     suspend fun uploadToCloudinary(
         @Part file: MultipartBody.Part,
         @Part("api_key") apiKey: RequestBody,

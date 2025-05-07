@@ -5,8 +5,10 @@ kotlin = "2.0.0"
 coreKtx = "1.16.0"
 junit = "4.13.2"
 junitVersion = "1.2.1"
+accompanistPermissions = "0.34.0"
 navigationCompose = "2.7.7"
 hiltNavigationCompose = "1.2.0"
+coilCompose = "2.6.0"
 hiltAndroid = "2.51.1"
 converterGson = "2.9.0"
 retrofit = "2.9.0"
@@ -24,6 +26,8 @@ hiltCommon = "1.2.0"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
+coil-compose = { module = "io.coil-kt:coil-compose", version.ref = "coilCompose" }
+accompanist-permissions = { module = "com.google.accompanist:accompanist-permissions", version.ref = "accompanistPermissions" }
 cloudinary-android = { module = "com.cloudinary:cloudinary-android", version.ref = "cloudinaryAndroid" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "junitVersion" }

@@ -156,11 +156,23 @@ fun RegisterScreen(
                             "Please provide a valid mail",
                             Toast.LENGTH_SHORT
                         ).show()
+                    } else if(name.isBlank()){
+                        Toast.makeText(
+                            context,
+                            "Name can't be empty",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                    } else if(phone.length < 10){
+                        Toast.makeText(
+                            context,
+                            "Invalid Phone Number",
+                            Toast.LENGTH_SHORT
+                        ).show()
                     } else {
                         Log.d("message" , "email sent is : $email")
                         authViewModel.setmail(email)
-                        authViewModel.setmail(email)
-                        authViewModel.setmail(email)
+                        authViewModel.setName(name)
+                        authViewModel.setPhone(phone.toLong())
                         authViewModel.getOtp(OtpRequest(email))
                     }
                 }
@@ -183,7 +195,7 @@ fun RegisterScreen(
                             )
 
                             Text(
-                                text = "Some Error Occurred",
+                                text = otpState.message.toString(),
                                 fontSize = 12.sp,
                                 fontFamily = Outfit,
                                 fontWeight = FontWeight.Normal,

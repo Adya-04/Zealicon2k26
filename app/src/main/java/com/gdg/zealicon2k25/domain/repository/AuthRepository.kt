@@ -12,6 +12,8 @@ import com.gdg.zealicon2k25.data.models.LoginResponse
 import com.gdg.zealicon2k25.data.models.OtpRequest
 import com.gdg.zealicon2k25.data.models.OtpResponse
 import com.gdg.zealicon2k25.data.models.SignCloudinaryResponse
+import com.gdg.zealicon2k25.data.models.SignupRequest
+import com.gdg.zealicon2k25.data.models.SignupResponse
 import com.gdg.zealicon2k25.data.models.VerifyOtpReq
 import com.gdg.zealicon2k25.data.models.VerifyOtpResponse
 import com.gdg.zealicon2k25.data.remote.AuthApi
@@ -35,8 +37,45 @@ class AuthRepository @Inject constructor(private val authApi: AuthApi) {
     val login: StateFlow<NetworkResult<LoginResponse>>
         get()=_login
 
-    private val _signCloudinaryFlow = MutableStateFlow<NetworkResult<SignCloudinaryResponse>>(NetworkResult.Start())
-    val signCloudinaryFlow: StateFlow<NetworkResult<SignCloudinaryResponse>> get() = _signCloudinaryFlow
+    private val _signCloudinaryFlowPhoto = MutableStateFlow<NetworkResult<SignCloudinaryResponse>>(NetworkResult.Start())
+    val signCloudinaryFlowPhoto: StateFlow<NetworkResult<SignCloudinaryResponse>> get() = _signCloudinaryFlowPhoto
+
+    private val _signCloudinaryFlowId = MutableStateFlow<NetworkResult<SignCloudinaryResponse>>(NetworkResult.Start())
+    val signCloudinaryFlowId: StateFlow<NetworkResult<SignCloudinaryResponse>> get() = _signCloudinaryFlowId
+
+    private val _signupFlow = MutableStateFlow<NetworkResult<SignupResponse>>(NetworkResult.Start())
+    val signupFlow: StateFlow<NetworkResult<SignupResponse>> get() = _signupFlow
+
+
+    suspend fun signup(signupRequest: SignupRequest, initToken: String){
+        _signupFlow.value = NetworkResult.Loading()
+        try{
+            val response = authApi.signup(signupRequest = signupRequest, initToken = initToken)
+            Log.d("message123",response.body().toString())
+            Log.d("message123*",response.toString())
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    _signupFlow.value = NetworkResult.Success(responseBody)
+                } else {
+                    _signupFlow.value = NetworkResult.Error("Response body is null")
+                }
+            }else if(response.errorBody() != null){
+                Log.d("message12", response.errorBody().toString())
+                val errObj = JSONObject(response.errorBody()!!.charStream().readText())
+                _signupFlow.value = NetworkResult.Error(errObj.getString("message"))
+            }else{
+                _signupFlow.value = NetworkResult.Error("Something went wrong")
+            }
+        }catch (e: SocketTimeoutException){
+            Log.d("message1",e.toString())
+            _signupFlow.value =NetworkResult.Error("Please try again!")
+        }catch (e: Exception){
+            Log.d("message12",e.toString())
+            _signupFlow.value =NetworkResult.Error("Unexpected error occurred")
+        }
+    }
+
 
     suspend fun getOtp(email: OtpRequest){
         _otpResponseLivedata.value = NetworkResult.Loading()
@@ -51,6 +90,7 @@ class AuthRepository @Inject constructor(private val authApi: AuthApi) {
                     _otpResponseLivedata.value = NetworkResult.Error("Response body is null")
                 }
             } else if (response.errorBody() != null) {
+                Log.d("message12", response.errorBody().toString())
                 val errObj = JSONObject(response.errorBody()!!.charStream().readText())
                 _otpResponseLivedata.value =NetworkResult.Error(errObj.getString("message"))
             } else {
@@ -129,11 +169,10 @@ class AuthRepository @Inject constructor(private val authApi: AuthApi) {
         }
     }
 
-    suspend fun signCloudinaryFlow(folder: String, initToken:String){
-        _signCloudinaryFlow.value = NetworkResult.Loading()
+    suspend fun signCloudinaryPhoto(initToken:String){
+        _signCloudinaryFlowPhoto.value = NetworkResult.Loading()
         try{
-            val response = authApi.getCloudinarySignature(
-                folder = folder,
+            val response = authApi.getCloudinarySignaturePhoto(
                 initToken = initToken
             )
             if (response.isSuccessful) {
@@ -141,24 +180,61 @@ class AuthRepository @Inject constructor(private val authApi: AuthApi) {
                 val responseBody = response.body()
                 if (responseBody != null) {
                     Log.d("message123","$responseBody")
-                    _signCloudinaryFlow.value=(NetworkResult.Success(responseBody))
+                    _signCloudinaryFlowPhoto.value=(NetworkResult.Success(responseBody))
                 } else {
                     Log.d("message123",response.errorBody().toString())
-                    _signCloudinaryFlow.value=(NetworkResult.Error("Response body is null"))
+                    _signCloudinaryFlowPhoto.value=(NetworkResult.Error("Response body is null"))
                 }
             } else if (response.errorBody() != null) {
                 val errObj = JSONObject(response.errorBody()!!.charStream().readText())
                 Log.d("message12", errObj.toString())
-                _signCloudinaryFlow.value=(NetworkResult.Error(errObj.getString("message")))
+                _signCloudinaryFlowPhoto.value=(NetworkResult.Error(errObj.getString("message")))
             } else {
-                _signCloudinaryFlow.value=(NetworkResult.Error("Something went wrong"))
+                _signCloudinaryFlowPhoto.value=(NetworkResult.Error("Something went wrong"))
             }
         }catch (e: SocketTimeoutException){
             Log.d("message1",e.toString())
-            _signCloudinaryFlow.value=(NetworkResult.Error("Please try again!"))
+            _signCloudinaryFlowPhoto.value=(NetworkResult.Error("Please try again!"))
         }catch (e: Exception){
             Log.d("message12",e.toString())
-            _signCloudinaryFlow.value=(NetworkResult.Error("Unexpected error occurred"))
+            _signCloudinaryFlowPhoto.value=(NetworkResult.Error("Unexpected error occurred"))
         }
+    }
+
+    suspend fun signCloudinaryId(initToken:String){
+        _signCloudinaryFlowId.value = NetworkResult.Loading()
+        try{
+            val response = authApi.getCloudinarySignatureIdCard(
+                initToken = initToken
+            )
+            if (response.isSuccessful) {
+                Log.d("message123","try block success")
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    Log.d("message123","$responseBody")
+                    _signCloudinaryFlowId.value=(NetworkResult.Success(responseBody))
+                } else {
+                    Log.d("message123",response.errorBody().toString())
+                    _signCloudinaryFlowId.value=(NetworkResult.Error("Response body is null"))
+                }
+            } else if (response.errorBody() != null) {
+                val errObj = JSONObject(response.errorBody()!!.charStream().readText())
+                Log.d("message12", errObj.toString())
+                _signCloudinaryFlowId.value=(NetworkResult.Error(errObj.getString("message")))
+            } else {
+                _signCloudinaryFlowId.value=(NetworkResult.Error("Something went wrong"))
+            }
+        }catch (e: SocketTimeoutException){
+            Log.d("message1",e.toString())
+            _signCloudinaryFlowId.value=(NetworkResult.Error("Please try again!"))
+        }catch (e: Exception){
+            Log.d("message12",e.toString())
+            _signCloudinaryFlowId.value=(NetworkResult.Error("Unexpected error occurred"))
+        }
+    }
+
+    fun removeSignCloudinaryState(){
+        _signCloudinaryFlowId.value = NetworkResult.Start()
+        _signCloudinaryFlowPhoto.value = NetworkResult.Start()
     }
 }
