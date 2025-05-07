@@ -26,6 +26,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -319,7 +320,7 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Divider(
+                HorizontalDivider(
                     color = HeadingTextColor,
                     thickness = 1.dp,
                     modifier = Modifier
@@ -334,7 +335,7 @@ fun HomeScreen(
                     fontWeight = FontWeight.SemiBold,
                     color = HeadingTextColor
                 )
-                Divider(
+                HorizontalDivider(
                     color = HeadingTextColor,
                     thickness = 1.dp,
                     modifier = Modifier

@@ -11,6 +11,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 
@@ -22,11 +23,14 @@ interface AuthApi {
     suspend fun verifyOtp(@Body verifyOtpReq: VerifyOtpReq): Response<VerifyOtpResponse>
 
     @POST("auth/login")
-    suspend fun login(@Body loginRequest: LoginRequest): Response<LoginResponse>
+    suspend fun login( @Body loginRequest: LoginRequest): Response<LoginResponse>
 
     @GET("/sign-cloudinary-token/{folder}")
     suspend fun getCloudinarySignature(
         @Header("Authorization") initToken: String,
         @Path("folder") folder: String
     ): Response<SignCloudinaryResponse>
+
+    @PATCH("auth/resend-otp")
+    suspend fun resendOtp(@Body otpRequest: OtpRequest): Response<OtpResponse>
 }

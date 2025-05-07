@@ -35,6 +35,10 @@ class AuthRepository @Inject constructor(private val authApi: AuthApi) {
     val login: StateFlow<NetworkResult<LoginResponse>>
         get()=_login
 
+    private val _resendState= MutableStateFlow<NetworkResult<OtpResponse>>(NetworkResult.Start())
+    val resendState: StateFlow<NetworkResult<OtpResponse>>
+        get() = _resendState
+
     private val _signCloudinaryFlow = MutableStateFlow<NetworkResult<SignCloudinaryResponse>>(NetworkResult.Start())
     val signCloudinaryFlow: StateFlow<NetworkResult<SignCloudinaryResponse>> get() = _signCloudinaryFlow
 
@@ -159,6 +163,33 @@ class AuthRepository @Inject constructor(private val authApi: AuthApi) {
         }catch (e: Exception){
             Log.d("message12",e.toString())
             _signCloudinaryFlow.value=(NetworkResult.Error("Unexpected error occurred"))
+        }
+    }
+
+    suspend fun resendOtp(email: OtpRequest){
+        _resendState.value = NetworkResult.Loading()
+        try {
+            Log.d("message1","try block called")
+            val response = authApi.resendOtp(email)
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    _resendState.value=NetworkResult.Success(responseBody)
+                } else {
+                    _resendState.value = NetworkResult.Error("Response body is null")
+                }
+            } else if (response.errorBody() != null) {
+                val errObj = JSONObject(response.errorBody()!!.charStream().readText())
+                _resendState.value =NetworkResult.Error(errObj.getString("message"))
+            } else {
+                _resendState.value =NetworkResult.Error("Something went wrong")
+            }
+        }catch (e: SocketTimeoutException){
+            Log.d("message1",e.toString())
+            _resendState.value =NetworkResult.Error("Please try again!")
+        }catch (e: Exception){
+            Log.d("message12",e.toString())
+            _resendState.value =NetworkResult.Error("Unexpected error occurred")
         }
     }
 }

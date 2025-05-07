@@ -1,8 +1,10 @@
 package com.gdg.zealicon2k25.presentation.ui
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -38,6 +40,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdg.zealicon2k25.R
+import com.gdg.zealicon2k25.data.models.OtpRequest
+import com.gdg.zealicon2k25.data.models.OtpResponse
 import com.gdg.zealicon2k25.data.models.VerifyOtpReq
 import com.gdg.zealicon2k25.presentation.ui.components.OtpInputField
 import com.gdg.zealicon2k25.presentation.ui.components.PrimaryButton
@@ -47,7 +51,7 @@ import com.gdg.zealicon2k25.presentation.ui.theme.FrontSpring
 import com.gdg.zealicon2k25.presentation.ui.theme.HeadingTextColor
 import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBackgroundColor
-import com.gdg.zealicon2k25.presentation.viewmodels.AuthViewModel
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 import com.gdg.zealicon2k25.utils.NetworkResult
 
 @Composable
@@ -60,9 +64,13 @@ fun VerifyOTPScreen(
     var isOTPError by remember {
         mutableStateOf(false)
     }
+    val resendOtpState by authViewModel.resendState.collectAsState()
     val verifyOtpState by authViewModel.verifyOtpState.collectAsState()
     val userMail = authViewModel.getMail()
     val context = LocalContext.current
+    var isResendEnabled by remember { mutableStateOf(true) }
+    var isVerifyEnabled by remember { mutableStateOf(false) }
+
     Box(
         modifier = Modifier.fillMaxSize().background(BackgroundColor)
     ) {
@@ -98,13 +106,20 @@ fun VerifyOTPScreen(
                     otpText = otpValue,
                     onOtpModified = { value, otpFilled ->
                         otpValue = value
+                        isVerifyEnabled = otpFilled
                     },
                     isErrorState = isOTPError,
                     modifier = Modifier.padding(start = 20.dp, top = 20.dp, 20.dp)
                         .focusRequester(focusRequester)
                 )
                 Text(
-                    modifier = Modifier.padding(top = 12.dp, end = 20.dp).fillMaxWidth(),
+                    modifier = Modifier
+                        .padding(top = 12.dp, end = 20.dp)
+                        .fillMaxWidth()
+                        .clickable(enabled = isResendEnabled) {
+                            authViewModel.resendOtp(OtpRequest(userMail))
+                            isResendEnabled = false
+                        },
                     text = "Resend OTP",
                     fontSize = 14.sp,
                     color = HeadingTextColor,
@@ -113,13 +128,27 @@ fun VerifyOTPScreen(
                     textDecoration = TextDecoration.Underline,
                     textAlign = TextAlign.End
                 )
+                when (resendOtpState) {
+                    is NetworkResult.Success -> {
+                        isResendEnabled = false
+                    }
+                    is NetworkResult.Error -> {
+                        isResendEnabled = true
+                    }
+                    is NetworkResult.Loading -> {
+                        isResendEnabled = false
+                    }
+                    else -> {}
+                }
+
             }
         }
         Column(
             modifier = Modifier.align(Alignment.BottomCenter).fillMaxWidth()
         ) {
             PrimaryButton(
-                text = "Verify"
+                text = "Verify",
+                enabled = isVerifyEnabled
             ) {
                 Log.d("otp chalga","${otpValue.toLong()+1}")
                 Log.d("otp chalga",userMail.toString())
@@ -127,6 +156,8 @@ fun VerifyOTPScreen(
             }
             when (verifyOtpState) {
                 is NetworkResult.Error -> {
+//                    isVerifyEnabled = false
+
                     Row(
                         modifier = Modifier.padding(20.dp, 10.dp, 20.dp),
                         verticalAlignment = Alignment.CenterVertically,
@@ -141,8 +172,8 @@ fun VerifyOTPScreen(
                         )
 
                         Text(
-                            text = "OTP is invalid",
-                            fontSize = 12.sp,
+                            text = verifyOtpState.message.toString(),
+                            fontSize = 14.sp,
                             fontFamily = Outfit,
                             fontWeight = FontWeight.Normal,
                             color = ErrorTextColor
@@ -152,6 +183,7 @@ fun VerifyOTPScreen(
 
                 is NetworkResult.Start -> {}
                 is NetworkResult.Loading -> {
+                    isVerifyEnabled = false
                     Row(
                         modifier = Modifier.fillMaxWidth().padding(20.dp, 10.dp, 20.dp),
                         verticalAlignment = Alignment.CenterVertically,
@@ -170,9 +202,8 @@ fun VerifyOTPScreen(
                     }
                 }
             }
-
+            Spacer(Modifier.height(52.dp))
         }
     }
-    Spacer(Modifier.height(52.dp))
 }
 

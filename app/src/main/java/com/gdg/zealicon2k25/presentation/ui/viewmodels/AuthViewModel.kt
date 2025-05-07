@@ -1,11 +1,6 @@
-package com.gdg.zealicon2k25.presentation.viewmodels
+package com.gdg.zealicon2k25.presentation.ui.viewmodels
 
 import android.util.Log
-import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gdg.zealicon2k25.data.models.LoginRequest
@@ -20,7 +15,9 @@ import com.gdg.zealicon2k25.pref.PrefDatastore
 import com.gdg.zealicon2k25.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -28,12 +25,12 @@ import javax.inject.Inject
 class AuthViewModel @Inject constructor(
     private val authRepository: AuthRepository,
     private val prefs: PrefDatastore
-): ViewModel(){
+) : ViewModel() {
     val otpResponseLiveData: StateFlow<NetworkResult<OtpResponse>>
-        get() =authRepository.otpResponseLivedata
+        get() = authRepository.otpResponseLivedata
 
     val loginLiveData: StateFlow<NetworkResult<LoginResponse>>
-        get() =authRepository.login
+        get() = authRepository.login
 
     val verifyOtpState: StateFlow<NetworkResult<VerifyOtpResponse>>
         get() = authRepository.verifyOtpResponse
@@ -41,21 +38,28 @@ class AuthViewModel @Inject constructor(
     val signCloudinaryFlow: StateFlow<NetworkResult<SignCloudinaryResponse>>
         get() = authRepository.signCloudinaryFlow
 
-    val initToken: Flow<String> = prefs.getToken()
+    val resendState: StateFlow<NetworkResult<OtpResponse>>
+        get() = authRepository.resendState
 
-    private var _email : String? = null
-    val email : String? get() = _email
+    val initToken: Flow<String> = prefs.getToken().stateIn(
+        scope = viewModelScope,
+        started = SharingStarted.WhileSubscribed(),
+        initialValue = ""
+    )
+
+    private var _email: String? = null
+    val email: String? get() = _email
 
     private var _username: String = ""
-    val username : String get() = _username
+    val username: String get() = _username
 
     private var _userPhone: Long = 0
-    val userPhone : Long get() = _userPhone
+    val userPhone: Long get() = _userPhone
 
 
     fun setmail(value: String) {
         _email = value
-        Log.d("message12345" , _email.toString())
+        Log.d("message12345", _email.toString())
     }
 
     fun setName(value: String) {
@@ -66,15 +70,15 @@ class AuthViewModel @Inject constructor(
         _userPhone = value
     }
 
-    fun getMail(): String{
+    fun getMail(): String {
         return email.toString()
     }
 
-    fun getName(): String{
+    fun getName(): String {
         return username
     }
 
-    fun getPhone(): Long{
+    fun getPhone(): Long {
         return userPhone
     }
 
@@ -84,30 +88,36 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun getOtp(email: OtpRequest){
+    fun getOtp(email: OtpRequest) {
         viewModelScope.launch {
-            Log.d("message1","View model called")
+            Log.d("message1", "View model called")
             authRepository.getOtp(email)
         }
     }
 
-    fun login(loginRequest: LoginRequest){
+    fun login(loginRequest: LoginRequest) {
         viewModelScope.launch {
             authRepository.login(loginRequest)
         }
     }
 
-    fun verifyOtp(verifyOtpReq: VerifyOtpReq){
+    fun verifyOtp(verifyOtpReq: VerifyOtpReq) {
         viewModelScope.launch {
-            Log.d("message1","View model called")
+            Log.d("message1", "View model called")
             authRepository.verifyOtp(verifyOtpReq)
+        }
+    }
+    fun resendOtp(email: OtpRequest) {
+        viewModelScope.launch {
+            Log.d("message1", "View model called")
+            authRepository.resendOtp(email)
         }
     }
 
     fun signCloudinaryFlow(
         folder: String,
-        initToken:String
-    ){
+        initToken: String
+    ) {
 
     }
 }
