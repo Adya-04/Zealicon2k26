@@ -55,7 +55,6 @@ import com.gdg.zealicon2k25.utils.Common.isValidEmail
 import com.gdg.zealicon2k25.utils.NetworkResult
 
 @Composable
-@Preview
 fun RegisterScreen(
     registerOnClick: () -> Unit = {},
     authViewModel: AuthViewModel
@@ -141,65 +140,9 @@ fun RegisterScreen(
                         }
                     },
                 )
-                Text(
-                    modifier = Modifier.padding(top = 24.dp, start = 20.dp),
-                    text = "Upload your ID Card",
-                    fontSize = 18.sp,
-                    color = HeadingTextColor,
-                    fontWeight = FontWeight.SemiBold,
-                    fontFamily = Outfit
-                )
-                Box(
-                    modifier = Modifier
-                        .padding(start = 20.dp, top = 5.dp, end = 20.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .height(161.dp)
-                        .background(color = TextFieldBackgroundColor)
-                        .border(
-                            width = 2.dp,
-                            color = PhotoBorderColor,
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                        .fillMaxWidth()
-                ) {
-                    Image(
-                        modifier = Modifier,
-                        painter = painterResource(R.drawable.take_photo_graphic),
-                        contentDescription = "graphics",
-                        contentScale = ContentScale.Crop
-                    )
-                }
-                Text(
-                    modifier = Modifier.padding(top = 24.dp, start = 20.dp),
-                    text = "Upload your Selfie",
-                    fontSize = 18.sp,
-                    color = HeadingTextColor,
-                    fontWeight = FontWeight.SemiBold,
-                    fontFamily = Outfit
-                )
-                Box(
-                    modifier = Modifier
-                        .padding(start = 20.dp, top = 5.dp, end = 20.dp)
-                        .clip(RoundedCornerShape(12.dp))
-                        .height(161.dp)
-                        .background(color = TextFieldBackgroundColor)
-                        .border(
-                            width = 2.dp,
-                            color = PhotoBorderColor,
-                            shape = RoundedCornerShape(12.dp)
-                        )
-                        .fillMaxWidth()
-                ) {
-                    Image(
-                        modifier = Modifier,
-                        painter = painterResource(R.drawable.take_photo_graphic),
-                        contentDescription = "graphics",
-                        contentScale = ContentScale.Crop
-                    )
-                }
-                Spacer(modifier = Modifier.height(22.dp))
+                Spacer(modifier = Modifier.height(30.dp))
                 PrimaryButton(
-                    text = "Register Now"
+                    text = "Send OTP"
                 ) {
                     if (email.isBlank()) {
                         Toast.makeText(
@@ -215,6 +158,8 @@ fun RegisterScreen(
                         ).show()
                     } else {
                         Log.d("message" , "email sent is : $email")
+                        authViewModel.setmail(email)
+                        authViewModel.setmail(email)
                         authViewModel.setmail(email)
                         authViewModel.getOtp(OtpRequest(email))
                     }
@@ -269,7 +214,14 @@ fun RegisterScreen(
                     is NetworkResult.Start<*> -> {}
                 }
             }
-            Spacer(modifier = Modifier.height(53.dp))
         }
     }
+}
+
+@Composable
+@Preview
+fun Preview(){
+    RegisterScreen(
+        authViewModel  = hiltViewModel()
+    )
 }

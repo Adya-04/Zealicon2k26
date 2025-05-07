@@ -1,5 +1,6 @@
 package com.gdg.zealicon2k25.domain.repository
 
+import android.util.JsonToken
 import android.util.Log
 import android.util.Log.e
 import android.widget.Toast
@@ -10,6 +11,7 @@ import com.gdg.zealicon2k25.data.models.LoginRequest
 import com.gdg.zealicon2k25.data.models.LoginResponse
 import com.gdg.zealicon2k25.data.models.OtpRequest
 import com.gdg.zealicon2k25.data.models.OtpResponse
+import com.gdg.zealicon2k25.data.models.SignCloudinaryResponse
 import com.gdg.zealicon2k25.data.models.VerifyOtpReq
 import com.gdg.zealicon2k25.data.models.VerifyOtpResponse
 import com.gdg.zealicon2k25.data.remote.AuthApi
@@ -32,6 +34,9 @@ class AuthRepository @Inject constructor(private val authApi: AuthApi) {
     private val _login = MutableStateFlow<NetworkResult<LoginResponse>>(NetworkResult.Start())
     val login: StateFlow<NetworkResult<LoginResponse>>
         get()=_login
+
+    private val _signCloudinaryFlow = MutableStateFlow<NetworkResult<SignCloudinaryResponse>>(NetworkResult.Start())
+    val signCloudinaryFlow: StateFlow<NetworkResult<SignCloudinaryResponse>> get() = _signCloudinaryFlow
 
     suspend fun getOtp(email: OtpRequest){
         _otpResponseLivedata.value = NetworkResult.Loading()
@@ -121,6 +126,39 @@ class AuthRepository @Inject constructor(private val authApi: AuthApi) {
         }catch (e: Exception){
             Log.d("message12",e.toString())
             _verifyOtpLivedata.value=(NetworkResult.Error("Unexpected error occurred"))
+        }
+    }
+
+    suspend fun signCloudinaryFlow(folder: String, initToken:String){
+        _signCloudinaryFlow.value = NetworkResult.Loading()
+        try{
+            val response = authApi.getCloudinarySignature(
+                folder = folder,
+                initToken = initToken
+            )
+            if (response.isSuccessful) {
+                Log.d("message123","try block success")
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    Log.d("message123","$responseBody")
+                    _signCloudinaryFlow.value=(NetworkResult.Success(responseBody))
+                } else {
+                    Log.d("message123",response.errorBody().toString())
+                    _signCloudinaryFlow.value=(NetworkResult.Error("Response body is null"))
+                }
+            } else if (response.errorBody() != null) {
+                val errObj = JSONObject(response.errorBody()!!.charStream().readText())
+                Log.d("message12", errObj.toString())
+                _signCloudinaryFlow.value=(NetworkResult.Error(errObj.getString("message")))
+            } else {
+                _signCloudinaryFlow.value=(NetworkResult.Error("Something went wrong"))
+            }
+        }catch (e: SocketTimeoutException){
+            Log.d("message1",e.toString())
+            _signCloudinaryFlow.value=(NetworkResult.Error("Please try again!"))
+        }catch (e: Exception){
+            Log.d("message12",e.toString())
+            _signCloudinaryFlow.value=(NetworkResult.Error("Unexpected error occurred"))
         }
     }
 }
