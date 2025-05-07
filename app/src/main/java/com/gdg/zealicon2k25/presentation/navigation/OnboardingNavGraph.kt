@@ -10,8 +10,10 @@ import com.gdg.zealicon2k25.presentation.ui.VerifyOTPScreen
 import com.gdg.zealicon2k25.presentation.ui.WelcomeScreen
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 
-fun NavGraphBuilder.onboardingNavGraph(navHostController: NavHostController ,
-                                       authViewModel: AuthViewModel) {
+fun NavGraphBuilder.onboardingNavGraph(
+    navHostController: NavHostController,
+    authViewModel: AuthViewModel
+) {
     navigation(
         route = NavRoutes.Onboarding.route,
         startDestination = Auth.WelcomeScreen.route

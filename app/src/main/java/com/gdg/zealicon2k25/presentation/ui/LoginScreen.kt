@@ -56,7 +56,6 @@ fun LoginScreen(
     var email by remember { mutableStateOf("") }
     val context = LocalContext.current
     val loginState by authViewModel.loginLiveData.collectAsState()
-    val initToken =authViewModel.initToken.collectAsState(initial = "")
     var isButtonEnabled by remember { mutableStateOf(true) }
 
     Box(
@@ -125,7 +124,7 @@ fun LoginScreen(
                         Toast.LENGTH_SHORT
                     ).show()
                 } else {
-                    Log.d("my_init_oye", initToken.value.toString())
+//                    Log.d("my_init_oye", initToken.value.toString())
                     authViewModel.setmail(email)
                     authViewModel.login(LoginRequest(email))
                 }

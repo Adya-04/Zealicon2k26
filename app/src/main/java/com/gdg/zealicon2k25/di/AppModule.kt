@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.emptyPreferences
 import androidx.datastore.preferences.preferencesDataStoreFile
 import com.gdg.zealicon2k25.data.remote.AuthApi
+import com.gdg.zealicon2k25.data.remote.EventsApi
 import com.gdg.zealicon2k25.data.remote.ImageUploadApi
 import com.gdg.zealicon2k25.pref.PrefDatastore
 import com.gdg.zealicon2k25.pref.PrefDatastoreImpl
@@ -74,4 +75,9 @@ class AppModule {
         return retrofitBuilder.build().create(ImageUploadApi::class.java)
     }
 
+    @Singleton
+    @Provides
+    fun providesEventsApi(retrofitBuilder: Builder): EventsApi {
+        return retrofitBuilder.build().create(EventsApi::class.java)
+    }
 }

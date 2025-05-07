@@ -13,8 +13,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.gdg.zealicon2k25.presentation.navigation.NavRoutes
 import com.gdg.zealicon2k25.presentation.navigation.RootNavGraph
-import com.gdg.zealicon2k25.presentation.ui.EventDetailScreen
-import com.gdg.zealicon2k25.presentation.ui.MenuScreen
 import com.gdg.zealicon2k25.presentation.ui.theme.Zealicon2K25Theme
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
