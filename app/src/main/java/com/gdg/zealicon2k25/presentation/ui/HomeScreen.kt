@@ -25,9 +25,11 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -50,6 +52,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdg.zealicon2k25.R
+import com.gdg.zealicon2k25.data.models.Event
 import com.gdg.zealicon2k25.presentation.ui.components.EventGridItem
 import com.gdg.zealicon2k25.presentation.ui.components.EventTabComponent
 import com.gdg.zealicon2k25.presentation.ui.components.ViewTicketButton
@@ -57,6 +60,7 @@ import com.gdg.zealicon2k25.presentation.ui.theme.BackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.ButtonBackgroundColor2
 import com.gdg.zealicon2k25.presentation.ui.theme.ButtonRippleColor
 import com.gdg.zealicon2k25.presentation.ui.theme.BuyButtonTextColor
+import com.gdg.zealicon2k25.presentation.ui.theme.ErrorTextColor
 import com.gdg.zealicon2k25.presentation.ui.theme.HeadingTextColor
 import com.gdg.zealicon2k25.presentation.ui.theme.MerchCardBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
@@ -64,6 +68,7 @@ import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBorderColor
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.EventsViewModel
+import com.gdg.zealicon2k25.utils.NetworkResult
 
 @Composable
 @Preview
@@ -71,17 +76,28 @@ fun HomeScreen(
     menuOnClick: () -> Unit = {},
     entryPass: () -> Unit = {},
     eventDetails: () -> Unit = {},
-    buyZealClick: () -> Unit = {}
+    buyZealClick: () -> Unit = {},
+    eventsViewModel: EventsViewModel ,
+    authViewModel: AuthViewModel
 ) {
     val eventTabs = EventTabType.entries
     var selected by remember { mutableStateOf(0) }
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp
     val fixedHeight = (screenHeight - 122).dp
-    val eventsViewModel: EventsViewModel=hiltViewModel()
-    val authViewModel: AuthViewModel=hiltViewModel()
     val accessToken by authViewModel.accessToken.collectAsState("")
     val refreshToken by authViewModel.refreshToken.collectAsState("")
+    val eventState by eventsViewModel.events.collectAsState()
+    Log.d("DEBUG", accessToken)
+    LaunchedEffect(accessToken) {
+        Log.d("DEBUG", "LaunchedEffect called")
+        if (accessToken.isNotEmpty()) {
+            Log.d("DEBUG", "Calling getEvents()")
+            Log.d("DEBUG", accessToken)
+            eventsViewModel.getEvents(accessToken, "CULTURAL")
+        }
+    }
+    val name = authViewModel.getName()
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -98,7 +114,7 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(
-                    text = "Hello Ayush",
+                    text = "Hey Zealite!",
                     fontSize = 28.sp,
                     color = HeadingTextColor,
                     fontWeight = FontWeight.Medium,
@@ -363,38 +379,102 @@ fun HomeScreen(
                         text = s.label,
                         onClick = {
                             selected = index
-                            Log.d("homeScreenEvents1",selected.toString())
-                            Log.d("homeScreenEvents2",s.toString())
-                            Log.d("homeScreenEvents2",accessToken.toString())
-                            Log.d("homeScreenEvents2",refreshToken.toString())
-                            eventsViewModel.getEvents(accessToken.toString(),s.toString())
+                            Log.d("homeScreenEvents1", selected.toString())
+                            Log.d("homeScreenEvents2", s.toString())
+                            Log.d("homeScreenEvents3", accessToken.toString())
+                            Log.d("homeScreenEvents4", refreshToken.toString())
+                            eventsViewModel.getEvents(accessToken.toString(), s.label.uppercase())
                         }
                     )
                 }
                 Spacer(modifier = Modifier.width(20.dp))
             }
             Spacer(modifier = Modifier.height(20.dp))
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-                horizontalArrangement = Arrangement.spacedBy(16.dp),
-                modifier = Modifier
-                    .padding(horizontal = 20.dp)
-                    .height(fixedHeight)
-            ) {
-                items(20) {
-                    EventGridItem(
-                        onClick = {
-                            eventDetails()
-                        }
-                    )
-                }
-                item {
-                    Spacer(modifier = Modifier.height(130.dp))
-                }
-            }
-        }
+            when (eventState) {
+                is NetworkResult.Error -> {
+                    Row(
+                        modifier = Modifier
+                            .padding(20.dp, 10.dp, 20.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start
 
+                    ) {
+                        Image(
+                            modifier = Modifier
+                                .padding(end = 4.dp)
+                                .size(12.dp),
+                            painter = painterResource(id = R.drawable.info),
+                            contentDescription = "trophy",
+                            alignment = Alignment.Center,
+                        )
+
+                        Text(
+                            text = eventState.message.toString(),
+                            fontSize = 14.sp,
+                            fontFamily = Outfit,
+                            fontWeight = FontWeight.Normal,
+                            color = ErrorTextColor
+                        )
+                    }
+                }
+
+                is NetworkResult.Loading -> {
+                    Row(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(20.dp, 10.dp, 20.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(32.dp),
+                            color = TicketCardBackgroundColor
+                        )
+                    }
+                }
+
+                is NetworkResult.Success -> {
+                    Log.d("Event","success state")
+                    val eventList = eventState.data?.events
+                    Log.d("Event",eventList.toString())
+
+                    val filteredEvents = eventList?.filter {
+                        it.type.equals(eventTabs[selected].label, ignoreCase = true)
+                    }
+                    Log.d("Event",filteredEvents.toString())
+                    LazyVerticalGrid(
+                        columns = GridCells.Fixed(2),
+                        verticalArrangement = Arrangement.spacedBy(16.dp),
+                        horizontalArrangement = Arrangement.spacedBy(16.dp),
+                        modifier = Modifier
+                            .padding(horizontal = 20.dp)
+                            .height(fixedHeight)
+                    ) {
+                        filteredEvents?.let {
+                            items(it.size) { index ->
+                                val event = filteredEvents[index]
+                                eventsViewModel.setEventList(filteredEvents)
+                                EventGridItem(
+                                    event = event,
+                                    onClick = {
+                                        eventsViewModel.setSelectedEvent(event)
+                                        eventDetails()
+                                    }
+                                )
+                            }
+                        }
+
+                        item {
+                            Spacer(modifier = Modifier.height(130.dp))
+                        }
+                    }
+                }
+
+                is NetworkResult.Start<*> -> {}
+            }
+
+        }
+//        EventsResponse(events=[Event(_id=681a2e0dc8c2ac9ddebde2d6, contact_info=codingclub@example.com, description=A 24-hour coding event to build innovative tech solutions., enrollment_end=2025-05-15T00:00:00.000Z, enrollment_start=2025-05-10T00:00:00.000Z, event_end=2025-05-21T00:00:00.000Z, event_start=2025-05-20T00:00:00.000Z, prize=50000, society=NCS, title=Hackathon 2025, type=TECHNICAL, venue=Auditorium Hall A), Event(_id=681a2e85c8c2ac9ddebde2dd, contact_info=codegolf@example.com, description=Write the shortest and smartest code to solve tough problems., enrollment_end=2025-06-25T00:00:00.000Z, enrollment_start=2025-06-20T00:00:00.000Z, event_end=2025-06-30T00:00:00.000Z, event_start=2025-06-30T00:00:00.000Z, prize=10000, society=NCS, title=Code Golf Tournament, type=TECHNICAL, venue=Lab 3, CS Block)], message=Events fetched successfully!, success=true)
         Box(
             modifier = Modifier
                 .fillMaxWidth()
@@ -418,6 +498,7 @@ fun HomeScreen(
         }
     }
 }
+
 enum class EventTabType(val label: String) {
     CULTURAL("Cultural"),
     TECHNICAL("Technical"),

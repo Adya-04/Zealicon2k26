@@ -9,6 +9,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.gdg.zealicon2k25.data.models.LoginRequest
 import com.gdg.zealicon2k25.data.models.LoginResponse
+import com.gdg.zealicon2k25.data.models.LoginVerifyOtpResponse
 import com.gdg.zealicon2k25.data.models.OtpRequest
 import com.gdg.zealicon2k25.data.models.OtpResponse
 import com.gdg.zealicon2k25.data.models.SignCloudinaryResponse
@@ -32,6 +33,10 @@ class AuthRepository @Inject constructor(private val authApi: AuthApi) {
     private val _verifyOtpLivedata = MutableStateFlow<NetworkResult<VerifyOtpResponse>>(NetworkResult.Start())
     val verifyOtpResponse: StateFlow<NetworkResult<VerifyOtpResponse>>
         get()=_verifyOtpLivedata
+
+    private val _loginVerifyOtpState = MutableStateFlow<NetworkResult<LoginVerifyOtpResponse>>(NetworkResult.Start())
+    val loginVerifyOtpState: StateFlow<NetworkResult<LoginVerifyOtpResponse>>
+        get()=_loginVerifyOtpState
 
     private val _login = MutableStateFlow<NetworkResult<LoginResponse>>(NetworkResult.Start())
     val login: StateFlow<NetworkResult<LoginResponse>>
@@ -171,6 +176,38 @@ class AuthRepository @Inject constructor(private val authApi: AuthApi) {
             _verifyOtpLivedata.value=(NetworkResult.Error("Unexpected error occurred"))
         }
     }
+
+    suspend fun loginVerifyOtp(otp: VerifyOtpReq){
+        _loginVerifyOtpState.value =(NetworkResult.Loading())
+        try {
+            Log.d("message1","try block called")
+            val response = authApi.loginOtpVerify(otp)
+            if (response.isSuccessful) {
+                Log.d("message123","try block success")
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    Log.d("message123","$responseBody")
+                    _loginVerifyOtpState.value=(NetworkResult.Success(responseBody))
+                } else {
+                    Log.d("message123",response.errorBody().toString())
+                    _loginVerifyOtpState.value=(NetworkResult.Error("Response body is null"))
+                }
+            } else if (response.errorBody() != null) {
+                val errObj = JSONObject(response.errorBody()!!.charStream().readText())
+                Log.d("message12", errObj.toString())
+                _loginVerifyOtpState.value=(NetworkResult.Error(errObj.getString("message")))
+            } else {
+                _loginVerifyOtpState.value=(NetworkResult.Error("Something went wrong"))
+            }
+        }catch (e: SocketTimeoutException){
+            Log.d("message1",e.toString())
+            _loginVerifyOtpState.value=(NetworkResult.Error("Please try again!"))
+        }catch (e: Exception){
+            Log.d("message12",e.toString())
+            _loginVerifyOtpState.value=(NetworkResult.Error("Unexpected error occurred"))
+        }
+    }
+
 
     suspend fun signCloudinaryPhoto(initToken:String){
         _signCloudinaryFlowPhoto.value = NetworkResult.Loading()

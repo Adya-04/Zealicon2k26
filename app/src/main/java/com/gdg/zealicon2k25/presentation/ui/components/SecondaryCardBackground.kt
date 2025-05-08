@@ -17,6 +17,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -56,15 +57,18 @@ fun SecondaryCardBackground(
             Image(
                 painter = painterResource(image),
                 contentDescription = "info",
-                modifier = Modifier.padding(end = 4.dp)
+                modifier = Modifier.padding(end = 4.dp, start = 2.dp)
             )
             Text(
                 text = details,
                 fontFamily = Outfit,
-                fontSize = 16.sp,
+                fontSize = 12.sp,
                 fontWeight = FontWeight.SemiBold,
                 color = cardTextColor,
-                textAlign = TextAlign.Center
+                textAlign = TextAlign.Center,
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                modifier = Modifier.padding(end = 2.dp)
             )
         }
 

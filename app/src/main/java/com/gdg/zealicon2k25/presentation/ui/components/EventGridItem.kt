@@ -1,5 +1,6 @@
 package com.gdg.zealicon2k25.presentation.ui.components
 
+import android.R.attr.onClick
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -29,10 +30,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gdg.zealicon2k25.R
+import com.gdg.zealicon2k25.data.models.Event
 import com.gdg.zealicon2k25.presentation.ui.theme.ButtonBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.ButtonBorderColor
 import com.gdg.zealicon2k25.presentation.ui.theme.ButtonRippleColor
@@ -44,6 +47,7 @@ import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 @Composable
 @Preview
 fun EventGridItem(
+    event: Event,
     onClick: () -> Unit = {}
 ) {
     Box(
@@ -89,25 +93,28 @@ fun EventGridItem(
                 horizontalAlignment = Alignment.Start
             ) {
                 Text(
-                    text = "Day-1",
+                    text ="Day 1" ,
                     fontSize = 12.sp,
                     fontFamily = Outfit,
                     fontWeight = FontWeight.Normal,
                     color =  HeadingTextColor
                 )
                 Text(
-                    text = "Line Up",
-                    fontSize = 18.sp,
+                    text = event.title,
+                    fontSize = 16.sp,
                     fontFamily = Outfit,
                     fontWeight = FontWeight.SemiBold,
-                    color =  HeadingTextColor
-                )
+                    color =  HeadingTextColor,
+                    maxLines = 1,
+                    overflow = TextOverflow.Ellipsis,
+                    )
             }
-            Image(
-                modifier = Modifier.rotate(180f),
-                painter = painterResource(R.drawable.back),
-                contentDescription = "go_arrow"
-            )
+//            Image(
+//                modifier = Modifier.rotate(180f),
+//                painter = painterResource(R.drawable.back),
+//                contentDescription = "go_arrow"
+//            )
         }
     }
 }
+// EventsResponse(events=[Event(_id=681a2e0dc8c2ac9ddebde2d6, contact_info=codingclub@example.com, description=A 24-hour coding event to build innovative tech solutions., enrollment_end=2025-05-15T00:00:00.000Z, enrollment_start=2025-05-10T00:00:00.000Z, event_end=2025-05-21T00:00:00.000Z, event_start=2025-05-20T00:00:00.000Z, prize=50000, society=NCS, title=Hackathon 2025, type=TECHNICAL, venue=Auditorium Hall A), Event(_id=681a2e85c8c2ac9ddebde2dd, contact_info=codegolf@example.com, description=Write the shortest and smartest code to solve tough problems., enrollment_end=2025-06-25T00:00:00.000Z, enrollment_start=2025-06-20T00:00:00.000Z, event_end=2025-06-30T00:00:00.000Z, event_start=2025-06-30T00:00:00.000Z, prize=10000, society=NCS, title=Code Golf Tournament, type=TECHNICAL, venue=Lab 3, CS Block)], message=Events fetched successfully!, success=true)

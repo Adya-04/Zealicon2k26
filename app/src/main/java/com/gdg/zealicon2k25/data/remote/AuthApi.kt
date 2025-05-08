@@ -2,6 +2,7 @@ package com.gdg.zealicon2k25.data.remote
 
 import com.gdg.zealicon2k25.data.models.LoginRequest
 import com.gdg.zealicon2k25.data.models.LoginResponse
+import com.gdg.zealicon2k25.data.models.LoginVerifyOtpResponse
 import com.gdg.zealicon2k25.data.models.OtpRequest
 import com.gdg.zealicon2k25.data.models.OtpResponse
 import com.gdg.zealicon2k25.data.models.SignCloudinaryResponse
@@ -26,6 +27,9 @@ interface AuthApi {
 
     @POST("api/auth/login")
     suspend fun login(@Body loginRequest: LoginRequest): Response<LoginResponse>
+
+    @POST("api/auth/verify-otp")
+    suspend fun loginOtpVerify(@Body verifyOtpReq: VerifyOtpReq): Response<LoginVerifyOtpResponse>
 
     @GET("api/auth/sign-cloudinary-token/idCard")
     suspend fun getCloudinarySignatureIdCard(

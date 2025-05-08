@@ -41,6 +41,7 @@ fun PrimaryTextField(
     onValueChange: (String) -> Unit,
     placeholder: String = "",
     enabled: Boolean = true,
+    keyBoardType: KeyboardType
 ) {
     Box(
         modifier = Modifier
@@ -65,7 +66,7 @@ fun PrimaryTextField(
                 .align(Alignment.Center)
                 .padding(horizontal = 12.dp, vertical = 12.dp)
                 .fillMaxWidth(),
-            keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text),
+            keyboardOptions = KeyboardOptions(keyboardType = keyBoardType),
             decorationBox = { innerTextField ->
                 if (value.isEmpty()) {
                     Text(
