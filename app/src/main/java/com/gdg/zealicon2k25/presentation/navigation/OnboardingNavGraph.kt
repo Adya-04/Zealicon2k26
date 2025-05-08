@@ -50,7 +50,13 @@ fun NavGraphBuilder.onboardingNavGraph(navHostController: NavHostController ,
                 verifyToPhoto = {
                     navHostController.navigate(Auth.PhotoUpload.route)
                 },
-
+                verifyToHome = {
+                    navHostController.navigate(NavRoutes.Main.route){
+                        popUpTo(NavRoutes.Onboarding.route){
+                            inclusive = true
+                        }
+                    }
+                },
                 authViewModel = authViewModel
             )
         }

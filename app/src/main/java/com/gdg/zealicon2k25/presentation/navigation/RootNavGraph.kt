@@ -6,18 +6,20 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.ImageUploadViewModel
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.EventsViewModel
 
 @Composable
 fun RootNavGraph(navController: NavHostController , startDestination: String) {
     val authViewModel : AuthViewModel= hiltViewModel()
     val imageViewModel : ImageUploadViewModel = hiltViewModel()
+    val eventsViewModel : EventsViewModel = hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = startDestination ,
     ) {
         onboardingNavGraph(navController,authViewModel, imageViewModel )
         paymentNavGraph(navController)
-        mainNavGraph(navController)
+        mainNavGraph(navController  , eventsViewModel , authViewModel)
     }
 }
 

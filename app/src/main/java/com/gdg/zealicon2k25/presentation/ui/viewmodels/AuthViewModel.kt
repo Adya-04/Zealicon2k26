@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gdg.zealicon2k25.data.models.LoginRequest
 import com.gdg.zealicon2k25.data.models.LoginResponse
+import com.gdg.zealicon2k25.data.models.LoginVerifyOtpResponse
 import com.gdg.zealicon2k25.data.models.OtpRequest
 import com.gdg.zealicon2k25.data.models.OtpResponse
 import com.gdg.zealicon2k25.data.models.SignCloudinaryResponse
@@ -17,7 +18,9 @@ import com.gdg.zealicon2k25.pref.PrefDatastore
 import com.gdg.zealicon2k25.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -52,6 +55,9 @@ class AuthViewModel @Inject constructor(
 
     val resendState: StateFlow<NetworkResult<OtpResponse>>
         get() = authRepository.resendState
+
+    val loginVerifyState: StateFlow<NetworkResult<LoginVerifyOtpResponse>>
+        get() = authRepository.loginVerifyOtpState
 
     val initToken: Flow<String> = prefs.getToken()
     val accessToken: Flow<String> = prefs.getAccessToken()
@@ -143,6 +149,12 @@ class AuthViewModel @Inject constructor(
         viewModelScope.launch {
             Log.d("message1", "View model called")
             authRepository.verifyOtp(verifyOtpReq)
+        }
+    }
+
+    fun loginVerifyOtp(verifyOtpReq: VerifyOtpReq){
+        viewModelScope.launch {
+            authRepository.loginVerifyOtp(verifyOtpReq)
         }
     }
 

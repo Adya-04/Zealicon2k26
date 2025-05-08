@@ -72,6 +72,7 @@ fun VerifyOTPScreen(
     val context = LocalContext.current
     var isResendEnabled by remember { mutableStateOf(true) }
     var isVerifyEnabled by remember { mutableStateOf(false) }
+    val loginVerifyOtpState by authViewModel.loginVerifyState.collectAsState()
 
     Box(
         modifier = Modifier.fillMaxSize().background(BackgroundColor)
@@ -152,9 +153,13 @@ fun VerifyOTPScreen(
                 text = "Verify",
                 enabled = isVerifyEnabled
             ) {
-                Log.d("otp chalga","${otpValue.toLong()+1}")
-                Log.d("otp chalga",userMail.toString())
-                authViewModel.verifyOtp(VerifyOtpReq(userMail.toString(), otpValue.toLong()))
+                Log.d("otp chalga", "${otpValue.toLong() + 1}")
+                Log.d("otp chalga", userMail.toString())
+                if (authViewModel.isLogin) {
+                    authViewModel.loginVerifyOtp(VerifyOtpReq(userMail.toString(), otpValue.toLong()))
+                }else{
+                    authViewModel.verifyOtp(VerifyOtpReq(userMail.toString() , otpValue.toLong()))
+                }
             }
             when (verifyOtpState) {
                 is NetworkResult.Error -> {
@@ -198,16 +203,62 @@ fun VerifyOTPScreen(
                 }
 
                 is NetworkResult.Success -> {
-                    if(authViewModel.isLogin){
-                        verifyToHome()
-                    }else{
-                        verifyToPhoto()
-                    }
-                    verifyOtpState.data?.let {
-                        authViewModel.saveToken(it.init_token)
-                    }
+                    verifyToPhoto()
+                    Log.d("OtpVerify",verifyOtpState.data.toString())
                 }
             }
+
+            when (loginVerifyOtpState) {
+                is NetworkResult.Error -> {
+//                    isVerifyEnabled = false
+
+                    Row(
+                        modifier = Modifier.padding(20.dp, 10.dp, 20.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Start
+
+                    ) {
+                        Image(
+                            modifier = Modifier.padding(end = 4.dp).size(12.dp),
+                            painter = painterResource(id = R.drawable.info),
+                            contentDescription = "trophy",
+                            alignment = Alignment.Center,
+                        )
+
+                        Text(
+                            text = verifyOtpState.message.toString(),
+                            fontSize = 14.sp,
+                            fontFamily = Outfit,
+                            fontWeight = FontWeight.Normal,
+                            color = ErrorTextColor
+                        )
+                    }
+                }
+
+                is NetworkResult.Start -> {}
+                is NetworkResult.Loading -> {
+                    isVerifyEnabled = false
+                    Row(
+                        modifier = Modifier.fillMaxWidth().padding(20.dp, 10.dp, 20.dp),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center
+                    ) {
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(32.dp), color = TicketCardBackgroundColor
+                        )
+                    }
+                }
+
+                is NetworkResult.Success -> {
+                    verifyToHome()
+                    authViewModel.saveAccessToken(loginVerifyOtpState.data?.access_token.toString())
+                    authViewModel.saveRefreshToken(loginVerifyOtpState.data?.refresh_token.toString())
+                    Log.d("OtpVerify",loginVerifyOtpState.data.toString())
+                    Log.d("OtpVerify",loginVerifyOtpState.message.toString())
+                    Toast.makeText(context , "${loginVerifyOtpState.data?.message}", Toast.LENGTH_SHORT).show()
+                }
+            }
+
             Spacer(modifier = Modifier.height(52.dp))
         }
     }

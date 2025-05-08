@@ -26,15 +26,16 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            val authViewModel: AuthViewModel= hiltViewModel()
-            val initToken = authViewModel.initToken.collectAsState(initial = "")
+//            val authViewModel: AuthViewModel= hiltViewModel()
+//            val initToken = authViewModel.initToken.collectAsState(initial = "")
             Zealicon2K25Theme {
-                val startDestination = if (initToken.value.isNotEmpty()) {
-                    NavRoutes.Main.route
-                } else {
-                    NavRoutes.Onboarding.route
-                }
-                RootNavGraph(navController = rememberNavController() , startDestination=startDestination )
+//                val startDestination = if (initToken.value.isNotEmpty()) {
+//                    NavRoutes.Main.route
+//                } else {
+//                    NavRoutes.Onboarding.route
+//                }
+//                RootNavGraph(navController = rememberNavController() , startDestination=startDestination )
+                RootNavGraph(navController = rememberNavController() , startDestination= NavRoutes.Onboarding.route )
             }
         }
     }

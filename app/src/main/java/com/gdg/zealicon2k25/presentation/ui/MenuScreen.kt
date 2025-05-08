@@ -43,7 +43,8 @@ import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 fun MenuScreen(
     contactUsClick: () -> Unit = {},
     aboutUsClick: () -> Unit = {},
-    backOnClick: () -> Unit = {}
+    backOnClick: () -> Unit = {},
+    teamClick:() -> Unit={}
 ) {
     val context = LocalContext.current
 
@@ -113,16 +114,14 @@ fun MenuScreen(
                     vector = R.drawable.info,
                     padding = 36.dp,
                     onClick = {
-
+                        teamClick()
                     }
                 )
             }
             Row(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(
-                        start = 20.dp, end = 20.dp, bottom = 10.dp
-                    ),
+                    .padding(start = 20.dp, end = 20.dp, bottom = 10.dp),
                 horizontalArrangement = Arrangement.spacedBy(12.dp)
             ) {
                 MenuCard(

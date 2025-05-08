@@ -1,7 +1,12 @@
 package com.gdg.zealicon2k25.presentation.ui
 
+import android.os.Build
+import android.util.Log
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -12,48 +17,71 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gdg.zealicon2k25.R
+import com.gdg.zealicon2k25.data.models.Event
 import com.gdg.zealicon2k25.presentation.ui.components.CardBackground
 import com.gdg.zealicon2k25.presentation.ui.components.PrizeCard
 import com.gdg.zealicon2k25.presentation.ui.components.RegisterButton
 import com.gdg.zealicon2k25.presentation.ui.components.SecondaryCardBackground
 import com.gdg.zealicon2k25.presentation.ui.theme.BackgroundColor
+import com.gdg.zealicon2k25.presentation.ui.theme.ButtonRippleColor
 import com.gdg.zealicon2k25.presentation.ui.theme.HeadingTextColor
 import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.EventsViewModel
+import com.gdg.zealicon2k25.utils.Common.formatEventDate
+import com.gdg.zealicon2k25.utils.Common.formatEventTime
 
+@RequiresApi(Build.VERSION_CODES.O)
 @Composable
 @Preview
 fun EventDetailScreen(
-//    eventName:String,
-    backOnClick: () -> Unit = {}
+    backOnClick: () -> Unit = {},
+    eventsViewModel: EventsViewModel
 ) {
     Box(
         modifier = Modifier
             .fillMaxSize()
             .background(BackgroundColor)
-            .padding(top = 16.dp)
     ) {
-        Column(modifier = Modifier.verticalScroll(rememberScrollState())) {
+        val eventDetails=eventsViewModel.selectedEvent
+        Log.d("selected",eventDetails.toString())
+        Column(modifier = Modifier.verticalScroll(rememberScrollState())
+            .padding(top=16.dp)) {
             Row(modifier = Modifier.fillMaxWidth()) {
                 Image(
                     painter = painterResource(R.drawable.back_arrow),
-                    modifier = Modifier.padding(top = 20.dp, start = 20.dp, bottom = 20.dp),
+                    modifier = Modifier.padding(top = 20.dp, start = 20.dp, bottom = 20.dp)
+                        .clickable(
+                            enabled = true,
+                            indication = rememberRipple(
+                                bounded = true,
+                                color = ButtonRippleColor
+                            ),
+                            interactionSource = remember { MutableInteractionSource() },
+                            role = Role.Button
+                        ) {
+                            backOnClick
+                        },
                     contentDescription = "arrow",
                     contentScale = ContentScale.Crop
                 )
                 Text(
-                    text = "LineUp",
+                    text = eventDetails?.title.toString(),
                     fontSize = 28.sp,
                     fontFamily = Outfit,
                     color = HeadingTextColor,
@@ -75,12 +103,12 @@ fun EventDetailScreen(
                 CardBackground(
                     modifier = Modifier.weight(1f).fillMaxWidth(),
                     image = R.drawable.calendar,
-                    detail = "15 May"
+                    detail = formatEventDate(eventDetails?.event_start)
                 )
                 SecondaryCardBackground(
                     modifier = Modifier.weight(1f).fillMaxWidth(),
                     image = R.drawable.clock,
-                    details = "13 : 00"
+                    details = formatEventTime(eventDetails?.event_start)
                 )
             }
             Row(
@@ -89,50 +117,34 @@ fun EventDetailScreen(
             ) {
                 SecondaryCardBackground(
                     modifier = Modifier.weight(1f).fillMaxWidth(),
-                    details = "AB1, 1st Floor",
+                    details = eventDetails?.venue.toString(),
                     image = R.drawable.location_marker
                 )
                 CardBackground(
                     modifier = Modifier.weight(1f).fillMaxWidth(),
                     image = R.drawable.phone,
-                    detail = "999999999"
+                    detail = eventDetails?.contact_info?.trim().toString()
                 )
             }
 
             PrizeCard(
-                prize = "₹15,000",
+                prize = "₹ " + eventDetails?.prize.toString(),
                 modifier = Modifier.fillMaxWidth().padding(top = 16.dp, end = 20.dp, start = 20.dp)
             )
 
             Text(
-                text = "About LineUp",
+                text = "About " + eventDetails?.title.toString(),
                 fontSize = 24.sp,
                 fontFamily = Outfit,
                 color = HeadingTextColor,
                 fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(top = 24.dp, start = 20.dp)
-            )
+                modifier = Modifier.padding(top = 24.dp, start = 20.dp),
+                maxLines = 1,
+                overflow = TextOverflow.Ellipsis,
+                )
 
             Text(
-                text = "Lorem ipsum dolor sit amet consectetur. Mollis pulvinar fermentum turpis feugiat sed orci. Cursus sed lorem diam a ut. Nibh egestas praesent facilisis et viverra phasellus donec at nascetur. Elit urna dui sit nibh. Sagittis habitant bibendum suscipit elementum. Dignissim condimentum dolor massa eget massa porttitor vel consectetur. Sit aliquam sed bibendum massa quam eget sodales.",
-                fontSize = 16.sp,
-                fontFamily = Outfit,
-                color = HeadingTextColor,
-                fontWeight = FontWeight.Normal,
-                textAlign = TextAlign.Justify,
-                modifier = Modifier.padding(top = 24.dp, start = 20.dp, end = 20.dp)
-            )
-            Text(
-                text = "Instructions",
-                fontSize = 24.sp,
-                fontFamily = Outfit,
-                color = HeadingTextColor,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(top = 24.dp, start = 20.dp)
-            )
-
-            Text(
-                text = "Lorem ipsum dolor sit amet consectetur. Mollis pulvinar fermentum turpis feugiat sed orci. Cursus sed lorem diam a ut. Nibh egestas praesent facilisis et viverra phasellus donec at nascetur. Elit urna dui sit nibh. Sagittis habitant bibendum suscipit elementum. Dignissim condimentum dolor massa eget massa porttitor vel consectetur. Sit aliquam sed bibendum massa quam eget sodales. Lorem ipsum dolor sit amet consectetur. Mollis pulvinar fermentum turpis feugiat sed orci. Cursus sed lorem diam a ut. Nibh egestas praesent facilisis et viverra phasellus donec at nascetur. Elit urna dui sit nibh. Sagittis habitant bibendum suscipit elementum. Dignissim condimentum dolor massa eget massa porttitor vel consectetur. Sit aliquam sed bibendum massa quam eget sodales.",
+                text = eventDetails?.description.toString(),
                 fontSize = 16.sp,
                 fontFamily = Outfit,
                 color = HeadingTextColor,
@@ -151,6 +163,7 @@ fun EventDetailScreen(
                 ) {}
             }
 
+//  EventsResponse(events=[Event(_id=681a2e0dc8c2ac9ddebde2d6, contact_info=codingclub@example.com, description=A 24-hour coding event to build innovative tech solutions., enrollment_end=2025-05-15T00:00:00.000Z, enrollment_start=2025-05-10T00:00:00.000Z, event_end=2025-05-21T00:00:00.000Z, event_start=2025-05-20T00:00:00.000Z, prize=50000, society=NCS, title=Hackathon 2025, type=TECHNICAL, venue=Auditorium Hall A), Event(_id=681a2e85c8c2ac9ddebde2dd, contact_info=codegolf@example.com, description=Write the shortest and smartest code to solve tough problems., enrollment_end=2025-06-25T00:00:00.000Z, enrollment_start=2025-06-20T00:00:00.000Z, event_end=2025-06-30T00:00:00.000Z, event_start=2025-06-30T00:00:00.000Z, prize=10000, society=NCS, title=Code Golf Tournament, type=TECHNICAL, venue=Lab 3, CS Block)], message=Events fetched successfully!, success=true)
 
         }
     }
