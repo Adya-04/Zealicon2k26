@@ -9,7 +9,6 @@ object Constants {
     const val ACCESS_TOKEN ="AccessToken"
     const val ZEAL_ID = "ZealID"
     const val CLOUDINARY_API_KEY= "322241248527716"
-    const val TEMP_ACCESS_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODFjZDcxZWM0YzVhYzA4OGUzMDVhZWUiLCJyb2xlIjowLCJpYXQiOjE3NDY3MzI2OTEsImV4cCI6MTc0NjczNjI5MX0.U62LD2U4lDQto-R0xcbjanZLRp-9PKilwE0sxDjYjnc"
 }
 
 //init token

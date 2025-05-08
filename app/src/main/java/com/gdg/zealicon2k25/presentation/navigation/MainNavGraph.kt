@@ -25,7 +25,7 @@ fun NavGraphBuilder.mainNavGraph(
     navHostController: NavHostController,
     eventsViewModel: EventsViewModel,
     authViewModel: AuthViewModel,
-    paymentViewModel: PaymentViewModel
+    paymentViewModel: PaymentViewModel,
     merchViewModel: MerchViewModel
 ) {
     navigation(
