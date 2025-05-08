@@ -50,7 +50,7 @@ import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 import com.gdg.zealicon2k25.presentation.ui.theme.PhotoBorderColor
 import com.gdg.zealicon2k25.presentation.ui.theme.TextFieldBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBackgroundColor
-import com.gdg.zealicon2k25.presentation.viewmodels.AuthViewModel
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 import com.gdg.zealicon2k25.utils.Common.isValidEmail
 import com.gdg.zealicon2k25.utils.NetworkResult
 
@@ -64,6 +64,8 @@ fun RegisterScreen(
     var phone by remember { mutableStateOf("") }
     val context = LocalContext.current
     val otpState by authViewModel.otpResponseLiveData.collectAsState()
+    var error by remember { mutableStateOf("") }
+    var isEnabled by remember { mutableStateOf(true) }
 
     Box(
         modifier = Modifier
@@ -142,7 +144,8 @@ fun RegisterScreen(
                 )
                 Spacer(modifier = Modifier.height(30.dp))
                 PrimaryButton(
-                    text = "Send OTP"
+                    text = "Send OTP",
+                    enabled = isEnabled
                 ) {
                     if (email.isBlank()) {
                         Toast.makeText(
@@ -178,6 +181,7 @@ fun RegisterScreen(
                 }
                 when (otpState) {
                     is NetworkResult.Error -> {
+                        isEnabled=true
                         Row(
                             modifier = Modifier
                                 .padding(20.dp, 10.dp, 20.dp),
@@ -196,7 +200,7 @@ fun RegisterScreen(
 
                             Text(
                                 text = otpState.message.toString(),
-                                fontSize = 12.sp,
+                                fontSize = 14.sp,
                                 fontFamily = Outfit,
                                 fontWeight = FontWeight.Normal,
                                 color = ErrorTextColor
@@ -205,6 +209,7 @@ fun RegisterScreen(
                     }
 
                     is NetworkResult.Loading -> {
+                        isEnabled=false
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()

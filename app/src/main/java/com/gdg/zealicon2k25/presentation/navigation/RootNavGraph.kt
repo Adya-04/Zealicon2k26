@@ -5,15 +5,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.ImageUploadViewModel
-import com.gdg.zealicon2k25.presentation.viewmodels.AuthViewModel
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 
 @Composable
-fun RootNavGraph(navController: NavHostController ) {
+fun RootNavGraph(navController: NavHostController , startDestination: String) {
     val authViewModel : AuthViewModel= hiltViewModel()
     val imageViewModel : ImageUploadViewModel = hiltViewModel()
     NavHost(
         navController = navController,
-        startDestination = NavRoutes.Onboarding.route ,
+        startDestination = startDestination ,
     ) {
         onboardingNavGraph(navController,authViewModel, imageViewModel )
         paymentNavGraph(navController)

@@ -66,13 +66,10 @@ import com.gdg.zealicon2k25.presentation.ui.theme.PhotoBorderColor
 import com.gdg.zealicon2k25.presentation.ui.theme.TextFieldBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.ImageUploadViewModel
-import com.gdg.zealicon2k25.presentation.viewmodels.AuthViewModel
-import com.gdg.zealicon2k25.utils.Common.isValidEmail
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 import com.gdg.zealicon2k25.utils.NetworkResult
 import com.gdg.zealicon2k25.utils.UploadState
-import kotlinx.coroutines.flow.collect
-import org.jetbrains.annotations.Async
-import kotlin.math.sign
+
 
 @Composable
 fun PhotoUploadScreen(

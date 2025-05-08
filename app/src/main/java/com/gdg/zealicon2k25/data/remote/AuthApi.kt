@@ -13,6 +13,7 @@ import retrofit2.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
+import retrofit2.http.PATCH
 import retrofit2.http.POST
 import retrofit2.http.Path
 
@@ -42,4 +43,6 @@ interface AuthApi {
         @Body signupRequest: SignupRequest
     ):Response<SignupResponse>
 
+    @PATCH("api/auth/resend-otp")
+    suspend fun resendOtp(@Body otpRequest: OtpRequest): Response<OtpResponse>
 }

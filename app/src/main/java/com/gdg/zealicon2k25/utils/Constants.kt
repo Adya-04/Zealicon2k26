@@ -9,3 +9,6 @@ object Constants {
     const val ACCESS_TOKEN ="AccessToken"
     const val CLOUDINARY_API_KEY= "322241248527716"
 }
+
+//access token
+//eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2ODFiYzMxNzU3YWI2ZmJkZjUwOWJkZTgiLCJyb2xlIjowLCJpYXQiOjE3NDY2NTAwMjksImV4cCI6MTc0NjY1MzYyOX0.lW-5MrRvakZtOBdc-hYITLOIuKZGB_NKd_XhQISKP78

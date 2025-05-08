@@ -1,6 +1,6 @@
 package com.gdg.zealicon2k25.presentation.ui
 
-import android.graphics.Paint.Align
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.border
@@ -25,9 +25,10 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple.rememberRipple
-import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -43,19 +44,17 @@ import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdg.zealicon2k25.R
 import com.gdg.zealicon2k25.presentation.ui.components.EventGridItem
 import com.gdg.zealicon2k25.presentation.ui.components.EventTabComponent
 import com.gdg.zealicon2k25.presentation.ui.components.ViewTicketButton
 import com.gdg.zealicon2k25.presentation.ui.theme.BackgroundColor
-import com.gdg.zealicon2k25.presentation.ui.theme.ButtonBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.ButtonBackgroundColor2
-import com.gdg.zealicon2k25.presentation.ui.theme.ButtonBorderColor
 import com.gdg.zealicon2k25.presentation.ui.theme.ButtonRippleColor
 import com.gdg.zealicon2k25.presentation.ui.theme.BuyButtonTextColor
 import com.gdg.zealicon2k25.presentation.ui.theme.HeadingTextColor
@@ -63,6 +62,8 @@ import com.gdg.zealicon2k25.presentation.ui.theme.MerchCardBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBorderColor
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.EventsViewModel
 
 @Composable
 @Preview
@@ -72,11 +73,15 @@ fun HomeScreen(
     eventDetails: () -> Unit = {},
     buyZealClick: () -> Unit = {}
 ) {
-    val eventTabs = listOf("Cultural", "Technical", "Registered")
+    val eventTabs = EventTabType.entries
     var selected by remember { mutableStateOf(0) }
     val configuration = LocalConfiguration.current
     val screenHeight = configuration.screenHeightDp
     val fixedHeight = (screenHeight - 122).dp
+    val eventsViewModel: EventsViewModel=hiltViewModel()
+    val authViewModel: AuthViewModel=hiltViewModel()
+    val accessToken by authViewModel.accessToken.collectAsState("")
+    val refreshToken by authViewModel.refreshToken.collectAsState("")
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -319,7 +324,7 @@ fun HomeScreen(
                 horizontalArrangement = Arrangement.Center,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Divider(
+                HorizontalDivider(
                     color = HeadingTextColor,
                     thickness = 1.dp,
                     modifier = Modifier
@@ -334,7 +339,7 @@ fun HomeScreen(
                     fontWeight = FontWeight.SemiBold,
                     color = HeadingTextColor
                 )
-                Divider(
+                HorizontalDivider(
                     color = HeadingTextColor,
                     thickness = 1.dp,
                     modifier = Modifier
@@ -355,9 +360,14 @@ fun HomeScreen(
                 eventTabs.forEachIndexed { index, s ->
                     EventTabComponent(
                         selected = index == selected,
-                        text = s,
+                        text = s.label,
                         onClick = {
                             selected = index
+                            Log.d("homeScreenEvents1",selected.toString())
+                            Log.d("homeScreenEvents2",s.toString())
+                            Log.d("homeScreenEvents2",accessToken.toString())
+                            Log.d("homeScreenEvents2",refreshToken.toString())
+                            eventsViewModel.getEvents(accessToken.toString(),s.toString())
                         }
                     )
                 }
@@ -407,4 +417,9 @@ fun HomeScreen(
             )
         }
     }
+}
+enum class EventTabType(val label: String) {
+    CULTURAL("Cultural"),
+    TECHNICAL("Technical"),
+    REGISTERED("Registered")
 }

@@ -2,18 +2,21 @@ package com.gdg.zealicon2k25.presentation.ui
 
 import android.content.Intent
 import android.net.Uri
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple.rememberRipple
@@ -22,6 +25,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
@@ -29,6 +34,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gdg.zealicon2k25.R
+import com.gdg.zealicon2k25.presentation.ui.components.EventGridItem
+import com.gdg.zealicon2k25.presentation.ui.components.TeamMemberCard
 import com.gdg.zealicon2k25.presentation.ui.theme.BackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.ButtonRippleColor
 import com.gdg.zealicon2k25.presentation.ui.theme.HeadingTextColor
@@ -41,11 +48,10 @@ fun ContactUsScreen(
     backOnClick: () -> Unit = {}
 ){
     val context = LocalContext.current
-
+    val height=LocalConfiguration.current.screenHeightDp
     Box(
         modifier = Modifier.fillMaxSize()
             .background(BackgroundColor)
-            .padding(top = 16.dp)
     ){
         Column(modifier = Modifier.verticalScroll(rememberScrollState())){
             Row(modifier = Modifier.fillMaxWidth()){
@@ -92,6 +98,19 @@ fun ContactUsScreen(
                 contentDescription = "star",
                 modifier = Modifier.padding(top = 20.dp , end = 19.dp , start = 19.dp)
             )
+            Spacer(modifier = Modifier.height(20.dp))
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(2),
+                verticalArrangement = Arrangement.spacedBy(12.dp),
+                horizontalArrangement = Arrangement.spacedBy(12.dp),
+                modifier = Modifier
+                    .padding(horizontal = 20.dp)
+                    .height(height.dp)
+            ) {
+                items(4) {
+                    TeamMemberCard()
+                }
+            }
         }
     }
 }
