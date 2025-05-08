@@ -42,6 +42,7 @@ import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ColorFilter
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
@@ -77,6 +78,7 @@ fun HomeScreen(
     entryPass: () -> Unit = {},
     eventDetails: () -> Unit = {},
     buyZealClick: () -> Unit = {},
+    merchListing:() -> Unit ={},
     eventsViewModel: EventsViewModel ,
     authViewModel: AuthViewModel
 ) {
@@ -274,35 +276,43 @@ fun HomeScreen(
                         fontFamily = Outfit
                     )
                     Row(
-                        modifier = Modifier.padding(12.dp, 32.dp, 12.dp),
+                        modifier = Modifier.padding(12.dp, 32.dp, 12.dp)
+                            .clickable(
+                                enabled = true,
+                                indication = rememberRipple(
+                                    bounded = true,
+                                    color = ButtonRippleColor
+                                ),
+                                interactionSource = remember { MutableInteractionSource() },
+                                role = Role.Button
+                            ) {
+                                merchListing()
+                            },
                         verticalAlignment = Alignment.CenterVertically,
                         horizontalArrangement = Arrangement.SpaceBetween
                     ) {
-                        Box(
+                        Image(
                             modifier = Modifier
-                                .padding(end = 6.dp)
+                                .fillMaxWidth()
+                                .padding(end=6.dp)
                                 .height(175.dp)
                                 .weight(1f)
-                                .aspectRatio(1f)
-                                .clickable(
-
-                                ) {
-
-                                }
-                                .background(color = Color.White)
+                                .aspectRatio(1f),
+                            painter = painterResource(R.drawable.merch_1),
+                            contentDescription = "Event Image",
+                            contentScale = ContentScale.Fit
                         )
-                        Box(
+
+                        Image(
                             modifier = Modifier
+                                .fillMaxWidth()
                                 .padding(start = 6.dp)
                                 .height(175.dp)
-                                .weight(1f)
                                 .aspectRatio(1f)
-                                .clickable(
-
-                                ) {
-
-                                }
-                                .background(color = Color.White)
+                                .weight(1f),
+                            painter = painterResource(R.drawable.merch_2),
+                            contentDescription = "Event Image",
+                            contentScale = ContentScale.Fit
                         )
                     }
                     Row(
@@ -313,7 +323,9 @@ fun HomeScreen(
                         horizontalArrangement = Arrangement.Center
                     ) {
                         Text(
-                            modifier = Modifier,
+                            modifier = Modifier.clickable {
+                                merchListing()
+                            },
                             text = "View All",
                             fontSize = 16.sp,
                             color = HeadingTextColor,
