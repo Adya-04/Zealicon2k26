@@ -89,6 +89,7 @@ fun HomeScreen(
     val fixedHeight = (screenHeight - 122).dp
     val accessToken by authViewModel.accessToken.collectAsState("")
     val refreshToken by authViewModel.refreshToken.collectAsState("")
+    val zealId by paymentViewModel.zealId.collectAsState("")
     val eventState by eventsViewModel.events.collectAsState()
     Log.d("DEBUG", accessToken)
     LaunchedEffect(accessToken) {
@@ -138,71 +139,11 @@ fun HomeScreen(
                     contentDescription = "menu"
                 )
             }
-            Box(
-                modifier = Modifier
-                    .padding(start = 20.dp, end = 20.dp, top = 18.dp)
-                    .height(168.dp)
-                    .clickable(
-                        enabled = true,
-                        indication = rememberRipple(
-                            bounded = true,
-                            color = ButtonRippleColor
-                        ),
-                        interactionSource = remember { MutableInteractionSource() },
-                        role = Role.Button
-                    ) {
-                        buyZealClick()
-                    }
-                    .clip(RoundedCornerShape(12.dp))
-                    .background(color = TicketCardBackgroundColor)
-                    .border(
-                        width = 2.dp,
-                        color = TicketCardBorderColor,
-                        shape = RoundedCornerShape(12.dp)
-                    )
-                    .fillMaxWidth()
-            ) {
-                Image(
-                    modifier = Modifier
-                        .align(Alignment.TopEnd)
-                        .height(127.dp),
-                    painter = painterResource(R.drawable.ticket_card_graphic),
-                    contentDescription = "graphic"
-                )
-                Column(
-                    modifier = Modifier
-                        .padding(top = 8.dp, start = 8.dp, end = 10.dp)
-                        .align(Alignment.TopStart),
-                    horizontalAlignment = Alignment.Start
-                ) {
-                    Text(
-                        modifier = Modifier.width(248.dp),
-                        text = "Hey,\nyou don’t have a Zeal ID !",
-                        fontSize = 22.sp,
-                        color = BackgroundColor,
-                        fontWeight = FontWeight.Medium,
-                        fontFamily = Outfit
-                    )
-                    Text(
-                        modifier = Modifier.width(248.dp),
-                        text = "You cannot enter the Zealicon-25 without a valid Zeal ID.",
-                        fontSize = 12.sp,
-                        color = BackgroundColor,
-                        fontWeight = FontWeight.Medium,
-                        fontFamily = Outfit
-                    )
-                }
+            if(zealId == "Default_init"){
                 Box(
                     modifier = Modifier
-                        .align(Alignment.BottomEnd)
-                        .padding(end = 12.dp, bottom = 12.dp)
-                        .height(40.dp)
-                        .width(117.dp)
-                        .shadow(
-                            elevation = 5.dp,
-                            shape = RoundedCornerShape(16.dp),
-                            clip = false
-                        )
+                        .padding(start = 20.dp, end = 20.dp, top = 18.dp)
+                        .height(168.dp)
                         .clickable(
                             enabled = true,
                             indication = rememberRipple(
@@ -211,34 +152,96 @@ fun HomeScreen(
                             ),
                             interactionSource = remember { MutableInteractionSource() },
                             role = Role.Button
-
                         ) {
                             buyZealClick()
                         }
-                        .clip(RoundedCornerShape(6.dp))
-                        .background(color = BackgroundColor)
-                        .fillMaxWidth(),
-                    contentAlignment = Alignment.Center
+                        .clip(RoundedCornerShape(12.dp))
+                        .background(color = TicketCardBackgroundColor)
+                        .border(
+                            width = 2.dp,
+                            color = TicketCardBorderColor,
+                            shape = RoundedCornerShape(12.dp)
+                        )
+                        .fillMaxWidth()
                 ) {
-                    Row(
-                        verticalAlignment = Alignment.CenterVertically
+                    Image(
+                        modifier = Modifier
+                            .align(Alignment.TopEnd)
+                            .height(127.dp),
+                        painter = painterResource(R.drawable.ticket_card_graphic),
+                        contentDescription = "graphic"
+                    )
+                    Column(
+                        modifier = Modifier
+                            .padding(top = 8.dp, start = 8.dp, end = 10.dp)
+                            .align(Alignment.TopStart),
+                        horizontalAlignment = Alignment.Start
                     ) {
                         Text(
-                            text = "Buy Now",
-                            fontSize = 16.sp,
-                            color = BuyButtonTextColor,
-                            fontWeight = FontWeight.SemiBold,
+                            modifier = Modifier.width(248.dp),
+                            text = "Hey,\nyou don’t have a Zeal ID !",
+                            fontSize = 22.sp,
+                            color = BackgroundColor,
+                            fontWeight = FontWeight.Medium,
                             fontFamily = Outfit
                         )
-                        Image(
-                            modifier = Modifier
-                                .padding(start = 3.dp)
-                                .size(16.dp),
-                            alignment = Alignment.BottomEnd,
-                            painter = painterResource(R.drawable.arrow_right_small),
-                            contentDescription = "arrow",
-                            colorFilter = ColorFilter.tint(BuyButtonTextColor)
+                        Text(
+                            modifier = Modifier.width(248.dp),
+                            text = "You cannot enter the Zealicon-25 without a valid Zeal ID.",
+                            fontSize = 12.sp,
+                            color = BackgroundColor,
+                            fontWeight = FontWeight.Medium,
+                            fontFamily = Outfit
                         )
+                    }
+                    Box(
+                        modifier = Modifier
+                            .align(Alignment.BottomEnd)
+                            .padding(end = 12.dp, bottom = 12.dp)
+                            .height(40.dp)
+                            .width(117.dp)
+                            .shadow(
+                                elevation = 5.dp,
+                                shape = RoundedCornerShape(16.dp),
+                                clip = false
+                            )
+                            .clickable(
+                                enabled = true,
+                                indication = rememberRipple(
+                                    bounded = true,
+                                    color = ButtonRippleColor
+                                ),
+                                interactionSource = remember { MutableInteractionSource() },
+                                role = Role.Button
+
+                            ) {
+                                buyZealClick()
+                            }
+                            .clip(RoundedCornerShape(6.dp))
+                            .background(color = BackgroundColor)
+                            .fillMaxWidth(),
+                        contentAlignment = Alignment.Center
+                    ) {
+                        Row(
+                            verticalAlignment = Alignment.CenterVertically
+                        ) {
+                            Text(
+                                text = "Buy Now",
+                                fontSize = 16.sp,
+                                color = BuyButtonTextColor,
+                                fontWeight = FontWeight.SemiBold,
+                                fontFamily = Outfit
+                            )
+                            Image(
+                                modifier = Modifier
+                                    .padding(start = 3.dp)
+                                    .size(16.dp),
+                                alignment = Alignment.BottomEnd,
+                                painter = painterResource(R.drawable.arrow_right_small),
+                                contentDescription = "arrow",
+                                colorFilter = ColorFilter.tint(BuyButtonTextColor)
+                            )
+                        }
                     }
                 }
             }
@@ -476,27 +479,28 @@ fun HomeScreen(
             }
 
         }
-//        EventsResponse(events=[Event(_id=681a2e0dc8c2ac9ddebde2d6, contact_info=codingclub@example.com, description=A 24-hour coding event to build innovative tech solutions., enrollment_end=2025-05-15T00:00:00.000Z, enrollment_start=2025-05-10T00:00:00.000Z, event_end=2025-05-21T00:00:00.000Z, event_start=2025-05-20T00:00:00.000Z, prize=50000, society=NCS, title=Hackathon 2025, type=TECHNICAL, venue=Auditorium Hall A), Event(_id=681a2e85c8c2ac9ddebde2dd, contact_info=codegolf@example.com, description=Write the shortest and smartest code to solve tough problems., enrollment_end=2025-06-25T00:00:00.000Z, enrollment_start=2025-06-20T00:00:00.000Z, event_end=2025-06-30T00:00:00.000Z, event_start=2025-06-30T00:00:00.000Z, prize=10000, society=NCS, title=Code Golf Tournament, type=TECHNICAL, venue=Lab 3, CS Block)], message=Events fetched successfully!, success=true)
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(112.dp)
-                .align(Alignment.BottomCenter)
-                .background(
-                    Brush.verticalGradient(
-                        listOf(
-                            Color.Transparent,
-                            ButtonBackgroundColor2
+        if(zealId != "Default_init"){
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(112.dp)
+                    .align(Alignment.BottomCenter)
+                    .background(
+                        Brush.verticalGradient(
+                            listOf(
+                                Color.Transparent,
+                                ButtonBackgroundColor2
+                            )
                         )
-                    )
-                ),
-            contentAlignment = Alignment.Center,
-        ) {
-            ViewTicketButton(
-                onClick = {
-                    entryPass()
-                }
-            )
+                    ),
+                contentAlignment = Alignment.Center,
+            ) {
+                ViewTicketButton(
+                    onClick = {
+                        entryPass()
+                    }
+                )
+            }
         }
     }
 }

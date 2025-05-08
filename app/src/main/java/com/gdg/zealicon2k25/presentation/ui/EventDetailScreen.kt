@@ -75,7 +75,7 @@ fun EventDetailScreen(
                             interactionSource = remember { MutableInteractionSource() },
                             role = Role.Button
                         ) {
-                            backOnClick
+                            backOnClick()
                         },
                     contentDescription = "arrow",
                     contentScale = ContentScale.Crop
@@ -162,9 +162,6 @@ fun EventDetailScreen(
                     modifier = Modifier
                 ) {}
             }
-
-//  EventsResponse(events=[Event(_id=681a2e0dc8c2ac9ddebde2d6, contact_info=codingclub@example.com, description=A 24-hour coding event to build innovative tech solutions., enrollment_end=2025-05-15T00:00:00.000Z, enrollment_start=2025-05-10T00:00:00.000Z, event_end=2025-05-21T00:00:00.000Z, event_start=2025-05-20T00:00:00.000Z, prize=50000, society=NCS, title=Hackathon 2025, type=TECHNICAL, venue=Auditorium Hall A), Event(_id=681a2e85c8c2ac9ddebde2dd, contact_info=codegolf@example.com, description=Write the shortest and smartest code to solve tough problems., enrollment_end=2025-06-25T00:00:00.000Z, enrollment_start=2025-06-20T00:00:00.000Z, event_end=2025-06-30T00:00:00.000Z, event_start=2025-06-30T00:00:00.000Z, prize=10000, society=NCS, title=Code Golf Tournament, type=TECHNICAL, venue=Lab 3, CS Block)], message=Events fetched successfully!, success=true)
-
         }
     }
 }

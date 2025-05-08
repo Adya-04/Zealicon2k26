@@ -12,6 +12,7 @@ import com.gdg.zealicon2k25.data.models.LoginResponse
 import com.gdg.zealicon2k25.data.models.LoginVerifyOtpResponse
 import com.gdg.zealicon2k25.data.models.OtpRequest
 import com.gdg.zealicon2k25.data.models.OtpResponse
+import com.gdg.zealicon2k25.data.models.RefreshTokenResponse
 import com.gdg.zealicon2k25.data.models.SignCloudinaryResponse
 import com.gdg.zealicon2k25.data.models.SignupRequest
 import com.gdg.zealicon2k25.data.models.SignupResponse
@@ -54,6 +55,39 @@ class AuthRepository @Inject constructor(private val authApi: AuthApi) {
 
     private val _signupFlow = MutableStateFlow<NetworkResult<SignupResponse>>(NetworkResult.Start())
     val signupFlow: StateFlow<NetworkResult<SignupResponse>> get() = _signupFlow
+
+    private val _refreshTokenState = MutableStateFlow<NetworkResult<RefreshTokenResponse>>(NetworkResult.Start())
+    val refreshTokenState: StateFlow<NetworkResult<RefreshTokenResponse>> get() = _refreshTokenState
+
+
+    suspend fun refreshToken(refreshToken: String){
+        _refreshTokenState.value = NetworkResult.Loading()
+        try{
+            val response = authApi.refreshToken(refreshToken)
+            Log.d("message123",response.body().toString())
+            Log.d("message123*",response.toString())
+            if (response.isSuccessful) {
+                val responseBody = response.body()
+                if (responseBody != null) {
+                    _refreshTokenState.value = NetworkResult.Success(responseBody)
+                } else {
+                    _refreshTokenState.value = NetworkResult.Error("Response body is null")
+                }
+            }else if(response.errorBody() != null){
+                Log.d("message12", response.errorBody().toString())
+                val errObj = JSONObject(response.errorBody()!!.charStream().readText())
+                _refreshTokenState.value = NetworkResult.Error(errObj.getString("message"))
+            }else{
+                _refreshTokenState.value = NetworkResult.Error("Something went wrong")
+            }
+        }catch (e: SocketTimeoutException){
+            Log.d("message1",e.toString())
+            _refreshTokenState.value =NetworkResult.Error("Please try again!")
+        }catch (e: Exception){
+            Log.d("message12",e.toString())
+            _refreshTokenState.value =NetworkResult.Error("Unexpected error occurred")
+        }
+    }
 
     suspend fun signup(signupRequest: SignupRequest, initToken: String){
         _signupFlow.value = NetworkResult.Loading()
@@ -303,5 +337,9 @@ class AuthRepository @Inject constructor(private val authApi: AuthApi) {
             Log.d("message12",e.toString())
             _resendState.value =NetworkResult.Error("Unexpected error occurred")
         }
+    }
+
+    fun removeRefreshState(){
+        _refreshTokenState.value = NetworkResult.Start()
     }
 }

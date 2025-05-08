@@ -17,12 +17,16 @@ fun NavGraphBuilder.paymentNavGraph(navHostController: NavHostController, activi
             PurchaseZealScreen(
                 continueWithoutZealOnClick = {
                     navHostController.navigate(NavRoutes.Main.route){
-                        popUpTo(NavRoutes.Payment.route)
+                        popUpTo(NavRoutes.Payment.route){
+                            inclusive = true
+                        }
                     }
                 },
                 homeOnClick = {
                     navHostController.navigate(NavRoutes.Main.route){
-                        popUpTo(NavRoutes.Payment.route)
+                        popUpTo(NavRoutes.Payment.route){
+                            inclusive = true
+                        }
                     }
                 },
                 activity = activity,

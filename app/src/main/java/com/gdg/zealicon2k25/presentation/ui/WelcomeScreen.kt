@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -21,9 +22,10 @@ import com.gdg.zealicon2k25.presentation.ui.components.SecodaryButton
 import com.gdg.zealicon2k25.presentation.ui.theme.BackgroundColor
 
 @Composable
+@Preview
 fun WelcomeScreen(
-    loginOnClick: () -> Unit,
-    registerOnClick: () -> Unit
+    loginOnClick: () -> Unit = {},
+    registerOnClick: () -> Unit = {}
 ) {
     Box(
         modifier = Modifier
@@ -40,6 +42,7 @@ fun WelcomeScreen(
             painter = painterResource(R.drawable.welcome_graphic_2),
             contentDescription = "graphics"
         )
+
         Box(
             modifier = Modifier
                 .fillMaxSize()
@@ -72,5 +75,13 @@ fun WelcomeScreen(
                 }
             }
         }
+        Image(
+            modifier = Modifier
+                .padding(bottom = 150.dp)
+                .size(250.dp)
+                .align(Alignment.Center),
+            painter = painterResource(R.drawable.zealicon_logo_final_07),
+            contentDescription = "zealicon_logo"
+        )
     }
 }
