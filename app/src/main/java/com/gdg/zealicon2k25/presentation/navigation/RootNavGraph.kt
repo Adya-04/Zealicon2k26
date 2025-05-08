@@ -13,6 +13,7 @@ import com.gdg.zealicon2k25.presentation.ui.viewmodels.ImageUploadViewModel
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.PaymentViewModel
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.EventsViewModel
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.MerchViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
@@ -20,6 +21,7 @@ fun RootNavGraph(navController: NavHostController, activity: Activity, paymentVi
     val authViewModel : AuthViewModel= hiltViewModel()
     val imageViewModel : ImageUploadViewModel = hiltViewModel()
     val eventsViewModel : EventsViewModel = hiltViewModel()
+    val merchViewModel : MerchViewModel = hiltViewModel()
     NavHost(
         navController = navController,
         startDestination = NavRoutes.SplashScreen.route,
@@ -45,7 +47,7 @@ fun RootNavGraph(navController: NavHostController, activity: Activity, paymentVi
         }
         onboardingNavGraph(navController,authViewModel, imageViewModel )
         paymentNavGraph(navController, activity, paymentViewModel)
-        mainNavGraph(navController  , eventsViewModel , authViewModel, paymentViewModel)
+        mainNavGraph(navController  , eventsViewModel , authViewModel , merchViewModel, paymentViewModel)
     }
 }
 

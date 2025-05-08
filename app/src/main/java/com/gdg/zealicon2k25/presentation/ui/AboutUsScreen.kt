@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -17,6 +19,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
@@ -71,13 +74,15 @@ fun AboutUsScreen(
                 )
             }
             Text(
-                text = "Lorem ipsum dolor sit amet consectetur. Mollis pulvinar fermentum turpis feugiat sed orci. Cursus sed lorem diam a ut. Nibh egestas praesent facilisis et viverra phasellus donec at nascetur. Elit urna dui sit nibh. Sagittis habitant bibendum suscipit elementum. Dignissim condimentum dolor massa eget massa porttitor vel consectetur. Sit aliquam sed bibendum massa quam eget sodales.",
+                text = stringResource(R.string.zealicon_about),
                 fontSize = 16.sp,
                 fontFamily = Outfit,
                 color = HeadingTextColor,
                 fontWeight = FontWeight.Normal,
                 textAlign = TextAlign.Justify,
-                modifier = Modifier.padding(top = 33.dp, start = 20.dp, end = 20.dp)
+                modifier = Modifier.padding(top = 33.dp, start = 20.dp, end = 20.dp, bottom = 33.dp).verticalScroll(
+                    rememberScrollState()
+                )
             )
         }
     }

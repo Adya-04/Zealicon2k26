@@ -13,9 +13,12 @@ import com.gdg.zealicon2k25.presentation.ui.EventDetailScreen
 import com.gdg.zealicon2k25.presentation.ui.HomeScreen
 import com.gdg.zealicon2k25.presentation.ui.MenuScreen
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.PaymentViewModel
+import com.gdg.zealicon2k25.presentation.ui.MerchListScreen
+import com.gdg.zealicon2k25.presentation.ui.MerchScreen
 import com.gdg.zealicon2k25.presentation.ui.TeamScreen
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.EventsViewModel
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.MerchViewModel
 
 @RequiresApi(Build.VERSION_CODES.O)
 fun NavGraphBuilder.mainNavGraph(
@@ -23,6 +26,7 @@ fun NavGraphBuilder.mainNavGraph(
     eventsViewModel: EventsViewModel,
     authViewModel: AuthViewModel,
     paymentViewModel: PaymentViewModel
+    merchViewModel: MerchViewModel
 ) {
     navigation(
         startDestination = Main.Home.routes,
@@ -43,9 +47,11 @@ fun NavGraphBuilder.mainNavGraph(
                     navHostController.navigate(route = NavRoutes.Payment.route)
                 },
                 paymentViewModel = paymentViewModel,
+                merchListing = {
+                    navHostController.navigate(route = Main.Merch.routes)
+                },
                 eventsViewModel = eventsViewModel,
                 authViewModel = authViewModel
-
             )
         }
 
@@ -95,6 +101,22 @@ fun NavGraphBuilder.mainNavGraph(
             TeamScreen()
         }
 
+        composable(route = Main.Merch.routes) {
+            MerchListScreen(
+                authViewModel=authViewModel ,
+                merchViewModel = merchViewModel,
+                merchDetails = {
+                    navHostController.navigate(route=Main.MerchDetail.routes)
+                }
+            )
+        }
+
+        composable(route=Main.MerchDetail.routes) {
+            MerchScreen(
+                merchViewModel = merchViewModel
+            )
+        }
+
         composable(route = Main.EventDetails.routes) {
             EventDetailScreen(
                 backOnClick = {
@@ -114,4 +136,6 @@ sealed class Main(val routes: String) {
     data object AboutUs : Main("about_us")
     data object EventDetails : Main("event_details")
     data object Team : Main("team")
+    data object Merch : Main("merch")
+    data object MerchDetail : Main("merch_detail")
 }
