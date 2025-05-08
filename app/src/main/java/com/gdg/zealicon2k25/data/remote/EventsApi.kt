@@ -9,9 +9,12 @@ import retrofit2.http.POST
 import retrofit2.http.Query
 
 interface EventsApi {
-    @GET("events/get")
-    suspend fun getEvents(@Header ("Authorization") accessToken:String , @Query("event_type") eventType:String): Response<EventsResponse>
+    @GET("/api/events/get")
+    suspend fun getEvents(
+        @Header("Authorization") accessToken: String,
+        @Query("event_type") eventType: String
+    ): Response<EventsResponse>
 
-    @POST("events/enroll")
+    @POST("/api/events/enroll")
     suspend fun enrollEvent(): Response<EnrollEventResponse>
 }

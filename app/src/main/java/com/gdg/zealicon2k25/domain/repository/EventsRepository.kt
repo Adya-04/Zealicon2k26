@@ -15,69 +15,71 @@ import javax.inject.Inject
 class EventsRepository @Inject constructor(private val eventsApi: EventsApi) {
     private val _events = MutableStateFlow<NetworkResult<EventsResponse>>(NetworkResult.Start())
     val events: StateFlow<NetworkResult<EventsResponse>>
-        get()=_events
+        get() = _events
 
-    private val _enrollEventState =MutableStateFlow<NetworkResult<EnrollEventResponse>>(NetworkResult.Start())
+    private val _enrollEventState =
+        MutableStateFlow<NetworkResult<EnrollEventResponse>>(NetworkResult.Start())
     val enrollEventState: StateFlow<NetworkResult<EnrollEventResponse>>
         get() = _enrollEventState
 
 
-    suspend fun getEvents(accessToken:String , eventType:String){
+    suspend fun getEvents(accessToken: String, eventType: String) {
         _events.value = NetworkResult.Loading()
         try {
-            Log.d("message1","try block called")
-            val response = eventsApi.getEvents(accessToken,eventType)
-            Log.d("message1","response success")
+            Log.d("message1", "try block called")
+            val response = eventsApi.getEvents(accessToken, eventType)
+            Log.d("message1", "response success")
+            Log.d("message1", response.body().toString())
             if (response.isSuccessful) {
                 val responseBody = response.body()
-                Log.d("message1",responseBody.toString())
+                Log.d("message1", responseBody.toString())
                 if (responseBody != null) {
-                    Log.d("message1",response.toString())
-                    _events.value= NetworkResult.Success(responseBody)
+                    Log.d("message1", response.toString())
+                    _events.value = NetworkResult.Success(responseBody)
                 } else {
                     _events.value = NetworkResult.Error("Response body is null")
                 }
             } else if (response.errorBody() != null) {
                 val errObj = JSONObject(response.errorBody()!!.charStream().readText())
                 Log.d("message1", errObj.toString())
-                _events.value =NetworkResult.Error(errObj.getString("message"))
+                _events.value = NetworkResult.Error(errObj.getString("message"))
             } else {
                 Log.d("message12", "Something went wrong")
-                _events.value =NetworkResult.Error("Something went wrong")
+                _events.value = NetworkResult.Error("Something went wrong")
             }
-        }catch (e: SocketTimeoutException){
-            Log.d("message1",e.toString())
-            _events.value =NetworkResult.Error("Please try again!")
-        }catch (e: Exception){
-            Log.d("message12",e.toString())
-            _events.value =NetworkResult.Error("Unexpected error occurred")
+        } catch (e: SocketTimeoutException) {
+            Log.d("message1", e.toString())
+            _events.value = NetworkResult.Error("Please try again!")
+        } catch (e: Exception) {
+            Log.d("message12", e.toString())
+            _events.value = NetworkResult.Error("Unexpected error occurred")
         }
     }
 
-    suspend fun enrollEvent(){
+    suspend fun enrollEvent() {
         _enrollEventState.value = NetworkResult.Loading()
         try {
-            Log.d("message1","try block called")
+            Log.d("message1", "try block called")
             val response = eventsApi.enrollEvent()
             if (response.isSuccessful) {
                 val responseBody = response.body()
                 if (responseBody != null) {
-                    _enrollEventState.value=NetworkResult.Success(responseBody)
+                    _enrollEventState.value = NetworkResult.Success(responseBody)
                 } else {
                     _enrollEventState.value = NetworkResult.Error("Response body is null")
                 }
             } else if (response.errorBody() != null) {
                 val errObj = JSONObject(response.errorBody()!!.charStream().readText())
-                _enrollEventState.value =NetworkResult.Error(errObj.getString("message"))
+                _enrollEventState.value = NetworkResult.Error(errObj.getString("message"))
             } else {
-                _enrollEventState.value =NetworkResult.Error("Something went wrong")
+                _enrollEventState.value = NetworkResult.Error("Something went wrong")
             }
-        }catch (e: SocketTimeoutException){
-            Log.d("message1",e.toString())
-            _enrollEventState.value =NetworkResult.Error("Please try again!")
-        }catch (e: Exception){
-            Log.d("message12",e.toString())
-            _enrollEventState.value =NetworkResult.Error("Unexpected error occurred")
+        } catch (e: SocketTimeoutException) {
+            Log.d("message1", e.toString())
+            _enrollEventState.value = NetworkResult.Error("Please try again!")
+        } catch (e: Exception) {
+            Log.d("message12", e.toString())
+            _enrollEventState.value = NetworkResult.Error("Unexpected error occurred")
         }
     }
 

@@ -28,6 +28,7 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -61,6 +62,7 @@ import com.gdg.zealicon2k25.presentation.ui.theme.MerchCardBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBorderColor
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.EventsViewModel
 
 @Composable
@@ -77,7 +79,9 @@ fun HomeScreen(
     val screenHeight = configuration.screenHeightDp
     val fixedHeight = (screenHeight - 122).dp
     val eventsViewModel: EventsViewModel=hiltViewModel()
-
+    val authViewModel: AuthViewModel=hiltViewModel()
+    val accessToken by authViewModel.accessToken.collectAsState("")
+    val refreshToken by authViewModel.refreshToken.collectAsState("")
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -361,7 +365,9 @@ fun HomeScreen(
                             selected = index
                             Log.d("homeScreenEvents1",selected.toString())
                             Log.d("homeScreenEvents2",s.toString())
-                            eventsViewModel.getEvents(" ",s.toString())
+                            Log.d("homeScreenEvents2",accessToken.toString())
+                            Log.d("homeScreenEvents2",refreshToken.toString())
+                            eventsViewModel.getEvents(accessToken.toString(),s.toString())
                         }
                     )
                 }

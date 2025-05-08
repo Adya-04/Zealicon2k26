@@ -30,7 +30,4 @@ fun SplashScreen(){
                 .align(Alignment.Center)
         )
     }
-    LaunchedEffect(key1 = true) {
-        delay(2000)
-    }
 }

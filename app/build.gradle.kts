@@ -87,4 +87,14 @@ dependencies {
 
     //Cloudinary
     implementation (libs.cloudinary.android)
+
+    //Accompanist - Permissions
+    implementation (libs.accompanist.permissions)
+
+    //Coil
+    implementation(libs.coil.compose)
+
+    //Splash
+    implementation(libs.androidx.core.splashscreen)
+
 }
