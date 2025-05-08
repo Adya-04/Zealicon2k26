@@ -1,5 +1,7 @@
 package com.gdg.zealicon2k25.presentation.navigation
 
+import android.os.Build
+import androidx.annotation.RequiresApi
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
@@ -11,13 +13,22 @@ import com.gdg.zealicon2k25.presentation.ui.EventDetailScreen
 import com.gdg.zealicon2k25.presentation.ui.HomeScreen
 import com.gdg.zealicon2k25.presentation.ui.MenuScreen
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.PaymentViewModel
+import com.gdg.zealicon2k25.presentation.ui.TeamScreen
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.EventsViewModel
 
-fun NavGraphBuilder.mainNavGraph(navHostController: NavHostController, paymentViewModel: PaymentViewModel){
+@RequiresApi(Build.VERSION_CODES.O)
+fun NavGraphBuilder.mainNavGraph(
+    navHostController: NavHostController,
+    eventsViewModel: EventsViewModel,
+    authViewModel: AuthViewModel,
+    paymentViewModel: PaymentViewModel
+) {
     navigation(
         startDestination = Main.Home.routes,
         route = NavRoutes.Main.route
-    ){
-        composable(route = Main.Home.routes){
+    ) {
+        composable(route = Main.Home.routes) {
             HomeScreen(
                 menuOnClick = {
                     navHostController.navigate(route = Main.Menu.routes)
@@ -31,11 +42,14 @@ fun NavGraphBuilder.mainNavGraph(navHostController: NavHostController, paymentVi
                 buyZealClick = {
                     navHostController.navigate(route = NavRoutes.Payment.route)
                 },
-                paymentViewModel = paymentViewModel
+                paymentViewModel = paymentViewModel,
+                eventsViewModel = eventsViewModel,
+                authViewModel = authViewModel
+
             )
         }
 
-        composable(route = Main.Menu.routes){
+        composable(route = Main.Menu.routes) {
             MenuScreen(
                 aboutUsClick = {
                     navHostController.navigate(route = Main.AboutUs.routes)
@@ -45,11 +59,14 @@ fun NavGraphBuilder.mainNavGraph(navHostController: NavHostController, paymentVi
                 },
                 backOnClick = {
                     navHostController.popBackStack()
+                },
+                teamClick = {
+                    navHostController.navigate(route = Main.Team.routes)
                 }
             )
         }
 
-        composable(route = Main.EntryPass.routes){
+        composable(route = Main.EntryPass.routes) {
             EntryPass(
                 backOnClick = {
                     navHostController.popBackStack()
@@ -58,7 +75,7 @@ fun NavGraphBuilder.mainNavGraph(navHostController: NavHostController, paymentVi
             )
         }
 
-        composable(route = Main.Contact.routes){
+        composable(route = Main.Contact.routes) {
             ContactUsScreen(
                 backOnClick = {
                     navHostController.popBackStack()
@@ -66,7 +83,7 @@ fun NavGraphBuilder.mainNavGraph(navHostController: NavHostController, paymentVi
             )
         }
 
-        composable(route = Main.AboutUs.routes){
+        composable(route = Main.AboutUs.routes) {
             AboutUsScreen(
                 backOnClick = {
                     navHostController.popBackStack()
@@ -74,11 +91,16 @@ fun NavGraphBuilder.mainNavGraph(navHostController: NavHostController, paymentVi
             )
         }
 
-        composable(route = Main.EventDetails.routes){
+        composable(route = Main.Team.routes) {
+            TeamScreen()
+        }
+
+        composable(route = Main.EventDetails.routes) {
             EventDetailScreen(
                 backOnClick = {
                     navHostController.popBackStack()
-                }
+                },
+                eventsViewModel = eventsViewModel
             )
         }
     }
@@ -91,4 +113,5 @@ sealed class Main(val routes: String) {
     data object Contact : Main("contact")
     data object AboutUs : Main("about_us")
     data object EventDetails : Main("event_details")
+    data object Team : Main("team")
 }

@@ -10,7 +10,7 @@ import com.gdg.zealicon2k25.presentation.ui.RegisterScreen
 import com.gdg.zealicon2k25.presentation.ui.VerifyOTPScreen
 import com.gdg.zealicon2k25.presentation.ui.WelcomeScreen
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.ImageUploadViewModel
-import com.gdg.zealicon2k25.presentation.viewmodels.AuthViewModel
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 
 fun NavGraphBuilder.onboardingNavGraph(navHostController: NavHostController ,
                                        authViewModel: AuthViewModel,
@@ -71,7 +71,7 @@ fun NavGraphBuilder.onboardingNavGraph(navHostController: NavHostController ,
                             inclusive = true
                         }
                     }
-                }
+                },
             )
         }
 

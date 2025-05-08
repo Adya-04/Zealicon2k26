@@ -2,6 +2,7 @@ package com.gdg.zealicon2k25.presentation.ui.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -18,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
@@ -35,12 +37,29 @@ import com.gdg.zealicon2k25.presentation.ui.theme.cardBackground
 fun SecondaryMenuCard(
 
 ) {
+
+    val context = LocalContext.current
+
     Box(
         modifier = Modifier
             .fillMaxWidth()
             .background(color= cardBackground , shape = RoundedCornerShape(18.dp))
             .padding(top = 12.dp, start = 12.dp)
             .clip(RoundedCornerShape(18.dp))
+            .clickable {
+                val uri = android.net.Uri.parse("https://www.instagram.com/zealicon_2k25/")
+                val intent = android.content.Intent(android.content.Intent.ACTION_VIEW, uri)
+                intent.setPackage("com.instagram.android")
+
+                // Fallback if Instagram app is not installed
+                if (intent.resolveActivity(context.packageManager) != null) {
+                    context.startActivity(intent)
+                } else {
+                    // Open in browser
+                    val browserIntent = android.content.Intent(android.content.Intent.ACTION_VIEW, uri)
+                    context.startActivity(browserIntent)
+                }
+            }
     ) {
         Column() {
             Text(

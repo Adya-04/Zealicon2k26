@@ -11,11 +11,13 @@ import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.rememberNavController
 import com.gdg.zealicon2k25.data.models.PaymentVerificationRequest
+import com.gdg.zealicon2k25.presentation.navigation.NavRoutes
 import com.gdg.zealicon2k25.presentation.navigation.RootNavGraph
 import com.gdg.zealicon2k25.presentation.ui.EntryPass
 import com.gdg.zealicon2k25.presentation.ui.EventDetailScreen
@@ -32,6 +34,7 @@ import com.razorpay.Checkout
 import com.razorpay.PaymentData
 import com.razorpay.PaymentResultListener
 import com.razorpay.PaymentResultWithDataListener
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -40,8 +43,16 @@ class MainActivity : ComponentActivity(), PaymentResultWithDataListener {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
+//            val authViewModel: AuthViewModel= hiltViewModel()
+//            val initToken = authViewModel.initToken.collectAsState(initial = "")
             Zealicon2K25Theme {
                RootNavGraph(rememberNavController(), activity = this, paymentViewModel = viewModel)
+//                val startDestination = if (initToken.value.isNotEmpty()) {
+//                    NavRoutes.Main.route
+//                } else {
+//                    NavRoutes.Onboarding.route
+//                }
+//                RootNavGraph(navController = rememberNavController() , startDestination=startDestination )
             }
 //            PurchaseZealScreen(
 //                activity = this,

@@ -66,13 +66,10 @@ import com.gdg.zealicon2k25.presentation.ui.theme.PhotoBorderColor
 import com.gdg.zealicon2k25.presentation.ui.theme.TextFieldBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.ImageUploadViewModel
-import com.gdg.zealicon2k25.presentation.viewmodels.AuthViewModel
-import com.gdg.zealicon2k25.utils.Common.isValidEmail
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 import com.gdg.zealicon2k25.utils.NetworkResult
 import com.gdg.zealicon2k25.utils.UploadState
-import kotlinx.coroutines.flow.collect
-import org.jetbrains.annotations.Async
-import kotlin.math.sign
+
 
 @Composable
 fun PhotoUploadScreen(
@@ -81,6 +78,7 @@ fun PhotoUploadScreen(
     registerOnClick: () -> Unit = {}
 ) {
     val initToken by authViewModel.initToken.collectAsState("Loading")
+    Log.d("init_token",initToken)
     val accessToken by authViewModel.accessToken.collectAsState("Loading")
     val refreshToken by authViewModel.refreshToken.collectAsState("Loading")
     val signCloudFlowPhoto by authViewModel.signCloudinaryFlowPhoto.collectAsState()
@@ -536,6 +534,9 @@ fun PhotoUploadScreen(
                         signupFlow.data?.let {
                             authViewModel.saveAccessToken(it.access_token)
                             authViewModel.saveRefreshToken(it.refresh_token)
+                            Log.d("TOKEN",it.refresh_token )
+                            Log.d("TOKEN",it.access_token )
+
                         }
                         Log.d("TOKEN", "${accessToken} ${refreshToken}")
                     }
