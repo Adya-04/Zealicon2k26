@@ -1,5 +1,9 @@
 package com.gdg.zealicon2k25.domain.repository
 
+import android.graphics.BitmapFactory
+import android.graphics.Bitmap
+import java.io.FileOutputStream
+
 import android.content.Context
 import android.net.Uri
 import android.util.Log
@@ -37,17 +41,26 @@ class ImageRepository @Inject constructor(
     ): Pair<String, String>? {
         _uploadState.value = UploadState.Loading
         try{
-            val file = withContext(Dispatchers.IO) {
-                File.createTempFile("upload", ".jpeg", context.cacheDir)
-            }
             Log.d("IMAGE", "1")
-            context.contentResolver.openInputStream(imageUri)?.use { input ->
-                file.outputStream().use { output -> input.copyTo(output) }
-            }
-            Log.d("IMAGE", "2")
+            val inputStream = context.contentResolver.openInputStream(imageUri)
+            val bitmap = BitmapFactory.decodeStream(inputStream)
+            inputStream?.close()
 
-            val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-            val body = MultipartBody.Part.createFormData("file", file.name, requestFile)
+            val compressedFile = withContext(Dispatchers.IO) {
+                File.createTempFile("compressed", ".jpg", context.cacheDir).apply {
+                    FileOutputStream(this).use { outputStream ->
+                        bitmap.compress(Bitmap.CompressFormat.JPEG, 50, outputStream) // 50% quality
+                        outputStream.flush()
+                    }
+                }
+            }
+
+            val fileSizeInKB = compressedFile.length() / 1024
+            val fileSizeInMB = fileSizeInKB / 1024
+            Log.d("IMAGE_SIZE", "File size: ${fileSizeInMB}MB")
+
+            val requestFile = compressedFile.asRequestBody("image/*".toMediaTypeOrNull())
+            val body = MultipartBody.Part.createFormData("file", compressedFile.name, requestFile)
 
             val timestamp = signCloudinaryResponse.timestamp.toString()
             val publicId = signCloudinaryResponse.public_id

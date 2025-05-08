@@ -8,6 +8,7 @@ import androidx.datastore.preferences.core.stringPreferencesKey
 import com.gdg.zealicon2k25.utils.Constants.ACCESS_TOKEN
 import com.gdg.zealicon2k25.utils.Constants.INIT_TOKEN
 import com.gdg.zealicon2k25.utils.Constants.REFRESH_TOKEN
+import com.gdg.zealicon2k25.utils.Constants.ZEAL_ID
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -53,7 +54,21 @@ class PrefDatastoreImpl @Inject constructor(private val datastore: DataStore<Pre
 
     override suspend fun saveRefreshToken(token: String) {
         datastore.edit {
-            it[stringPreferencesKey(REFRESH_TOKEN)]?:"Default_init"
+            it[stringPreferencesKey(REFRESH_TOKEN)] = token
+        }
+    }
+
+    override fun getZealId(): Flow<String> {
+        return datastore.data.catch {
+            emit(emptyPreferences())
+        }.map {
+            it[stringPreferencesKey(ZEAL_ID)]?:"Default_init"
+        }
+    }
+
+    override suspend fun saveZealId(zealId: String) {
+        datastore.edit {
+            it[stringPreferencesKey(ZEAL_ID)] = zealId
         }
     }
 

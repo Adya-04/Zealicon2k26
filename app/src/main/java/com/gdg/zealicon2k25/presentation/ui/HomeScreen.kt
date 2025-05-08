@@ -63,6 +63,7 @@ import com.gdg.zealicon2k25.presentation.ui.theme.MerchCardBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBorderColor
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.PaymentViewModel
 
 @Composable
 @Preview
@@ -70,7 +71,8 @@ fun HomeScreen(
     menuOnClick: () -> Unit = {},
     entryPass: () -> Unit = {},
     eventDetails: () -> Unit = {},
-    buyZealClick: () -> Unit = {}
+    buyZealClick: () -> Unit = {},
+    paymentViewModel: PaymentViewModel
 ) {
     val eventTabs = listOf("Cultural", "Technical", "Registered")
     var selected by remember { mutableStateOf(0) }

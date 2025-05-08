@@ -10,8 +10,9 @@ import com.gdg.zealicon2k25.presentation.ui.EntryPass
 import com.gdg.zealicon2k25.presentation.ui.EventDetailScreen
 import com.gdg.zealicon2k25.presentation.ui.HomeScreen
 import com.gdg.zealicon2k25.presentation.ui.MenuScreen
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.PaymentViewModel
 
-fun NavGraphBuilder.mainNavGraph(navHostController: NavHostController){
+fun NavGraphBuilder.mainNavGraph(navHostController: NavHostController, paymentViewModel: PaymentViewModel){
     navigation(
         startDestination = Main.Home.routes,
         route = NavRoutes.Main.route
@@ -29,7 +30,8 @@ fun NavGraphBuilder.mainNavGraph(navHostController: NavHostController){
                 },
                 buyZealClick = {
                     navHostController.navigate(route = NavRoutes.Payment.route)
-                }
+                },
+                paymentViewModel = paymentViewModel
             )
         }
 
@@ -51,7 +53,8 @@ fun NavGraphBuilder.mainNavGraph(navHostController: NavHostController){
             EntryPass(
                 backOnClick = {
                     navHostController.popBackStack()
-                }
+                },
+                paymentViewModel = paymentViewModel
             )
         }
 

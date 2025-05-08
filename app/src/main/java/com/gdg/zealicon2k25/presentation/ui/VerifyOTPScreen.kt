@@ -179,6 +179,5 @@ fun VerifyOTPScreen(
             Spacer(modifier = Modifier.height(52.dp))
         }
     }
-    Spacer(Modifier.height(52.dp))
 }
 

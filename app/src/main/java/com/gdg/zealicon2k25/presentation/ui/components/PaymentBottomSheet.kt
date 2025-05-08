@@ -39,7 +39,8 @@ import com.gdg.zealicon2k25.presentation.ui.theme.SuccessTextColor
 @Composable
 fun PaymentSuccessBottomSheet(
     onDismiss: () -> Unit,
-    homeOnClick: () -> Unit
+    homeOnClick: () -> Unit,
+    zealId: String
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState()
     ModalBottomSheet(onDismissRequest = { onDismiss() },
@@ -96,11 +97,11 @@ fun PaymentSuccessBottomSheet(
                 )
                 Text(
                     modifier = Modifier.padding(top = 4.dp),
-                    text = "ZEAL 6969",
-                    fontSize = 48.sp,
+                    text = zealId,
+                    fontSize = 40.sp,
                     color = HeadingTextColor,
                     fontWeight = FontWeight.Bold,
-                    fontFamily = FrontSpring,
+                    fontFamily = Outfit,
                     lineHeight = 1.5.em
                 )
             }
@@ -125,7 +126,8 @@ fun PaymentSuccessBottomSheet(
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun PaymentErrorBottomSheet(
-    onDismiss: () -> Unit
+    onDismiss: () -> Unit,
+    retryOnclick: () -> Unit
 ) {
     val modalBottomSheetState = rememberModalBottomSheetState()
     ModalBottomSheet(onDismissRequest = { onDismiss() },
@@ -193,7 +195,9 @@ fun PaymentErrorBottomSheet(
                 PrimaryButton(
                     text = "Retry",
                     arrow = false
-                ) { }
+                ) {
+                    retryOnclick()
+                }
                 Text(
                     modifier = Modifier
                         .padding(top = 24.dp)

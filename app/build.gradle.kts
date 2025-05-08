@@ -93,4 +93,7 @@ dependencies {
 
     //Coil
     implementation(libs.coil.compose)
+
+    //RazorPay
+    implementation (libs.checkout)
 }
