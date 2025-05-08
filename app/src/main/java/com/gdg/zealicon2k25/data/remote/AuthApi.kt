@@ -5,6 +5,8 @@ import com.gdg.zealicon2k25.data.models.LoginResponse
 import com.gdg.zealicon2k25.data.models.OtpRequest
 import com.gdg.zealicon2k25.data.models.OtpResponse
 import com.gdg.zealicon2k25.data.models.SignCloudinaryResponse
+import com.gdg.zealicon2k25.data.models.SignupRequest
+import com.gdg.zealicon2k25.data.models.SignupResponse
 import com.gdg.zealicon2k25.data.models.VerifyOtpReq
 import com.gdg.zealicon2k25.data.models.VerifyOtpResponse
 import retrofit2.Response

@@ -66,7 +66,6 @@ fun NavGraphBuilder.onboardingNavGraph(navHostController: NavHostController ,
                         }
                     }
                 },
-                authViewModel = authViewModel
             )
         }
 
@@ -78,4 +77,5 @@ sealed class Auth(val route: String) {
     data object Login : Auth("login")
     data object Register : Auth("register")
     data object VerifyOTP : Auth("verify_otp")
+    data object PhotoUpload : Auth("photo_upload")
 }

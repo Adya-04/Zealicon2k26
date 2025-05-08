@@ -1,11 +1,6 @@
 package com.gdg.zealicon2k25.presentation.ui.viewmodels
 
 import android.util.Log
-import androidx.compose.runtime.State
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.setValue
-import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gdg.zealicon2k25.data.models.LoginRequest
@@ -22,9 +17,7 @@ import com.gdg.zealicon2k25.pref.PrefDatastore
 import com.gdg.zealicon2k25.utils.NetworkResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
-import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -121,11 +114,9 @@ class AuthViewModel @Inject constructor(
         }
     }
 
-    fun getOtp(email: OtpRequest) {
-        fun saveAccessToken(token: String) {
-            viewModelScope.launch {
-                prefs.saveAccessToken(token)
-            }
+    fun saveAccessToken(token: String) {
+        viewModelScope.launch {
+            prefs.saveAccessToken(token)
         }
     }
 
