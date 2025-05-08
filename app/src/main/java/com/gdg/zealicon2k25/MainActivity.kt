@@ -1,9 +1,10 @@
 package com.gdg.zealicon2k25
 
+import android.os.Build
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.enableEdgeToEdge
+import androidx.annotation.RequiresApi
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -23,19 +24,20 @@ import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-//            val authViewModel: AuthViewModel= hiltViewModel()
-//            val initToken = authViewModel.initToken.collectAsState(initial = "")
+            val authViewModel: AuthViewModel= hiltViewModel()
+            val initToken = authViewModel.initToken.collectAsState(initial = "")
             Zealicon2K25Theme {
-//                val startDestination = if (initToken.value.isNotEmpty()) {
-//                    NavRoutes.Main.route
-//                } else {
-//                    NavRoutes.Onboarding.route
-//                }
-//                RootNavGraph(navController = rememberNavController() , startDestination=startDestination )
-                RootNavGraph(navController = rememberNavController() , startDestination= NavRoutes.Onboarding.route )
+                val startDestination = if (initToken.value.isNotEmpty()) {
+                    NavRoutes.Main.route
+                } else {
+                    NavRoutes.Onboarding.route
+                }
+                RootNavGraph(navController = rememberNavController() , startDestination=startDestination )
+//                RootNavGraph(navController = rememberNavController() , startDestination= NavRoutes.Onboarding.route )
             }
         }
     }

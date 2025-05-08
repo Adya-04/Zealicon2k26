@@ -10,6 +10,7 @@ import androidx.datastore.preferences.preferencesDataStoreFile
 import com.gdg.zealicon2k25.data.remote.AuthApi
 import com.gdg.zealicon2k25.data.remote.EventsApi
 import com.gdg.zealicon2k25.data.remote.ImageUploadApi
+import com.gdg.zealicon2k25.data.remote.MerchApi
 import com.gdg.zealicon2k25.pref.PrefDatastore
 import com.gdg.zealicon2k25.pref.PrefDatastoreImpl
 import com.gdg.zealicon2k25.utils.Constants.BASE_URL
@@ -80,4 +81,11 @@ class AppModule {
     fun providesEventsApi(retrofitBuilder: Builder): EventsApi {
         return retrofitBuilder.build().create(EventsApi::class.java)
     }
+
+    @Singleton
+    @Provides
+    fun providesMerchApi(retrofitBuilder: Builder): MerchApi {
+        return retrofitBuilder.build().create(MerchApi::class.java)
+    }
+
 }
