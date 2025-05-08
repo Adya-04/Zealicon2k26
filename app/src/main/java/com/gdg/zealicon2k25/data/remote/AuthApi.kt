@@ -5,6 +5,7 @@ import com.gdg.zealicon2k25.data.models.LoginResponse
 import com.gdg.zealicon2k25.data.models.LoginVerifyOtpResponse
 import com.gdg.zealicon2k25.data.models.OtpRequest
 import com.gdg.zealicon2k25.data.models.OtpResponse
+import com.gdg.zealicon2k25.data.models.RefreshTokenResponse
 import com.gdg.zealicon2k25.data.models.SignCloudinaryResponse
 import com.gdg.zealicon2k25.data.models.SignupRequest
 import com.gdg.zealicon2k25.data.models.SignupResponse
@@ -49,4 +50,9 @@ interface AuthApi {
 
     @PATCH("api/auth/resend-otp")
     suspend fun resendOtp(@Body otpRequest: OtpRequest): Response<OtpResponse>
+
+    @GET("/api/auth/refresh-token")
+    suspend fun refreshToken(
+        @Header("Authorization") refreshToken: String,
+    ):Response<RefreshTokenResponse>
 }

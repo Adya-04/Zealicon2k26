@@ -398,13 +398,25 @@ fun PhotoUploadScreen(
                         Row(
                             modifier = Modifier
                                 .fillMaxWidth()
-                                .padding(20.dp, 10.dp, 20.dp),
+                                .padding(20.dp, 10.dp, 20.dp, 10.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Center
                         ) {
-                            CircularProgressIndicator(
-                                modifier = Modifier.size(32.dp), color = TicketCardBackgroundColor
-                            )
+                            Column(
+                                horizontalAlignment = Alignment.CenterHorizontally
+                            ) {
+                                CircularProgressIndicator(
+                                    modifier = Modifier.size(32.dp), color = TicketCardBackgroundColor
+                                )
+                                Text(
+                                    modifier = Modifier.padding(top = 10.dp),
+                                    text = "Uploading Image...",
+                                    fontSize = 18.sp,
+                                    fontFamily = Outfit,
+                                    fontWeight = FontWeight.Normal,
+                                    color = TicketCardBackgroundColor
+                                )
+                            }
                         }
                     }
 
@@ -480,7 +492,7 @@ fun PhotoUploadScreen(
                 when(signupFlow){
                     is NetworkResult.Error -> {
                         Row(
-                            modifier = Modifier.padding(20.dp, 10.dp, 20.dp),
+                            modifier = Modifier.padding(20.dp, 10.dp, 20.dp, 10.dp),
                             verticalAlignment = Alignment.CenterVertically,
                             horizontalArrangement = Arrangement.Start
 
@@ -526,8 +538,7 @@ fun PhotoUploadScreen(
                             Log.d("TOKEN",it.access_token )
 
                         }
-
-                        Log.d("TOKEN", "${authViewModel.accessToken} ${authViewModel.refreshToken}")
+                        Log.d("TOKEN", "${accessToken} ${refreshToken}")
                     }
                 }
                 Spacer(Modifier.height(30.dp))

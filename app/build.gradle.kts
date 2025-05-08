@@ -94,13 +94,9 @@ dependencies {
     //Coil
     implementation(libs.coil.compose)
 
-    //Accompanist - Permissions
-    implementation (libs.accompanist.permissions)
-
-    //Coil
-    implementation(libs.coil.compose)
-
     //Splash
     implementation(libs.androidx.core.splashscreen)
 
+    //RazorPay
+    implementation (libs.checkout)
 }

@@ -46,7 +46,6 @@ import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.MerchViewModel
-import com.gdg.zealicon2k25.utils.Constants.TEMP_ACCESS_TOKEN
 import com.gdg.zealicon2k25.utils.NetworkResult
 
 @Preview
@@ -64,7 +63,7 @@ fun MerchListScreen(authViewModel: AuthViewModel ,
         if (accessToken.isNotEmpty()) {
             Log.d("DEBUG", "Calling getEvents()")
             Log.d("DEBUG", accessToken)
-            merchViewModel.getMerch(TEMP_ACCESS_TOKEN)
+            merchViewModel.getMerch(accessToken)
         }
     }
     Box(

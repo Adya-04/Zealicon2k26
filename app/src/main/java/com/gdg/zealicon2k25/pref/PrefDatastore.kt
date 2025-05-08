@@ -14,4 +14,8 @@ interface PrefDatastore{
     fun getRefreshToken(): Flow<String>
 
     suspend fun saveRefreshToken(token: String)
+
+    fun getZealId(): Flow<String>
+
+    suspend fun saveZealId(zealId: String)
 }

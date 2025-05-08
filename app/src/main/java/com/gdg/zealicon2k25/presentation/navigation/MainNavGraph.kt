@@ -12,6 +12,7 @@ import com.gdg.zealicon2k25.presentation.ui.EntryPass
 import com.gdg.zealicon2k25.presentation.ui.EventDetailScreen
 import com.gdg.zealicon2k25.presentation.ui.HomeScreen
 import com.gdg.zealicon2k25.presentation.ui.MenuScreen
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.PaymentViewModel
 import com.gdg.zealicon2k25.presentation.ui.MerchListScreen
 import com.gdg.zealicon2k25.presentation.ui.MerchScreen
 import com.gdg.zealicon2k25.presentation.ui.TeamScreen
@@ -24,6 +25,7 @@ fun NavGraphBuilder.mainNavGraph(
     navHostController: NavHostController,
     eventsViewModel: EventsViewModel,
     authViewModel: AuthViewModel,
+    paymentViewModel: PaymentViewModel,
     merchViewModel: MerchViewModel
 ) {
     navigation(
@@ -44,6 +46,7 @@ fun NavGraphBuilder.mainNavGraph(
                 buyZealClick = {
                     navHostController.navigate(route = NavRoutes.Payment.route)
                 },
+                paymentViewModel = paymentViewModel,
                 merchListing = {
                     navHostController.navigate(route = Main.Merch.routes)
                 },
@@ -73,15 +76,8 @@ fun NavGraphBuilder.mainNavGraph(
             EntryPass(
                 backOnClick = {
                     navHostController.popBackStack()
-                }
-            )
-        }
-
-        composable(route = Main.EntryPass.routes) {
-            EntryPass(
-                backOnClick = {
-                    navHostController.popBackStack()
-                }
+                },
+                paymentViewModel = paymentViewModel
             )
         }
 

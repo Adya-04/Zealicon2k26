@@ -8,6 +8,7 @@ import com.gdg.zealicon2k25.data.models.LoginResponse
 import com.gdg.zealicon2k25.data.models.LoginVerifyOtpResponse
 import com.gdg.zealicon2k25.data.models.OtpRequest
 import com.gdg.zealicon2k25.data.models.OtpResponse
+import com.gdg.zealicon2k25.data.models.RefreshTokenResponse
 import com.gdg.zealicon2k25.data.models.SignCloudinaryResponse
 import com.gdg.zealicon2k25.data.models.SignupRequest
 import com.gdg.zealicon2k25.data.models.SignupResponse
@@ -20,6 +21,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -43,6 +45,9 @@ class AuthViewModel @Inject constructor(
 
     val signCloudinaryFlowId: StateFlow<NetworkResult<SignCloudinaryResponse>>
         get() = authRepository.signCloudinaryFlowId
+
+    val refreshTokenState: StateFlow<NetworkResult<RefreshTokenResponse>>
+        get () = authRepository.refreshTokenState
 
     private var _selfieImageSignature: SignCloudinaryResponse? = null
     val selfieImageSignature: SignCloudinaryResponse? get() = _selfieImageSignature
@@ -112,6 +117,12 @@ class AuthViewModel @Inject constructor(
 
     fun getPhone(): Long {
         return userPhone
+    }
+
+    fun refreshToken(){
+        viewModelScope.launch {
+            authRepository.refreshToken(refreshToken.first())
+        }
     }
 
     fun saveToken(token: String) {
@@ -195,5 +206,9 @@ class AuthViewModel @Inject constructor(
 
     fun removeSignCloudinaryState() {
         authRepository.removeSignCloudinaryState()
+    }
+
+    fun removeRefreshState(){
+        authRepository.removeRefreshState()
     }
 }

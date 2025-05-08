@@ -42,7 +42,6 @@ import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 fun TeamMemberCard(){
     Box(
         modifier = Modifier
-            .height(284.dp)
             .clickable(
                 enabled = true,
                 indication = rememberRipple(
@@ -96,7 +95,7 @@ fun TeamMemberCard(){
                     fontFamily = Outfit,
                     fontWeight = FontWeight.Normal,
                     color = HeadingTextColor,
-                    modifier = Modifier.padding( bottom = 4.dp)
+                    modifier = Modifier.padding( bottom = 5.dp)
                 )
             }
         }

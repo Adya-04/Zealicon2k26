@@ -30,15 +30,18 @@ import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 
 @Composable
 @Preview
-fun ZealiconTicket() {
+fun ZealiconTicket(
+    name: String = "Ayush Agrawal",
+    id: String = "ZEAL 3462"
+) {
     val configuration = LocalConfiguration.current
     val screenWidth = configuration.screenWidthDp
 
     val (padding, fontSize) = when {
-        screenWidth < 360 -> 47.dp to 14.sp       // Small
-        screenWidth < 480 -> 50.dp to 14.sp      // Normal
-        screenWidth < 720 -> 50.dp to 16.sp      // Large
-        else -> 50.dp to 20.sp                   // X-Large
+        screenWidth < 360 -> 150.dp to 14.sp       // Small
+        screenWidth < 480 -> 180.dp to 14.sp      // Normal
+        screenWidth < 720 -> 200.dp to 16.sp      // Large
+        else -> 200.dp to 20.sp                   // X-Large
     }
 
 
@@ -59,35 +62,28 @@ fun ZealiconTicket() {
             painter = painterResource(R.drawable.ticket_frame),
             contentDescription = "Zealicon Ticket"
         )
-        Column{
-            Image(
-                modifier = Modifier
-                    .padding(top = topPadding, start = 58.dp, end = 58.dp),
-                painter = painterResource(R.drawable.qr_code),
-                contentDescription = "Zealicon Ticket",
+        Row(
+            modifier = Modifier
+                .align(Alignment.Center)
+                .fillMaxWidth()
+                .padding(10.dp, padding, 10.dp, 0.dp),
+            verticalAlignment = Alignment.CenterVertically,
+            horizontalArrangement = Arrangement.Absolute.SpaceBetween
+        ) {
+            Text(
+                text = name,
+                fontSize = fontSize,
+                color = BackgroundColor,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = Outfit
             )
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(10.dp, padding, 10.dp, 0.dp),
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.Absolute.SpaceBetween
-            ) {
-                Text(
-                    text = "Ayush Agrawal",
-                    fontSize = fontSize,
-                    color = BackgroundColor,
-                    fontWeight = FontWeight.SemiBold,
-                    fontFamily = Outfit
-                )
-                Text(
-                    text = "ZEAL 3462",
-                    fontSize = fontSize,
-                    color = BackgroundColor,
-                    fontWeight = FontWeight.SemiBold,
-                    fontFamily = Outfit
-                )
-            }
+            Text(
+                text = id,
+                fontSize = fontSize,
+                color = BackgroundColor,
+                fontWeight = FontWeight.SemiBold,
+                fontFamily = Outfit
+            )
         }
     }
 }
