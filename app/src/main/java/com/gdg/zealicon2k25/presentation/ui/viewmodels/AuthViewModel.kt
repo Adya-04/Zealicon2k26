@@ -211,4 +211,10 @@ class AuthViewModel @Inject constructor(
     fun removeRefreshState(){
         authRepository.removeRefreshState()
     }
+    fun removeLoginVerifyState(){
+        viewModelScope.launch {
+            authRepository.removeLoginVerifyState()
+        }
+    }
+
 }

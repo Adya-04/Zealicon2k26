@@ -97,9 +97,9 @@ fun LoginScreen(
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 PrimaryTextField(
-                    value = email,
+                    value = email.trim(),
                     placeholder = "Enter your Email",
-                    onValueChange = { email = it },
+                    onValueChange = { email = it.trim() },
                     keyBoardType = KeyboardType.Text
                 )
             }

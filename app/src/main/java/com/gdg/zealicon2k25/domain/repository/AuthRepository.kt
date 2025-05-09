@@ -58,6 +58,7 @@ class AuthRepository @Inject constructor(private val authApi: AuthApi) {
         _refreshTokenState.value = NetworkResult.Loading()
         try{
             val response = authApi.refreshToken(refreshToken)
+            Log.d("message123**",refreshToken)
             Log.d("message123",response.body().toString())
             Log.d("message123*",response.toString())
             if (response.isSuccessful) {
@@ -335,5 +336,8 @@ class AuthRepository @Inject constructor(private val authApi: AuthApi) {
 
     fun removeRefreshState(){
         _refreshTokenState.value = NetworkResult.Start()
+    }
+    fun removeLoginVerifyState(){
+        _loginVerifyOtpState.value = NetworkResult.Start()
     }
 }

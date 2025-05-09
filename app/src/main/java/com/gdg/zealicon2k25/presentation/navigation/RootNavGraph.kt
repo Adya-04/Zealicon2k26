@@ -45,7 +45,7 @@ fun RootNavGraph(navController: NavHostController, activity: Activity, paymentVi
                 }
             )
         }
-        onboardingNavGraph(navController,authViewModel, imageViewModel )
+        onboardingNavGraph(navController,authViewModel, imageViewModel , paymentViewModel)
         paymentNavGraph(navController, activity, paymentViewModel)
         mainNavGraph(navController  , eventsViewModel , authViewModel , paymentViewModel, merchViewModel)
     }
