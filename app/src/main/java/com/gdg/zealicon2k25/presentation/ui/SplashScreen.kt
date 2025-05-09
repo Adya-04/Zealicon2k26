@@ -44,6 +44,7 @@ fun SplashScreen(
 ){
     val refreshState by authViewModel.refreshTokenState.collectAsState()
     val accessToken by authViewModel.accessToken.collectAsState(initial = "")
+
     LaunchedEffect(accessToken != "") {
         Log.d("TOKEN", accessToken)
         if (accessToken == "Default_init"){
@@ -87,7 +88,7 @@ fun SplashScreen(
                 ) {
                     Image(
                         modifier = Modifier.padding(end = 4.dp).size(25.dp),
-                        painter = painterResource(id = R.drawable.info),
+                        painter = painterResource(id = R.drawable.clock),
                         contentDescription = "trophy",
                         alignment = Alignment.Center,
                         colorFilter = ColorFilter.tint(BackgroundColor)
@@ -97,12 +98,11 @@ fun SplashScreen(
                         modifier = Modifier.clickable {
                             authViewModel.refreshToken()
                         },
-                        text = "Retry",
+                        text = "Loading...",
                         fontSize = 25.sp,
                         fontFamily = Outfit,
                         fontWeight = FontWeight.Normal,
                         color = BackgroundColor,
-                        textDecoration = TextDecoration.Underline
                     )
                 }
             }
