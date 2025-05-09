@@ -1,5 +1,6 @@
 package com.gdg.zealicon2k25.presentation.ui
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -43,7 +44,9 @@ fun SplashScreen(
 ){
     val refreshState by authViewModel.refreshTokenState.collectAsState()
     val accessToken by authViewModel.accessToken.collectAsState(initial = "")
-    LaunchedEffect(Unit) {
+
+    LaunchedEffect(accessToken) {
+        Log.d("access_token",accessToken)
         if (accessToken == "Default_init"){
             delay(2000)
             navigateToWelcome()
@@ -85,7 +88,7 @@ fun SplashScreen(
                 ) {
                     Image(
                         modifier = Modifier.padding(end = 4.dp).size(25.dp),
-                        painter = painterResource(id = R.drawable.info),
+                        painter = painterResource(id = R.drawable.clock),
                         contentDescription = "trophy",
                         alignment = Alignment.Center,
                         colorFilter = ColorFilter.tint(BackgroundColor)
@@ -95,12 +98,11 @@ fun SplashScreen(
                         modifier = Modifier.clickable {
                             authViewModel.refreshToken()
                         },
-                        text = "Retry",
+                        text = "Loading...",
                         fontSize = 25.sp,
                         fontFamily = Outfit,
                         fontWeight = FontWeight.Normal,
                         color = BackgroundColor,
-                        textDecoration = TextDecoration.Underline
                     )
                 }
             }

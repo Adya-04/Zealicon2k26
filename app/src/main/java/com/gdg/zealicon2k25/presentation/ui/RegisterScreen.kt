@@ -105,7 +105,7 @@ fun RegisterScreen(
                     value = name,
                     placeholder = "Enter your Name",
                     onValueChange = { name = it },
-                    keyBoardType = KeyboardType.Text
+                    keyBoardType = KeyboardType.Text,
                 )
                 Text(
                     modifier = Modifier.padding(top = 24.dp, start = 20.dp),
@@ -117,7 +117,7 @@ fun RegisterScreen(
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 PrimaryTextField(
-                    value = email,
+                    value = email.trim(),
                     placeholder = "Enter your Email",
                     onValueChange = { email = it },
                     keyBoardType = KeyboardType.Text

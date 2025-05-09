@@ -455,10 +455,7 @@ fun HomeScreen(
                     val eventList = eventState.data?.events
                     Log.d("Event",eventList.toString())
 
-                    val filteredEvents = eventList?.filter {
-                        it.type.equals(eventTabs[selected].label, ignoreCase = true)
-                    }
-                    Log.d("Event",filteredEvents.toString())
+                    Log.d("Event",eventList.toString())
                     LazyVerticalGrid(
                         columns = GridCells.Fixed(2),
                         verticalArrangement = Arrangement.spacedBy(16.dp),
@@ -467,10 +464,10 @@ fun HomeScreen(
                             .padding(horizontal = 20.dp)
                             .height(fixedHeight)
                     ) {
-                        filteredEvents?.let {
+                        eventList?.let {
                             items(it.size) { index ->
-                                val event = filteredEvents[index]
-                                eventsViewModel.setEventList(filteredEvents)
+                                val event = eventList[index]
+                                eventsViewModel.setEventList(eventList)
                                 EventGridItem(
                                     event = event,
                                     onClick = {
