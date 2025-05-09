@@ -372,7 +372,7 @@ fun PurchaseZealScreen(
     }
 }
 
-fun startRazorpayPayment(
+private fun startRazorpayPayment(
     activity: Activity,
     checkoutResponse: CheckoutResponse,
 ) {

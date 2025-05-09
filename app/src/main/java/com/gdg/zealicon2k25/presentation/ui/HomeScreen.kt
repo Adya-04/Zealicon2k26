@@ -96,6 +96,7 @@ fun HomeScreen(
     Log.d("DEBUG", accessToken)
     LaunchedEffect(accessToken) {
         Log.d("DEBUG", "LaunchedEffect called")
+        Log.d("DEBUG", "$accessToken + $refreshToken")
         if (accessToken.isNotEmpty()) {
             Log.d("DEBUG", "Calling getEvents()")
             Log.d("DEBUG", accessToken)

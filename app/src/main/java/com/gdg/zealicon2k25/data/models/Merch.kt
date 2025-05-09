@@ -5,5 +5,6 @@ data class Merch(
     val description: String,
     val photo: String,
     val price: Int,
-    val title: String
+    val title: String,
+    val sizes: List<String>
 )
