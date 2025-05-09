@@ -78,7 +78,7 @@ fun EventGridItem(
                 .height(210.dp)
                 .clip(RoundedCornerShape(6.dp)),
             contentDescription = "Event Image",
-            contentScale = ContentScale.Crop,
+            contentScale = ContentScale.Fit,
             placeholder = painterResource(R.drawable.default_placeholder),
             error = painterResource(R.drawable.default_placeholder)
         )

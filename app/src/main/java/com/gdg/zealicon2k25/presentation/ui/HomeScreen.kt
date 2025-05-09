@@ -102,7 +102,6 @@ fun HomeScreen(
             eventsViewModel.getEvents(accessToken, "CULTURAL")
         }
     }
-    val name = authViewModel.getName()
     Box(
         modifier = Modifier
             .fillMaxSize()

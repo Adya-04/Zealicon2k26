@@ -20,6 +20,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -38,10 +39,8 @@ import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdg.zealicon2k25.R
 import com.gdg.zealicon2k25.data.models.OtpRequest
-import com.gdg.zealicon2k25.data.models.OtpResponse
 import com.gdg.zealicon2k25.data.models.VerifyOtpReq
 import com.gdg.zealicon2k25.presentation.ui.components.OtpInputField
 import com.gdg.zealicon2k25.presentation.ui.components.PrimaryButton
@@ -52,6 +51,7 @@ import com.gdg.zealicon2k25.presentation.ui.theme.HeadingTextColor
 import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.PaymentViewModel
 import com.gdg.zealicon2k25.utils.NetworkResult
 
 @Composable
@@ -60,6 +60,7 @@ fun VerifyOTPScreen(
     verifyToPhoto: () -> Unit = {},
     authViewModel: AuthViewModel,
     verifyToHome: () -> Unit = {},
+    paymentViewModel: PaymentViewModel
 ) {
     var otpValue by remember { mutableStateOf("") }
     val focusRequester = remember { FocusRequester() }
@@ -73,7 +74,33 @@ fun VerifyOTPScreen(
     var isResendEnabled by remember { mutableStateOf(true) }
     var isVerifyEnabled by remember { mutableStateOf(false) }
     val loginVerifyOtpState by authViewModel.loginVerifyState.collectAsState()
+    val getZealDetails by paymentViewModel.getZealState.collectAsState()
 
+    LaunchedEffect(loginVerifyOtpState.data?.access_token.toString()) {
+        if (authViewModel.isLogin) {
+            val token = loginVerifyOtpState.data?.access_token.toString()
+            paymentViewModel.getZealId2(token)
+        }
+    }
+    when (getZealDetails) {
+        is NetworkResult.Success -> {
+            getZealDetails.data?.let {
+                Log.d("zealIdaarhi", it.zeal_id)
+                paymentViewModel.saveZealID(it.zeal_id)
+            }
+            paymentViewModel.removeGetZealState()
+            authViewModel.removeLoginVerifyState()
+            verifyToHome()
+        }
+
+        is NetworkResult.Error -> {
+//                verifyToHome()
+            Log.d("zealIdError", getZealDetails.data.toString())
+            Log.d("zealIdError", getZealDetails.message.toString())
+        }
+
+        else -> {}
+    }
     Box(
         modifier = Modifier.fillMaxSize().background(BackgroundColor)
     ) {
@@ -135,12 +162,15 @@ fun VerifyOTPScreen(
                     is NetworkResult.Success -> {
                         isResendEnabled = false
                     }
+
                     is NetworkResult.Error -> {
                         isResendEnabled = true
                     }
+
                     is NetworkResult.Loading -> {
                         isResendEnabled = false
                     }
+
                     else -> {}
                 }
 
@@ -156,14 +186,21 @@ fun VerifyOTPScreen(
                 Log.d("otp chalga", "${otpValue.toLong() + 1}")
                 Log.d("otp chalga", userMail.toString())
                 if (authViewModel.isLogin) {
-                    authViewModel.loginVerifyOtp(VerifyOtpReq(userMail.toString(), otpValue.toLong()))
-                }else{
-                    authViewModel.verifyOtp(VerifyOtpReq(userMail.toString() , otpValue.toLong()))
+                    authViewModel.loginVerifyOtp(
+                        VerifyOtpReq(
+                            userMail.toString(),
+                            otpValue.toLong()
+                        )
+                    )
+//                    LaunchedEffect(loginVerifyOtpState.data?.access_token) {
+//                        paymentViewModel.getZealId()
+//                    }
+                } else {
+                    authViewModel.verifyOtp(VerifyOtpReq(userMail.toString(), otpValue.toLong()))
                 }
             }
             when (verifyOtpState) {
                 is NetworkResult.Error -> {
-//                    isVerifyEnabled = false
 
                     Row(
                         modifier = Modifier.padding(20.dp, 10.dp, 20.dp),
@@ -207,13 +244,32 @@ fun VerifyOTPScreen(
                         authViewModel.saveToken(it.init_token)
                     }
                     verifyToPhoto()
-                    Log.d("OtpVerify",verifyOtpState.data.toString())
+                    Log.d("OtpVerify", verifyOtpState.data.toString())
+                }
+            }
+            if (loginVerifyOtpState is NetworkResult.Error) {
+                Row(
+                    modifier = Modifier.padding(20.dp, 10.dp, 20.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
+                ) {
+                    Image(
+                        modifier = Modifier.padding(end = 4.dp).size(12.dp),
+                        painter = painterResource(id = R.drawable.info),
+                        contentDescription = "trophy"
+                    )
+                    Text(
+                        text = "Try Resending the OTP",
+                        fontSize = 14.sp,
+                        fontFamily = Outfit,
+                        fontWeight = FontWeight.Normal,
+                        color = ErrorTextColor
+                    )
                 }
             }
 
             when (loginVerifyOtpState) {
                 is NetworkResult.Error -> {
-//                    isVerifyEnabled = false
 
                     Row(
                         modifier = Modifier.padding(20.dp, 10.dp, 20.dp),
@@ -253,14 +309,15 @@ fun VerifyOTPScreen(
                 }
 
                 is NetworkResult.Success -> {
-                    Log.d("access_token",loginVerifyOtpState.data?.refresh_token.toString())
-                    Log.d("refresh_token",loginVerifyOtpState.data?.access_token.toString())
+                    Log.d("access_token", loginVerifyOtpState.data?.refresh_token.toString())
+                    Log.d("refresh_token", loginVerifyOtpState.data?.access_token.toString())
                     authViewModel.saveAccessToken(loginVerifyOtpState.data?.access_token.toString())
                     authViewModel.saveRefreshToken(loginVerifyOtpState.data?.refresh_token.toString())
-                    Toast.makeText(context , "${loginVerifyOtpState.data?.message}", Toast.LENGTH_SHORT).show()
-                    verifyToHome()
-                    Log.d("OtpVerify",loginVerifyOtpState.data.toString())
-                    Log.d("OtpVerify",loginVerifyOtpState.message.toString())
+                    Toast.makeText(
+                        context,
+                        "${loginVerifyOtpState.data?.message}",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 

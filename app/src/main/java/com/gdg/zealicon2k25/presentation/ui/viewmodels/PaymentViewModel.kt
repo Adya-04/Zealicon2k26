@@ -1,5 +1,6 @@
 package com.gdg.zealicon2k25.presentation.ui.viewmodels
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gdg.zealicon2k25.data.models.CheckoutResponse
@@ -49,7 +50,15 @@ class PaymentViewModel@Inject constructor(
 
     fun getZealId(){
         viewModelScope.launch {
+            Log.d("zealId","${accessToken.first()}")
             paymentRepository.getZealId(accessToken.first())
+        }
+    }
+
+    fun getZealId2(token: String){
+        viewModelScope.launch {
+            Log.d("zealId","${token}")
+            paymentRepository.getZealId(token)
         }
     }
 
