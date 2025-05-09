@@ -94,7 +94,7 @@ fun EventDetailScreen(
                 model = eventDetails?.image,
                 modifier = Modifier.padding(horizontal = 20.dp).fillMaxWidth().height(250.dp),
                 contentDescription = "eventImage",
-                contentScale = ContentScale.Crop,
+                contentScale = ContentScale.Fit,
                 placeholder = painterResource(R.drawable.game_image),
                 error = painterResource(R.drawable.game_image)
             )

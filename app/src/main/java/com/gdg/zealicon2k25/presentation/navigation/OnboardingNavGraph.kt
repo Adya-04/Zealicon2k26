@@ -11,10 +11,12 @@ import com.gdg.zealicon2k25.presentation.ui.VerifyOTPScreen
 import com.gdg.zealicon2k25.presentation.ui.WelcomeScreen
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.ImageUploadViewModel
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.PaymentViewModel
 
 fun NavGraphBuilder.onboardingNavGraph(navHostController: NavHostController ,
                                        authViewModel: AuthViewModel,
-                                       imageViewModel: ImageUploadViewModel
+                                       imageViewModel: ImageUploadViewModel,
+                                       paymentViewModel: PaymentViewModel
 ) {
     navigation(
         route = NavRoutes.Onboarding.route,
@@ -57,7 +59,8 @@ fun NavGraphBuilder.onboardingNavGraph(navHostController: NavHostController ,
                         }
                     }
                 },
-                authViewModel = authViewModel
+                authViewModel = authViewModel,
+                paymentViewModel = paymentViewModel
             )
         }
 

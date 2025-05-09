@@ -25,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.rememberAsyncImagePainter
 import com.gdg.zealicon2k25.R
 import com.gdg.zealicon2k25.presentation.ui.theme.ButtonRippleColor
 import com.gdg.zealicon2k25.presentation.ui.theme.HeadingTextColor
@@ -33,7 +34,11 @@ import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 
 @Composable
 @Preview
-fun SecondaryTeamMemberCard(){
+fun SecondaryTeamMemberCard(
+    imageUrl: String,
+    name: String,
+    role: String
+) {
     Box(
         modifier = Modifier
             .height(284.dp)
@@ -53,7 +58,7 @@ fun SecondaryTeamMemberCard(){
             .background(color = MerchCardBackgroundColor)
             .border(width = 1.dp, color = HeadingTextColor, shape = RoundedCornerShape(12.dp))
             .fillMaxWidth()
-    ){
+    ) {
         Column {
             Image(
                 modifier = Modifier
@@ -61,7 +66,7 @@ fun SecondaryTeamMemberCard(){
                     .padding(5.dp, 5.dp, 5.dp)
                     .height(210.dp)
                     .clip(RoundedCornerShape(6.dp)),
-                painter = painterResource(R.drawable.default_placeholder),
+                painter = rememberAsyncImagePainter(imageUrl),
                 contentDescription = "Event Image",
                 contentScale = ContentScale.Crop
             )
@@ -70,15 +75,15 @@ fun SecondaryTeamMemberCard(){
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Text(
-                    text = "Fest Secretary",
+                    text = role,
                     fontSize = 12.sp,
                     fontFamily = Outfit,
                     fontWeight = FontWeight.Normal,
                     color = HeadingTextColor,
-                    modifier = Modifier.padding(top=4.dp)
+                    modifier = Modifier.padding(top = 4.dp)
                 )
                 Text(
-                    text = "Kokila Bond",
+                    text = name,
                     fontSize = 16.sp,
                     fontFamily = Outfit,
                     fontWeight = FontWeight.SemiBold,
