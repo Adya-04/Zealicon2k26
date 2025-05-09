@@ -94,7 +94,7 @@ fun VerifyOTPScreen(
         }
 
         is NetworkResult.Error -> {
-//                verifyToHome()
+            verifyToHome()
             Log.d("zealIdError", getZealDetails.data.toString())
             Log.d("zealIdError", getZealDetails.message.toString())
         }
