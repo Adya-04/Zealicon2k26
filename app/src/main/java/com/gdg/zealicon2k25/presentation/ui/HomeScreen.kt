@@ -260,7 +260,7 @@ fun HomeScreen(
                         interactionSource = remember { MutableInteractionSource() },
                         role = Role.Button
                     ) {
-
+                        merchListing()
                     }
                     .clip(RoundedCornerShape(12.dp))
                     .background(color = MerchCardBackgroundColor)

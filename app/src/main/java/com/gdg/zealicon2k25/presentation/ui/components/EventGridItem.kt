@@ -34,6 +34,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.gdg.zealicon2k25.R
 import com.gdg.zealicon2k25.data.models.Event
 import com.gdg.zealicon2k25.presentation.ui.theme.ButtonBackgroundColor
@@ -70,16 +71,16 @@ fun EventGridItem(
             .border(width = 1.dp, color = HeadingTextColor, shape = RoundedCornerShape(12.dp))
             .fillMaxWidth()
     ) {
-        Image(
-            modifier = Modifier
-                .fillMaxWidth()
+        AsyncImage(
+            model = event.image,
+            modifier = Modifier.fillMaxWidth()
                 .padding(5.dp, 5.dp, 5.dp)
                 .height(210.dp)
-                .clip(RoundedCornerShape(6.dp))
-            ,
-            painter = painterResource(R.drawable.default_placeholder),
+                .clip(RoundedCornerShape(6.dp)),
             contentDescription = "Event Image",
-            contentScale = ContentScale.Crop
+            contentScale = ContentScale.Crop,
+            placeholder = painterResource(R.drawable.default_placeholder),
+            error = painterResource(R.drawable.default_placeholder)
         )
         Row(
             modifier = Modifier

@@ -45,8 +45,8 @@ fun SplashScreen(
     val refreshState by authViewModel.refreshTokenState.collectAsState()
     val accessToken by authViewModel.accessToken.collectAsState(initial = "")
 
-    LaunchedEffect(accessToken) {
-        Log.d("access_token",accessToken)
+    LaunchedEffect(accessToken != "") {
+        Log.d("TOKEN", accessToken)
         if (accessToken == "Default_init"){
             delay(2000)
             navigateToWelcome()

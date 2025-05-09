@@ -164,16 +164,5 @@ fun MenuScreen(
                 SecondaryMenuCard()
             }
         }
-        Box(
-            modifier = Modifier
-                .align(Alignment.BottomCenter)
-                .fillMaxWidth()
-                .padding(bottom = 24.dp)
-        ) {
-            SecodaryButton(
-                text = "Log out"
-            ) {
-            }
-        }
     }
 }
