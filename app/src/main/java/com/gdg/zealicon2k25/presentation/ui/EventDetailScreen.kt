@@ -32,6 +32,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.gdg.zealicon2k25.R
 import com.gdg.zealicon2k25.data.models.Event
 import com.gdg.zealicon2k25.presentation.ui.components.CardBackground
@@ -89,10 +90,13 @@ fun EventDetailScreen(
                     modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 20.dp)
                 )
             }
-            Image(
-                painter = painterResource(R.drawable.game_image),
+            AsyncImage(
+                model = eventDetails?.image,
                 modifier = Modifier.padding(horizontal = 20.dp).fillMaxWidth().height(250.dp),
                 contentDescription = "eventImage",
+                contentScale = ContentScale.Crop,
+                placeholder = painterResource(R.drawable.game_image),
+                error = painterResource(R.drawable.game_image)
             )
             Row(
                 modifier = Modifier.fillMaxWidth().padding(

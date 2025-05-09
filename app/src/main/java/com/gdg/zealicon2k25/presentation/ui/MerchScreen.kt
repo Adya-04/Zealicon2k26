@@ -44,7 +44,8 @@ import com.gdg.zealicon2k25.presentation.ui.viewmodels.MerchViewModel
 @Composable
 @Preview
 fun MerchScreen(
-    merchViewModel: MerchViewModel
+    merchViewModel: MerchViewModel,
+    backOnClick: () -> Unit = {}
 ) {
     val merch = merchViewModel.selectedMerch
     Box(
@@ -62,7 +63,7 @@ fun MerchScreen(
                     contentDescription = "back",
                     modifier = Modifier.padding(top = 20.dp , start = 20.dp)
                         .clickable {
-
+                            backOnClick()
                         }
                 )
                 Text(
