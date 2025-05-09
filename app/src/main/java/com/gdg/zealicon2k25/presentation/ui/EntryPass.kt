@@ -14,9 +14,11 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,10 +27,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextDecoration
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -39,6 +43,7 @@ import com.gdg.zealicon2k25.presentation.ui.theme.BackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.ButtonRippleColor
 import com.gdg.zealicon2k25.presentation.ui.theme.HeadingTextColor
 import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
+import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.PaymentViewModel
 import com.gdg.zealicon2k25.utils.NetworkResult
 
@@ -59,10 +64,38 @@ fun EntryPass(
     ) {
         when(getZealIdState){
             is NetworkResult.Error -> {
+                Row(
+                    modifier = Modifier.align(Alignment.BottomCenter).padding(bottom = 100.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Start
 
+                ) {
+                    Text(
+                        modifier = Modifier.clickable {
+                            paymentViewModel.getZealId()
+                        },
+                        text = "Retry ->",
+                        fontSize = 25.sp,
+                        fontFamily = Outfit,
+                        fontWeight = FontWeight.Normal,
+                        color = BackgroundColor,
+                        textDecoration = TextDecoration.Underline
+                    )
+                }
             }
             is NetworkResult.Loading -> {
-
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .align(Alignment.Center)
+                        .padding(20.dp, 10.dp, 20.dp, 100.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.Center
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(45.dp), color = TicketCardBackgroundColor
+                    )
+                }
             }
             is NetworkResult.Start -> {}
             is NetworkResult.Success -> {

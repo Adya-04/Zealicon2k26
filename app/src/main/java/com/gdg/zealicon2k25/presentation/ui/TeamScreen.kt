@@ -41,7 +41,7 @@ import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 @Composable
 @Preview
 fun TeamScreen(
-//    backOnClick:()->Unit={}
+    backOnClick:() -> Unit = {}
 ) {
     val totalHeight= LocalConfiguration.current.screenHeightDp
     Box(
@@ -66,7 +66,7 @@ fun TeamScreen(
                             interactionSource = remember { MutableInteractionSource() },
                             role = Role.Button
                         ) {
-//                            backOnClick()
+                            backOnClick()
                         },
                     contentScale = ContentScale.Crop
                 )

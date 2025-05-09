@@ -12,5 +12,6 @@ data class Event(
     val society: String,
     val title: String,
     val type: String,
-    val venue: String
+    val venue: String,
+    val image: String
 )

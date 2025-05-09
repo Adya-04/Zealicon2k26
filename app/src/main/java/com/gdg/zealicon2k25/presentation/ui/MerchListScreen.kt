@@ -53,6 +53,7 @@ import com.gdg.zealicon2k25.utils.NetworkResult
 fun MerchListScreen(authViewModel: AuthViewModel ,
                     merchViewModel: MerchViewModel,
                     merchDetails: () -> Unit = {},
+                    backOnClick: () -> Unit = {}
 ) {
     val totalHeight = LocalConfiguration.current.screenHeightDp
     val accessToken by authViewModel.accessToken.collectAsState("")
@@ -85,7 +86,9 @@ fun MerchListScreen(authViewModel: AuthViewModel ,
                             ),
                             interactionSource = remember { MutableInteractionSource() },
                             role = Role.Button
-                        ) {},
+                        ) {
+                            backOnClick()
+                        },
                     contentScale = ContentScale.Crop
                 )
                 Text(

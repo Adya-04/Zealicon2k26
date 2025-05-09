@@ -1,5 +1,6 @@
 package com.gdg.zealicon2k25.presentation.ui
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -43,7 +44,8 @@ fun SplashScreen(
 ){
     val refreshState by authViewModel.refreshTokenState.collectAsState()
     val accessToken by authViewModel.accessToken.collectAsState(initial = "")
-    LaunchedEffect(Unit) {
+    LaunchedEffect(accessToken != "") {
+        Log.d("TOKEN", accessToken)
         if (accessToken == "Default_init"){
             delay(2000)
             navigateToWelcome()

@@ -98,7 +98,11 @@ fun NavGraphBuilder.mainNavGraph(
         }
 
         composable(route = Main.Team.routes) {
-            TeamScreen()
+            TeamScreen(
+                backOnClick = {
+                    navHostController.popBackStack()
+                }
+            )
         }
 
         composable(route = Main.Merch.routes) {
@@ -107,13 +111,19 @@ fun NavGraphBuilder.mainNavGraph(
                 merchViewModel = merchViewModel,
                 merchDetails = {
                     navHostController.navigate(route=Main.MerchDetail.routes)
+                },
+                backOnClick = {
+                    navHostController.popBackStack()
                 }
             )
         }
 
         composable(route=Main.MerchDetail.routes) {
             MerchScreen(
-                merchViewModel = merchViewModel
+                merchViewModel = merchViewModel,
+                backOnClick = {
+                    navHostController.popBackStack()
+                }
             )
         }
 
