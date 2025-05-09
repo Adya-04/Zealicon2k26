@@ -7,7 +7,7 @@ import java.time.format.DateTimeFormatter
 
 object Common {
     fun isValidEmail(email: String): Boolean {
-        return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
+        return android.util.Patterns.EMAIL_ADDRESS.matcher(email.trim()).matches()
     }
 
 

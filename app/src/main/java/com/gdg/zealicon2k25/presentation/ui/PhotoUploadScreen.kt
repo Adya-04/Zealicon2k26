@@ -2,6 +2,7 @@ package com.gdg.zealicon2k25.presentation.ui
 
 import android.Manifest
 import android.content.ContentValues
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
@@ -44,10 +45,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.unit.sp
+import androidx.core.content.ContextCompat
 import coil.compose.AsyncImage
 import coil.compose.rememberAsyncImagePainter
 import com.gdg.zealicon2k25.R
@@ -100,9 +101,9 @@ fun PhotoUploadScreen(
         contract = ActivityResultContracts.RequestMultiplePermissions()
     ) { permissions ->
         val granted = permissions.all { it.value }
-        if (!granted) {
-            Toast.makeText(context, "Permissions required", Toast.LENGTH_SHORT).show()
-        }
+//        if (!granted) {
+//            Toast.makeText(context, "Permissions required", Toast.LENGTH_SHORT).show()
+//        }
     }
 
     fun createImageUri(): Uri {
@@ -220,9 +221,19 @@ fun PhotoUploadScreen(
                             role = Role.Button
 
                         ) {
-                            authViewModel.signCloudinaryId(
-                                initToken = initToken
-                            )
+                            try {
+                                if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
+                                    != PackageManager.PERMISSION_GRANTED
+                                ) {
+                                    Toast.makeText(context, "Please provide camera permissions from settings", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    authViewModel.signCloudinaryId(
+                                        initToken = initToken
+                                    )
+                                }
+                            } catch (e: Exception) {
+                                Log.e("Permission", "Error checking camera permission: ${e.message}")
+                            }
                         }
                         .background(color = TextFieldBackgroundColor)
                         .border(
@@ -330,9 +341,19 @@ fun PhotoUploadScreen(
                             role = Role.Button
 
                         ) {
-                            authViewModel.signCloudinaryPhoto(
-                                initToken = initToken
-                            )
+                            try {
+                                if (ContextCompat.checkSelfPermission(context, Manifest.permission.CAMERA)
+                                    != PackageManager.PERMISSION_GRANTED
+                                ) {
+                                    Toast.makeText(context, "Please provide camera permissions from settings", Toast.LENGTH_SHORT).show()
+                                } else {
+                                    authViewModel.signCloudinaryId(
+                                        initToken = initToken
+                                    )
+                                }
+                            } catch (e: Exception) {
+                                Log.e("Permission", "Error checking camera permission: ${e.message}")
+                            }
                         }
                         .background(color = TextFieldBackgroundColor)
                         .border(

@@ -203,6 +203,9 @@ fun VerifyOTPScreen(
                 }
 
                 is NetworkResult.Success -> {
+                    verifyOtpState.data?.let {
+                        authViewModel.saveToken(it.init_token)
+                    }
                     verifyToPhoto()
                     Log.d("OtpVerify",verifyOtpState.data.toString())
                 }
@@ -250,12 +253,14 @@ fun VerifyOTPScreen(
                 }
 
                 is NetworkResult.Success -> {
-                    verifyToHome()
+                    Log.d("access_token",loginVerifyOtpState.data?.refresh_token.toString())
+                    Log.d("refresh_token",loginVerifyOtpState.data?.access_token.toString())
                     authViewModel.saveAccessToken(loginVerifyOtpState.data?.access_token.toString())
                     authViewModel.saveRefreshToken(loginVerifyOtpState.data?.refresh_token.toString())
+                    Toast.makeText(context , "${loginVerifyOtpState.data?.message}", Toast.LENGTH_SHORT).show()
+                    verifyToHome()
                     Log.d("OtpVerify",loginVerifyOtpState.data.toString())
                     Log.d("OtpVerify",loginVerifyOtpState.message.toString())
-                    Toast.makeText(context , "${loginVerifyOtpState.data?.message}", Toast.LENGTH_SHORT).show()
                 }
             }
 
