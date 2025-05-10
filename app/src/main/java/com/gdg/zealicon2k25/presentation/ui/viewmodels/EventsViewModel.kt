@@ -2,6 +2,7 @@ package com.gdg.zealicon2k25.presentation.ui.viewmodels
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gdg.zealicon2k25.data.models.EnrollEventReq
 import com.gdg.zealicon2k25.data.models.EnrollEventResponse
 import com.gdg.zealicon2k25.data.models.Event
 import com.gdg.zealicon2k25.data.models.EventsResponse
@@ -41,9 +42,9 @@ class EventsViewModel @Inject constructor(private val eventsRepo: EventsReposito
         }
     }
 
-    fun enrollEvent(token:String){
+    fun enrollEvent(token:String , enrollEventRequest: EnrollEventReq){
         viewModelScope.launch {
-            eventsRepo.enrollEvent(token)
+            eventsRepo.enrollEvent(token , enrollEventRequest)
         }
     }
 }

@@ -1,6 +1,7 @@
 package com.gdg.zealicon2k25.domain.repository
 
 import android.util.Log
+import com.gdg.zealicon2k25.data.models.EnrollEventReq
 import com.gdg.zealicon2k25.data.models.EnrollEventResponse
 import com.gdg.zealicon2k25.data.models.EventsResponse
 import com.gdg.zealicon2k25.data.remote.EventsApi
@@ -56,11 +57,11 @@ class EventsRepository @Inject constructor(private val eventsApi: EventsApi) {
         }
     }
 
-    suspend fun enrollEvent(token:String) {
+    suspend fun enrollEvent(token:String , enrollEventRequest: EnrollEventReq) {
         _enrollEventState.value = NetworkResult.Loading()
         try {
             Log.d("message1", "try block called")
-            val response = eventsApi.enrollEvent(token)
+            val response = eventsApi.enrollEvent(token  , enrollEventRequest)
             if (response.isSuccessful) {
                 val responseBody = response.body()
                 if (responseBody != null) {

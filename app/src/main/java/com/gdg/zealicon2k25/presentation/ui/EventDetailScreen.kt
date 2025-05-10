@@ -40,6 +40,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
 import com.gdg.zealicon2k25.R
+import com.gdg.zealicon2k25.data.models.EnrollEventReq
 import com.gdg.zealicon2k25.data.models.Event
 import com.gdg.zealicon2k25.presentation.ui.components.CardBackground
 import com.gdg.zealicon2k25.presentation.ui.components.PrizeCard
@@ -70,6 +71,7 @@ fun EventDetailScreen(
     val context= LocalContext.current
     val accessToken by authViewModel.accessToken.collectAsState("")
     val eventEnrollState by eventsViewModel.enrollEvent.collectAsState()
+    val zeal by paymentViewModel.zealId.collectAsState("")
 
     Box(
         modifier = Modifier
@@ -181,15 +183,19 @@ fun EventDetailScreen(
             ) {
                 RegisterButton(
                     modifier = Modifier.clickable {
-                        val zeal = paymentViewModel.zealId.toString()
-                        if(zeal.isNotEmpty()){
-//                            val token = accessToken.toString()
-                            eventsViewModel.enrollEvent(accessToken)
-                        }else {
-                            Toast.makeText(context, "Zeal ID not found", Toast.LENGTH_SHORT).show()
-                        }
+
                     }
-                ) {}
+                ) {
+                    Log.d("eventRegister1","$zeal")
+                    if(zeal!="Default_init"){
+                        Log.d("eventRegister2","${eventDetails?._id}")
+                        Log.d("eventRegister3","$accessToken")
+                        eventsViewModel.enrollEvent(accessToken , EnrollEventReq(eventDetails?._id.toString() , "ENROLL"))
+                    }else {
+                        Log.d("eventRegister4","zeal not found")
+                        Toast.makeText(context, "Buy Zeal Id first", Toast.LENGTH_SHORT).show()
+                    }
+                }
                 when(eventEnrollState){
                     is NetworkResult.Error -> {
                         Row(
@@ -237,7 +243,8 @@ fun EventDetailScreen(
 
                     }
                     is NetworkResult.Success<*> -> {
-                        Toast.makeText(context , "Event Registered", Toast.LENGTH_SHORT).show()
+                        val msg=eventEnrollState.data?.message
+                        Toast.makeText(context , msg, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
