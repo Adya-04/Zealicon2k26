@@ -56,11 +56,11 @@ class EventsRepository @Inject constructor(private val eventsApi: EventsApi) {
         }
     }
 
-    suspend fun enrollEvent() {
+    suspend fun enrollEvent(token:String) {
         _enrollEventState.value = NetworkResult.Loading()
         try {
             Log.d("message1", "try block called")
-            val response = eventsApi.enrollEvent()
+            val response = eventsApi.enrollEvent(token)
             if (response.isSuccessful) {
                 val responseBody = response.body()
                 if (responseBody != null) {

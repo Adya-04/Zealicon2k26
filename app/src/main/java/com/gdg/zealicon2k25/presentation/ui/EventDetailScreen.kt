@@ -2,6 +2,7 @@ package com.gdg.zealicon2k25.presentation.ui
 
 import android.os.Build
 import android.util.Log
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -15,15 +16,20 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple.rememberRipple
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
@@ -41,19 +47,30 @@ import com.gdg.zealicon2k25.presentation.ui.components.RegisterButton
 import com.gdg.zealicon2k25.presentation.ui.components.SecondaryCardBackground
 import com.gdg.zealicon2k25.presentation.ui.theme.BackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.ButtonRippleColor
+import com.gdg.zealicon2k25.presentation.ui.theme.ErrorTextColor
 import com.gdg.zealicon2k25.presentation.ui.theme.HeadingTextColor
 import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
+import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBackgroundColor
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.EventsViewModel
+import com.gdg.zealicon2k25.presentation.ui.viewmodels.PaymentViewModel
 import com.gdg.zealicon2k25.utils.Common.formatEventDate
 import com.gdg.zealicon2k25.utils.Common.formatEventTime
+import com.gdg.zealicon2k25.utils.NetworkResult
 
 @RequiresApi(Build.VERSION_CODES.O)
 @Composable
 @Preview
 fun EventDetailScreen(
     backOnClick: () -> Unit = {},
-    eventsViewModel: EventsViewModel
+    eventsViewModel: EventsViewModel ,
+    paymentViewModel: PaymentViewModel,
+    authViewModel: AuthViewModel
 ) {
+    val context= LocalContext.current
+    val accessToken by authViewModel.accessToken.collectAsState("")
+    val eventEnrollState by eventsViewModel.enrollEvent.collectAsState()
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -163,8 +180,66 @@ fun EventDetailScreen(
                 contentAlignment = Alignment.Center
             ) {
                 RegisterButton(
-                    modifier = Modifier
+                    modifier = Modifier.clickable {
+                        val zeal = paymentViewModel.zealId.toString()
+                        if(zeal.isNotEmpty()){
+//                            val token = accessToken.toString()
+                            eventsViewModel.enrollEvent(accessToken)
+                        }else {
+                            Toast.makeText(context, "Zeal ID not found", Toast.LENGTH_SHORT).show()
+                        }
+                    }
                 ) {}
+                when(eventEnrollState){
+                    is NetworkResult.Error -> {
+                        Row(
+                            modifier = Modifier
+                                .padding(20.dp, 10.dp, 20.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Start
+
+                        ) {
+                            Image(
+                                modifier = Modifier
+                                    .padding(end = 4.dp)
+                                    .size(12.dp),
+                                painter = painterResource(id = R.drawable.info),
+                                contentDescription = "trophy",
+                                alignment = Alignment.Center,
+                            )
+
+                            Text(
+                                text = eventEnrollState.message.toString(),
+                                fontSize = 14.sp,
+                                fontFamily = Outfit,
+                                fontWeight = FontWeight.Normal,
+                                color = ErrorTextColor
+                            )
+                        }
+                    }
+
+                    is NetworkResult.Loading -> {
+                        Row(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(20.dp, 10.dp, 20.dp),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            CircularProgressIndicator(
+                                modifier = Modifier.size(32.dp),
+                                color = TicketCardBackgroundColor
+                            )
+                        }
+                    }
+
+                    is NetworkResult.Start<*> -> {
+
+                    }
+                    is NetworkResult.Success<*> -> {
+                        Toast.makeText(context , "Event Registered", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }

@@ -41,9 +41,9 @@ class EventsViewModel @Inject constructor(private val eventsRepo: EventsReposito
         }
     }
 
-    fun enrollEvent(){
+    fun enrollEvent(token:String){
         viewModelScope.launch {
-            eventsRepo.enrollEvent()
+            eventsRepo.enrollEvent(token)
         }
     }
 }

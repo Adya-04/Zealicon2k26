@@ -132,7 +132,9 @@ fun NavGraphBuilder.mainNavGraph(
                 backOnClick = {
                     navHostController.popBackStack()
                 },
-                eventsViewModel = eventsViewModel
+                eventsViewModel = eventsViewModel,
+                paymentViewModel = paymentViewModel,
+                authViewModel = authViewModel
             )
         }
     }

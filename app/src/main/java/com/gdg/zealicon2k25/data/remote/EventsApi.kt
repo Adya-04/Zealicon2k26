@@ -16,5 +16,5 @@ interface EventsApi {
     ): Response<EventsResponse>
 
     @POST("/api/events/enroll")
-    suspend fun enrollEvent(): Response<EnrollEventResponse>
+    suspend fun enrollEvent(@Header("Authorization") token:String): Response<EnrollEventResponse>
 }
