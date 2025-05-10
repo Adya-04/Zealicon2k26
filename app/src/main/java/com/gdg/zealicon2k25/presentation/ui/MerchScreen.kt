@@ -30,10 +30,12 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.motionEventSpy
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -47,6 +49,7 @@ import com.gdg.zealicon2k25.presentation.ui.components.EventTabComponent
 import com.gdg.zealicon2k25.presentation.ui.components.MerchPaymentErrorBottomSheet
 import com.gdg.zealicon2k25.presentation.ui.components.MerchPaymentSuccessBottomSheet
 import com.gdg.zealicon2k25.presentation.ui.components.PrimaryButton
+import com.gdg.zealicon2k25.presentation.ui.components.PrimaryTextField
 import com.gdg.zealicon2k25.presentation.ui.theme.BackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.ErrorTextColor
 import com.gdg.zealicon2k25.presentation.ui.theme.HeadingTextColor
@@ -71,6 +74,7 @@ fun MerchScreen(
     val merchCheckoutState by paymentViewModel.merchCheckoutState.collectAsState()
     val merchPaymentVerifyState by paymentViewModel.merchPaymentVerifyState.collectAsState()
     val paymentBottomSheetState by paymentViewModel.paymentBottomSheetState.collectAsState()
+    var quantity by remember { mutableStateOf("1") }
 
     var size by remember {
         mutableStateOf("S")
@@ -199,7 +203,22 @@ fun MerchScreen(
                 textAlign = TextAlign.Justify,
                 modifier = Modifier.padding(start = 20.dp, end = 20.dp)
             )
-
+            Text(
+                text = "Quantity :",
+                fontSize = 24.sp,
+                fontFamily = Outfit,
+                color = HeadingTextColor,
+                fontWeight = FontWeight.SemiBold,
+                modifier = Modifier.padding(top = 20.dp, start = 20.dp, bottom = 10.dp)
+            )
+            PrimaryTextField(
+                value = quantity,
+                placeholder = "Enter the quantity",
+                onValueChange = {
+                    quantity = it
+                },
+                keyBoardType = KeyboardType.Number
+            )
             Text(
                 text = "Help and Support :",
                 fontSize = 24.sp,
@@ -226,6 +245,7 @@ fun MerchScreen(
                 textAlign = TextAlign.Justify,
                 modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 4.dp, bottom = 20.dp)
             )
+            Spacer(modifier = Modifier.height(100.dp))
         }
         Box(
             modifier = Modifier
@@ -358,7 +378,7 @@ fun MerchScreen(
                                 MerchCheckoutRequest(
                                     merch_id = it._id,
                                     size = "",
-                                    quantity = 1
+                                    quantity = quantity.toInt()
                                 )
                             )
                         }else{
@@ -366,7 +386,7 @@ fun MerchScreen(
                                 MerchCheckoutRequest(
                                     merch_id = it._id,
                                     size = size,
-                                    quantity = 1
+                                    quantity = quantity.toInt()
                                 )
                             )
                         }
@@ -382,7 +402,7 @@ private fun startRazorpayPayment(
     merchCheckoutResponse: MerchCheckoutResponse
 ) {
     val checkout = Checkout()
-    checkout.setKeyID("rzp_live_4yXHLG0FayLua2")
+    checkout.setKeyID("rzp_live_QhZ5hdVS97ySIU")
 
     try {
         val option = JSONObject()

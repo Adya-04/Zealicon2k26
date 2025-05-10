@@ -43,7 +43,7 @@ class PaymentRepository @Inject constructor(private val paymentAPI: PaymentAPI) 
     ) {
         _merchPaymentVerifyState.value = NetworkResult.Loading()
         try {
-            val response = paymentAPI.paymentVerify(accessToken, paymentVerificationRequest)
+            val response = paymentAPI.merchPaymentVerification(accessToken, paymentVerificationRequest)
             Log.d("message123", response.body().toString())
             Log.d("message123*", response.toString())
             if (response.isSuccessful) {
