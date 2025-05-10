@@ -347,7 +347,7 @@ fun PhotoUploadScreen(
                                 ) {
                                     Toast.makeText(context, "Please provide camera permissions from settings", Toast.LENGTH_SHORT).show()
                                 } else {
-                                    authViewModel.signCloudinaryId(
+                                    authViewModel.signCloudinaryPhoto(
                                         initToken = initToken
                                     )
                                 }

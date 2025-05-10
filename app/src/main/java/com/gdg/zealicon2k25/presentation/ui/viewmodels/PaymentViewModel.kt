@@ -1,10 +1,13 @@
 package com.gdg.zealicon2k25.presentation.ui.viewmodels
 
 import android.util.Log
+import android.util.TypedValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gdg.zealicon2k25.data.models.CheckoutResponse
 import com.gdg.zealicon2k25.data.models.GetZealResponse
+import com.gdg.zealicon2k25.data.models.MerchCheckoutRequest
+import com.gdg.zealicon2k25.data.models.MerchCheckoutResponse
 import com.gdg.zealicon2k25.data.models.PaymentVerificationRequest
 import com.gdg.zealicon2k25.data.models.PaymentVerificationResponse
 import com.gdg.zealicon2k25.domain.repository.PaymentRepository
@@ -29,15 +32,56 @@ class PaymentViewModel@Inject constructor(
     val checkoutState: StateFlow<NetworkResult<CheckoutResponse>> get() = paymentRepository.checkoutState
     val paymentVerifyState: StateFlow<NetworkResult<PaymentVerificationResponse>> get() = paymentRepository.paymentVerifyState
     val getZealState: StateFlow<NetworkResult<GetZealResponse>> get() = paymentRepository.getZealIdState
+    val merchCheckoutState: StateFlow<NetworkResult<MerchCheckoutResponse>> get() = paymentRepository.merchCheckoutState
+    val merchPaymentVerifyState: StateFlow<NetworkResult<PaymentVerificationResponse>> get() = paymentRepository.merchPaymentVerifyState
 
     private var _bottomSheetState = MutableStateFlow<PaymentState>(PaymentState.Idle)
     val bottomSheetState: StateFlow<PaymentState> get() = _bottomSheetState
 
+    private var _paymentBottomSheetState = MutableStateFlow<PaymentState>(PaymentState.Idle)
+    val paymentBottomSheetState: StateFlow<PaymentState> get() = _paymentBottomSheetState
+
+    private var _isMerchPayment = MutableStateFlow<Boolean>(false)
+    val isMerchPayment : StateFlow<Boolean> get () = _isMerchPayment
+
+    private var _accessTokenSet = MutableStateFlow<String>("")
+    val accessTokenSet: StateFlow<String> get() = _accessTokenSet
+
+
+
     val accessToken: Flow<String> = prefs.getAccessToken()
     val zealId: Flow<String> = prefs.getZealId()
 
+    fun setAccessToken(value: String){
+        _accessTokenSet.value = value
+    }
+
     fun updateBottomSheetState(state: PaymentState) {
         _bottomSheetState.value = state
+    }
+
+    fun updatePaymentBottomSheetState(state: PaymentState){
+        _paymentBottomSheetState.value = state
+    }
+
+    fun updateMerchPaymentState(state: Boolean){
+        _isMerchPayment.value = state
+    }
+
+    fun merchPaymentVerify(
+        paymentVerificationRequest: PaymentVerificationRequest
+    ) {
+        viewModelScope.launch {
+            paymentRepository.merchPaymentVerify(accessToken.first(), paymentVerificationRequest)
+        }
+    }
+
+    fun merchCheckout(
+        merchCheckoutRequest: MerchCheckoutRequest
+    ){
+        viewModelScope.launch {
+            paymentRepository.merchCheckout(accessToken.first(), merchCheckoutRequest)
+        }
     }
 
     fun paymentVerify(
@@ -83,6 +127,24 @@ class PaymentViewModel@Inject constructor(
     fun removeGetZealState(){
         viewModelScope.launch {
             paymentRepository.removeGetZealState()
+        }
+    }
+
+    fun removeMerchCheckoutState(){
+        viewModelScope.launch {
+            paymentRepository.removeMerchCheckoutState()
+        }
+    }
+
+    fun removeCheckoutState(){
+        viewModelScope.launch {
+            paymentRepository.removeCheckoutState()
+        }
+    }
+
+    fun removeMerchPaymentVerifyState(){
+        viewModelScope.launch {
+            paymentRepository.removeMerchPaymentVerifyState()
         }
     }
 }

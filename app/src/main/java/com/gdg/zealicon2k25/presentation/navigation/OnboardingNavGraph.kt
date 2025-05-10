@@ -4,6 +4,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
+import com.gdg.zealicon2k25.presentation.ui.FetchZealScreen
 import com.gdg.zealicon2k25.presentation.ui.LoginScreen
 import com.gdg.zealicon2k25.presentation.ui.PhotoUploadScreen
 import com.gdg.zealicon2k25.presentation.ui.RegisterScreen
@@ -53,11 +54,7 @@ fun NavGraphBuilder.onboardingNavGraph(navHostController: NavHostController ,
                     navHostController.navigate(Auth.PhotoUpload.route)
                 },
                 verifyToHome = {
-                    navHostController.navigate(NavRoutes.Main.route){
-                        popUpTo(NavRoutes.Onboarding.route){
-                            inclusive = true
-                        }
-                    }
+                    navHostController.navigate(Auth.FetchZeal.route)
                 },
                 authViewModel = authViewModel,
                 paymentViewModel = paymentViewModel
@@ -78,6 +75,20 @@ fun NavGraphBuilder.onboardingNavGraph(navHostController: NavHostController ,
             )
         }
 
+        composable(route = Auth.FetchZeal.route){
+            FetchZealScreen(
+                authViewModel = authViewModel,
+                paymentViewModel = paymentViewModel,
+                verifyToHome = {
+                    navHostController.navigate(NavRoutes.Main.route){
+                        popUpTo(NavRoutes.Onboarding.route){
+                            inclusive = true
+                        }
+                    }
+                }
+            )
+        }
+
     }
 }
 
@@ -87,4 +98,5 @@ sealed class Auth(val route: String) {
     data object Register : Auth("register")
     data object VerifyOTP : Auth("verify_otp")
     data object PhotoUpload : Auth("photo_upload")
+    data object FetchZeal : Auth("fetch_zeal")
 }

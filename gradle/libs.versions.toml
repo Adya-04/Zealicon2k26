@@ -25,6 +25,11 @@ composeBom = "2024.04.01"
 loggingInterceptor = "4.11.0"
 okhttp = "4.12.0"
 hiltCommon = "1.2.0"
+appcompat = "1.7.0"
+materialVersion = "1.12.0"
+activity = "1.10.1"
+constraintlayout = "2.2.1"
+soloader = "0.10.4"
 
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
@@ -59,6 +64,11 @@ androidx-material = { module = "androidx.compose.material:material", version.ref
 androidx-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-test-junit4" }
 androidx-material3 = { group = "androidx.compose.material3", name = "material3" }
+androidx-appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+material = { group = "com.google.android.material", name = "material", version.ref = "materialVersion" }
+androidx-activity = { group = "androidx.activity", name = "activity", version.ref = "activity" }
+androidx-constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
+soloader = { module = "com.facebook.soloader:soloader", version.ref = "soloader" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

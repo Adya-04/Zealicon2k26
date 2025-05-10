@@ -1,5 +1,6 @@
 package com.gdg.zealicon2k25.presentation.navigation
 
+import android.app.Activity
 import android.os.Build
 import androidx.annotation.RequiresApi
 import androidx.navigation.NavGraphBuilder
@@ -26,7 +27,8 @@ fun NavGraphBuilder.mainNavGraph(
     eventsViewModel: EventsViewModel,
     authViewModel: AuthViewModel,
     paymentViewModel: PaymentViewModel,
-    merchViewModel: MerchViewModel
+    merchViewModel: MerchViewModel,
+    activity: Activity
 ) {
     navigation(
         startDestination = Main.Home.routes,
@@ -123,7 +125,9 @@ fun NavGraphBuilder.mainNavGraph(
                 merchViewModel = merchViewModel,
                 backOnClick = {
                     navHostController.popBackStack()
-                }
+                },
+                paymentViewModel = paymentViewModel,
+                activity = activity
             )
         }
 
