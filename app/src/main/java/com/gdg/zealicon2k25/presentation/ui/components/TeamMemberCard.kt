@@ -50,7 +50,6 @@ fun TeamMemberCard(){
                 ),
                 interactionSource = remember { MutableInteractionSource() },
                 role = Role.Button
-
             ) {
 
             }
