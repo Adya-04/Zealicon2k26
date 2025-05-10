@@ -103,4 +103,6 @@ dependencies {
 
     //RazorPay
     implementation (libs.checkout)
+
+    implementation (libs.soloader)
 }

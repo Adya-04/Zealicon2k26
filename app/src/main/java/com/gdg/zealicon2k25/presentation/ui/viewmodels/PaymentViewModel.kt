@@ -1,6 +1,7 @@
 package com.gdg.zealicon2k25.presentation.ui.viewmodels
 
 import android.util.Log
+import android.util.TypedValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gdg.zealicon2k25.data.models.CheckoutResponse
@@ -43,10 +44,17 @@ class PaymentViewModel@Inject constructor(
     private var _isMerchPayment = MutableStateFlow<Boolean>(false)
     val isMerchPayment : StateFlow<Boolean> get () = _isMerchPayment
 
+    private var _accessTokenSet = MutableStateFlow<String>("")
+    val accessTokenSet: StateFlow<String> get() = _accessTokenSet
+
 
 
     val accessToken: Flow<String> = prefs.getAccessToken()
     val zealId: Flow<String> = prefs.getZealId()
+
+    fun setAccessToken(value: String){
+        _accessTokenSet.value = value
+    }
 
     fun updateBottomSheetState(state: PaymentState) {
         _bottomSheetState.value = state
