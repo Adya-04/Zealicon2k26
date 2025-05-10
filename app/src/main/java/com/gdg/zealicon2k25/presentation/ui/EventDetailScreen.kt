@@ -245,6 +245,7 @@ fun EventDetailScreen(
                     is NetworkResult.Success<*> -> {
                         val msg=eventEnrollState.data?.message
                         Toast.makeText(context , msg, Toast.LENGTH_SHORT).show()
+                        eventsViewModel.removeEventEnrollState()
                     }
                 }
             }

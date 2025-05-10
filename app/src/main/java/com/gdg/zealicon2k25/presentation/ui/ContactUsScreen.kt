@@ -43,7 +43,6 @@ import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 
 @Composable
 @Preview
-
 fun ContactUsScreen(
     backOnClick: () -> Unit = {}
 ){

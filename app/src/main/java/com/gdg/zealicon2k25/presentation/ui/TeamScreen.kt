@@ -122,7 +122,7 @@ fun TeamScreen(
         ),
         TeamMember(
             name = "Abhidhamma",
-            role = "Stage and Production Head",
+            role = "Production Head",
             imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/Abhidhamma%20Sheel_Stage%20and%20Production%20Head.jpg?alt=media&token=d76db82f-e17d-40c0-a568-449ddfee4305"
         ),
         TeamMember(
@@ -269,14 +269,6 @@ fun TeamScreen(
                     modifier = Modifier.padding(top = 20.dp, start = 12.dp, bottom = 20.dp)
                 )
             }
-            Text(
-                text = "Management Team",
-                fontSize = 24.sp,
-                fontFamily = Outfit,
-                color = HeadingTextColor,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(top = 20.dp, start = 20.dp, bottom = 20.dp)
-            )
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
