@@ -47,4 +47,8 @@ class EventsViewModel @Inject constructor(private val eventsRepo: EventsReposito
             eventsRepo.enrollEvent(token , enrollEventRequest)
         }
     }
+
+    fun removeEventEnrollState(){
+        eventsRepo.removeEventEnrollState()
+    }
 }

@@ -84,4 +84,8 @@ class EventsRepository @Inject constructor(private val eventsApi: EventsApi) {
         }
     }
 
+    fun removeEventEnrollState(){
+        _enrollEventState.value = NetworkResult.Start()
+    }
+
 }
