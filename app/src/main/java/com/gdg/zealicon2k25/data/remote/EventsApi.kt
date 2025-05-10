@@ -1,8 +1,11 @@
 package com.gdg.zealicon2k25.data.remote
 
+import com.gdg.zealicon2k25.data.models.EnrollEventReq
 import com.gdg.zealicon2k25.data.models.EnrollEventResponse
 import com.gdg.zealicon2k25.data.models.EventsResponse
+import okhttp3.Request
 import retrofit2.Response
+import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Header
 import retrofit2.http.POST
@@ -16,5 +19,5 @@ interface EventsApi {
     ): Response<EventsResponse>
 
     @POST("/api/events/enroll")
-    suspend fun enrollEvent(): Response<EnrollEventResponse>
+    suspend fun enrollEvent(@Header("Authorization") token:String , @Body enrollEventRequest: EnrollEventReq): Response<EnrollEventResponse>
 }

@@ -199,7 +199,7 @@ fun EntryPass(
                     )
                     getZealIdState.data?.let {
                         AsyncImage(
-                            model = it.userDetails.id_card,
+                            model = it.userDetails.photo,
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 8.dp, start = 20.dp, end = 20.dp)

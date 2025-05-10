@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -144,12 +145,12 @@ fun TeamScreen(
     val techTeam = listOf(
         TeamMember(
             name = "Ayush",
-            role = "Android Developer",
+            role = "Android Dev",
             imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/WhatsApp%20Image%202025-04-25%20at%2022.29.03.jpeg?alt=media&token=c3454bf0-0f18-4ed7-827d-ead01b11fd34"
         ),
         TeamMember(
             name = "Kanak",
-            role = "Android Developer",
+            role = "Android Dev",
             imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/1632571792402.jpg?alt=media&token=a830f46a-33fb-4e36-9643-0be0fe932bb7"
         )
     )
@@ -159,7 +160,7 @@ fun TeamScreen(
             .fillMaxSize()
             .background(BackgroundColor)
     ) {
-        Column(
+        Column (
             modifier = Modifier.verticalScroll(rememberScrollState())
         ) {
             Row(modifier = Modifier.fillMaxWidth()) {
@@ -205,7 +206,7 @@ fun TeamScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier
                     .padding(start = 20.dp, end = 20.dp, bottom = 32.dp)
-                    .height(height = totalHeight.dp)
+//                    .height(height = totalHeight.dp)
             ) {
                 items(teamMembers) { member ->
                     SecondaryTeamMemberCard(
@@ -229,7 +230,7 @@ fun TeamScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier
                     .padding(start = 20.dp, end = 20.dp, bottom = 32.dp)
-                    .height(height = totalHeight.dp)
+//                    .height(height = )
             ) {
                 items(techTeam) { member ->
                     SecondaryTeamMemberCard(
