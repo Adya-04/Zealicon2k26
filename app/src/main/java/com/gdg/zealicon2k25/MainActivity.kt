@@ -68,13 +68,26 @@ class MainActivity : ComponentActivity(), PaymentResultWithDataListener {
         Log.d("RAZORPAY", p1.toString())
         Toast.makeText(this, "Payment Successful", Toast.LENGTH_SHORT).show()
         Toast.makeText(this, "Verifying Payment...", Toast.LENGTH_SHORT).show()
-        viewModel.paymentVerify(
-            PaymentVerificationRequest(
-                razorpay_payment_id = p1?.paymentId ?: "",
-                razorpay_order_id = p1?.orderId ?: "",
-                razorpay_signature = p1?.signature ?: ""
+        if(viewModel.isMerchPayment.value){
+            viewModel.merchPaymentVerify(
+                PaymentVerificationRequest(
+                    razorpay_payment_id = p1?.paymentId ?: "",
+                    razorpay_order_id = p1?.orderId ?: "",
+                    razorpay_signature = p1?.signature ?: ""
+                )
             )
-        )
+            viewModel.updateMerchPaymentState(false)
+            viewModel.removeMerchCheckoutState()
+        }else{
+            viewModel.paymentVerify(
+                PaymentVerificationRequest(
+                    razorpay_payment_id = p1?.paymentId ?: "",
+                    razorpay_order_id = p1?.orderId ?: "",
+                    razorpay_signature = p1?.signature ?: ""
+                )
+            )
+            viewModel.removeCheckoutState()
+        }
     }
 
     override fun onPaymentError(p0: Int, p1: String?, p2: PaymentData?) {
@@ -82,7 +95,16 @@ class MainActivity : ComponentActivity(), PaymentResultWithDataListener {
 
         when (p0) {
             else -> {
-                viewModel.updateBottomSheetState(state = PaymentState.Error)
+                if(viewModel.isMerchPayment.value){
+                    viewModel.updateMerchPaymentState(false)
+                    viewModel.updatePaymentBottomSheetState(state = PaymentState.Error)
+                    viewModel.removeMerchCheckoutState()
+                    viewModel.removeMerchPaymentVerifyState()
+                }else{
+                    viewModel.updateBottomSheetState(state = PaymentState.Error)
+                    viewModel.removeCheckoutState()
+                    viewModel.removePaymentVerifyState()
+                }
             }
         }
 

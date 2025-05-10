@@ -76,31 +76,31 @@ fun VerifyOTPScreen(
     val loginVerifyOtpState by authViewModel.loginVerifyState.collectAsState()
     val getZealDetails by paymentViewModel.getZealState.collectAsState()
 
-    LaunchedEffect(loginVerifyOtpState.data?.access_token.toString()) {
-        if (authViewModel.isLogin) {
-            val token = loginVerifyOtpState.data?.access_token.toString()
-            paymentViewModel.getZealId2(token)
-        }
-    }
-    when (getZealDetails) {
-        is NetworkResult.Success -> {
-            getZealDetails.data?.let {
-                Log.d("zealIdaarhi", it.zeal_id)
-                paymentViewModel.saveZealID(it.zeal_id)
-            }
-            paymentViewModel.removeGetZealState()
-            authViewModel.removeLoginVerifyState()
-            verifyToHome()
-        }
-
-        is NetworkResult.Error -> {
-            verifyToHome()
-            Log.d("zealIdError", getZealDetails.data.toString())
-            Log.d("zealIdError", getZealDetails.message.toString())
-        }
-
-        else -> {}
-    }
+//    LaunchedEffect(loginVerifyOtpState.data?.access_token.toString()) {
+//        if (authViewModel.isLogin) {
+//            val token = loginVerifyOtpState.data?.access_token.toString()
+//            paymentViewModel.getZealId2(token)
+//        }
+//    }
+//    when (getZealDetails) {
+//        is NetworkResult.Success -> {
+//            getZealDetails.data?.let {
+//                Log.d("zealIdaarhi", it.zeal_id)
+//                paymentViewModel.saveZealID(it.zeal_id)
+//            }
+//            paymentViewModel.removeGetZealState()
+//            authViewModel.removeLoginVerifyState()
+//            verifyToHome()
+//        }
+//
+//        is NetworkResult.Error -> {
+//            verifyToHome()
+//            Log.d("zealIdError", getZealDetails.data.toString())
+//            Log.d("zealIdError", getZealDetails.message.toString())
+//        }
+//
+//        else -> {}
+//    }
     Box(
         modifier = Modifier.fillMaxSize().background(BackgroundColor)
     ) {
@@ -313,11 +313,15 @@ fun VerifyOTPScreen(
                     Log.d("refresh_token", loginVerifyOtpState.data?.access_token.toString())
                     authViewModel.saveAccessToken(loginVerifyOtpState.data?.access_token.toString())
                     authViewModel.saveRefreshToken(loginVerifyOtpState.data?.refresh_token.toString())
-                    Toast.makeText(
-                        context,
-                        "${loginVerifyOtpState.data?.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
+//                    Toast.makeText(
+//                        context,
+//                        "${loginVerifyOtpState.data?.message}",
+//                        Toast.LENGTH_SHORT
+//                    ).show()
+                    loginVerifyOtpState.data?.let {
+                        paymentViewModel.setAccessToken(it.access_token)
+                    }
+                    verifyToHome()
                 }
             }
 
