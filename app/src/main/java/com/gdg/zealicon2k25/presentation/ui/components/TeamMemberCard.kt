@@ -31,6 +31,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.gdg.zealicon2k25.R
 import com.gdg.zealicon2k25.presentation.ui.theme.ButtonRippleColor
 import com.gdg.zealicon2k25.presentation.ui.theme.HeadingTextColor
@@ -38,8 +39,12 @@ import com.gdg.zealicon2k25.presentation.ui.theme.MerchCardBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
 
 @Composable
-@Preview
-fun TeamMemberCard(){
+fun TeamMemberCard(
+    name: String,
+    imgUrl: String,
+    role: String,
+    contact: String
+){
     Box(
         modifier = Modifier
             .clickable(
@@ -59,13 +64,13 @@ fun TeamMemberCard(){
             .fillMaxWidth()
     ) {
         Column {
-            Image(
+            AsyncImage(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(5.dp, 5.dp, 5.dp)
                     .height(210.dp)
                     .clip(RoundedCornerShape(6.dp)),
-                painter = painterResource(R.drawable.default_placeholder),
+                model = imgUrl,
                 contentDescription = "Event Image",
                 contentScale = ContentScale.Crop
             )
@@ -74,7 +79,7 @@ fun TeamMemberCard(){
                 modifier = Modifier.align(Alignment.CenterHorizontally)
             ) {
                 Text(
-                    text = "Fest Secretary",
+                    text = role,
                     fontSize = 12.sp,
                     fontFamily = Outfit,
                     fontWeight = FontWeight.Normal,
@@ -82,14 +87,14 @@ fun TeamMemberCard(){
                     modifier = Modifier.padding(top=4.dp)
                 )
                 Text(
-                    text = "Kokila Bond",
+                    text = name,
                     fontSize = 16.sp,
                     fontFamily = Outfit,
                     fontWeight = FontWeight.SemiBold,
                     color = HeadingTextColor,
                 )
                 Text(
-                    text = "1234567890",
+                    text = contact,
                     fontSize = 12.sp,
                     fontFamily = Outfit,
                     fontWeight = FontWeight.Normal,

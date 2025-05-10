@@ -54,6 +54,11 @@ fun TeamScreen(
             imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/Deepanshu_tech_head.jpg?alt=media&token=502d93ad-31bd-4f21-bb2e-8e95c9db2c38"
         ),
         TeamMember(
+            name = "Ashutosh",
+            role = "Fest Secretary",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/ashutosh_fest_secretary.jpeg?alt=media&token=5fa0d196-d6c9-44ba-85e2-a2df32e34db4"
+        ),
+        TeamMember(
             name = "Sri Krishn",
             role = "Finance Head",
             imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/Sri%20Krishn%20Pandey_Finance%20Head.jpg?alt=media&token=1ea81613-26a2-4a13-af89-a5aa73e0661a"

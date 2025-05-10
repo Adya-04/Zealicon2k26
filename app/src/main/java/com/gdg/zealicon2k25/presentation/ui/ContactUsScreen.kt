@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.ripple.rememberRipple
@@ -48,6 +49,32 @@ fun ContactUsScreen(
 ){
     val context = LocalContext.current
     val height=LocalConfiguration.current.screenHeightDp
+    val teamMembers = listOf(
+        ContactMember(
+            name = "Deepanshu Pandey",
+            role = "Technical Head",
+            imgUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/Deepanshu_tech_head.jpg?alt=media&token=502d93ad-31bd-4f21-bb2e-8e95c9db2c38",
+            contact = "+91 79920 98246"
+        ),
+        ContactMember(
+            name = "Ashutosh Tiwari",
+            role = "Fest Secretary",
+            imgUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/ashutosh_fest_secretary.jpeg?alt=media&token=5fa0d196-d6c9-44ba-85e2-a2df32e34db4",
+            contact = "+91 97216 92996"
+        ),
+        ContactMember(
+            name = "Ayush Agrawal",
+            role = "App Developer",
+            imgUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/20250510_191309.jpg?alt=media&token=b4e23d9b-a6ff-44a6-94ff-502da146a9b9",
+            contact = "+91 98708 04246"
+        ),
+        ContactMember(
+            name = "Ramit Vishwakarma",
+            role = "Web Developer",
+            imgUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/WhatsApp%20Image%202025-05-10%20at%2017.24.22.jpeg?alt=media&token=760adaba-ac82-45d2-af50-806aff2bfbd2",
+            contact = "+91 93057 86097"
+        )
+    )
     Box(
         modifier = Modifier.fillMaxSize()
             .background(BackgroundColor)
@@ -106,10 +133,22 @@ fun ContactUsScreen(
                     .padding(horizontal = 20.dp)
                     .height(height.dp)
             ) {
-                items(4) {
-                    TeamMemberCard()
+                items(teamMembers){
+                    TeamMemberCard(
+                        name = it.name,
+                        imgUrl = it.imgUrl,
+                        contact = it.contact,
+                        role = it.role
+                    )
                 }
             }
         }
     }
 }
+
+data class ContactMember(
+    val name: String,
+    val imgUrl: String,
+    val contact: String,
+    val role: String
+)
