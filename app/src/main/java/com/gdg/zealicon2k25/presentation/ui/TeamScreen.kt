@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
@@ -76,7 +75,7 @@ fun TeamScreen(
         ),
         TeamMember(
             name = "Shreyansh",
-            role = "Committee Member",
+            role = "Merchandise Head",
             imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/ShreyanshChaurasia.jpg?alt=media&token=4cc19b3f-cfef-4ffd-a237-c6a2cb3bfd16"
         ),
         TeamMember(
@@ -133,26 +132,104 @@ fun TeamScreen(
         ),
         TeamMember(
             name = "Anshul",
-            role = "Committee Member",
+            role = "Marketing Head",
             imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/Anshul%20Mittal%20.jpg?alt=media&token=66660dd8-7c04-4ec8-b20c-406e0502c87a"
         ),
         TeamMember(
             name = "Sachin",
             role = "IEEE",
             imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/Sachin%20Jha%20-IEEE.jpg?alt=media&token=014dafe5-380c-482e-a9dd-e6843ff814b8"
-        )
-    )
-    val techTeam = listOf(
+        ),
+        TeamMember(
+            name = "Kartikey",
+            role = "Member Secretary",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/KumarKartikeyPandey_Member_Sec.jpg?alt=media&token=f5d00c52-435b-452e-90b4-78ab83f59bf7"
+        ),
+        TeamMember(
+            name = "Harsh",
+            role = "Media Head",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/harsh%20madan-media%20head.jpg?alt=media&token=d3cd3b33-7375-4b05-90a6-05679bbf0b54"
+        ),
+        TeamMember(
+            name = "Nazeel",
+            role = "Management Head",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/nazeel%20farooqui-management%20head.jpg?alt=media&token=852fab6f-2f9c-4383-a5b5-c4c5cf8f4ed9"
+        ),
         TeamMember(
             name = "Ayush",
-            role = "Android Dev",
-            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/WhatsApp%20Image%202025-04-25%20at%2022.29.03.jpeg?alt=media&token=c3454bf0-0f18-4ed7-827d-ead01b11fd34"
+            role = "Android Developer",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/20250510_191309.jpg?alt=media&token=b4e23d9b-a6ff-44a6-94ff-502da146a9b9"
         ),
         TeamMember(
             name = "Kanak",
-            role = "Android Dev",
-            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/1632571792402.jpg?alt=media&token=a830f46a-33fb-4e36-9643-0be0fe932bb7"
-        )
+            role = "Android Developer",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/WhatsApp%20Image%202024-12-25%20at%2011.31.43.jpeg?alt=media&token=477bad72-78e2-4b6f-bd04-2e87ff24b545"
+        ),
+        TeamMember(
+            name = "Sparsh",
+            role = "Designer",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/WhatsApp%20Image%202025-05-10%20at%2019.15.25.jpeg?alt=media&token=b6d9b202-5367-4a41-bb83-777bb14f4e1b"
+        ),
+        TeamMember(
+            name = "Ramit",
+            role = "Web Developer",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/WhatsApp%20Image%202025-05-10%20at%2017.24.22.jpeg?alt=media&token=760adaba-ac82-45d2-af50-806aff2bfbd2"
+        ),
+        TeamMember(
+            name = "Parth",
+            role = "Web Developer",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/IMG_20250218_005240~2.jpg?alt=media&token=82d46d85-f846-421b-bd8f-cbe98bb9a371"
+        ),
+        TeamMember(
+            name = "Muskan",
+            role = "Web Developer",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/Muskan.jpg?alt=media&token=c113d82b-a7e1-4582-b23b-4ce9ef15fdd0"
+        ),
+        TeamMember(
+            name = "Harsh",
+            role = "Designer",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/WhatsApp%20Image%202025-05-10%20at%2017.26.17.jpeg?alt=media&token=a1594354-6085-4ba7-b0b8-e3cb542a96d6"
+        ),
+        TeamMember(
+            name = "Anushka",
+            role = "Designer",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/Anushka.jpeg?alt=media&token=e44d6262-812d-456e-958c-d5edf83270c8"
+        ),
+        TeamMember(
+            name = "Insha",
+            role = "Designer",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/Insha.jpeg?alt=media&token=3ebcc2b5-9c2f-46cb-9176-3bd1cbad2f14"
+        ),
+        TeamMember(
+            name = "Unnat",
+            role = "Web Developer",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/WhatsApp%20Image%202025-05-10%20at%2019.16.31.jpeg?alt=media&token=cce5fb54-312d-4832-8010-08374f6d7b4a"
+        ),
+        TeamMember(
+            name = "Rohit",
+            role = "Web Developer",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/Rohit%20Pandey.jpg?alt=media&token=ec921da3-48b2-4fec-b832-acf806749319"
+        ),
+        TeamMember(
+            name = "Amish",
+            role = "Web Developer",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/Amish.jpeg?alt=media&token=ee9ed18e-64d2-4c4f-83b1-fac480b4f1e8"
+        ),
+        TeamMember(
+            name = "Devansh",
+            role = "Web Developer",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/Devansh.jpeg?alt=media&token=8edac6de-3943-4bba-bc9d-eb5cb3b5fdb2"
+        ),
+        TeamMember(
+            name = "Krati",
+            role = "Web Developer",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/Krati.jpg?alt=media&token=0566e003-cc46-4ec0-ba0a-145cb06bc68c"
+        ),
+        TeamMember(
+            name = "Pulak",
+            role = "Web Developer",
+            imageUrl = "https://firebasestorage.googleapis.com/v0/b/zealicon-2k24.appspot.com/o/Pulak%20Jakhmola.jpg?alt=media&token=7003ba02-0a67-46c7-bd35-f426c5e16903"
+        ),
     )
 
     Box(
@@ -160,7 +237,7 @@ fun TeamScreen(
             .fillMaxSize()
             .background(BackgroundColor)
     ) {
-        Column (
+        Column(
             modifier = Modifier.verticalScroll(rememberScrollState())
         ) {
             Row(modifier = Modifier.fillMaxWidth()) {
@@ -206,33 +283,9 @@ fun TeamScreen(
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
                 modifier = Modifier
                     .padding(start = 20.dp, end = 20.dp, bottom = 32.dp)
-//                    .height(height = totalHeight.dp)
+                    .height(height = totalHeight.dp)
             ) {
                 items(teamMembers) { member ->
-                    SecondaryTeamMemberCard(
-                        imageUrl = member.imageUrl,
-                        name = member.name,
-                        role = member.role
-                    )
-                }
-            }
-            Text(
-                text = "Technical Team",
-                fontSize = 24.sp,
-                fontFamily = Outfit,
-                color = HeadingTextColor,
-                fontWeight = FontWeight.SemiBold,
-                modifier = Modifier.padding(top = 20.dp, start = 20.dp, bottom = 20.dp)
-            )
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(2),
-                verticalArrangement = Arrangement.spacedBy(12.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                modifier = Modifier
-                    .padding(start = 20.dp, end = 20.dp, bottom = 32.dp)
-//                    .height(height = )
-            ) {
-                items(techTeam) { member ->
                     SecondaryTeamMemberCard(
                         imageUrl = member.imageUrl,
                         name = member.name,
