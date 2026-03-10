@@ -16,6 +16,20 @@ val FrontSpring = FontFamily(
     Font(R.font.front_spring_thin, FontWeight.Thin),
 )
 
+val NewRocker = FontFamily(
+    Font(R.font.newrocker_regular, FontWeight.Normal)
+)
+
+val RobotSlab = FontFamily(
+    Font(R.font.robotoslab_regular, FontWeight.Normal),
+    Font(R.font.robotoslab_bold, FontWeight.Bold),
+    Font(R.font.robotoslab_black, FontWeight.Black),
+    Font(R.font.robotoslab_medium, FontWeight.Medium),
+    Font(R.font.robotoslab_thin, FontWeight.Thin),
+    Font(R.font.robotoslab_black, FontWeight.Black),
+    Font(R.font.robotoslab_light, FontWeight.Light)
+)
+
 
 val Outfit = FontFamily(
     Font(R.font.outfit_regular, FontWeight.Normal),

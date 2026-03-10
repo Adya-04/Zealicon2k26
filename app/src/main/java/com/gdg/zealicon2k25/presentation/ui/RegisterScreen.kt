@@ -44,7 +44,9 @@ import com.gdg.zealicon2k25.presentation.ui.theme.BackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.theme.ErrorTextColor
 import com.gdg.zealicon2k25.presentation.ui.theme.FrontSpring
 import com.gdg.zealicon2k25.presentation.ui.theme.HeadingTextColor
+import com.gdg.zealicon2k25.presentation.ui.theme.NewRocker
 import com.gdg.zealicon2k25.presentation.ui.theme.Outfit
+import com.gdg.zealicon2k25.presentation.ui.theme.RobotSlab
 import com.gdg.zealicon2k25.presentation.ui.theme.TicketCardBackgroundColor
 import com.gdg.zealicon2k25.presentation.ui.viewmodels.AuthViewModel
 import com.gdg.zealicon2k25.utils.Common.isValidEmail
@@ -88,8 +90,8 @@ fun RegisterScreen(
                     text = "Let’s get you Registered",
                     fontSize = 30.sp,
                     color = HeadingTextColor,
-                    fontWeight = FontWeight.Bold,
-                    fontFamily = FrontSpring,
+                    fontWeight = FontWeight.Normal,
+                    fontFamily = NewRocker,
                     lineHeight = 1.5.em
                 )
                 Text(
@@ -98,7 +100,7 @@ fun RegisterScreen(
                     fontSize = 18.sp,
                     color = HeadingTextColor,
                     fontWeight = FontWeight.SemiBold,
-                    fontFamily = Outfit
+                    fontFamily = RobotSlab
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 PrimaryTextField(
@@ -113,7 +115,7 @@ fun RegisterScreen(
                     fontSize = 18.sp,
                     color = HeadingTextColor,
                     fontWeight = FontWeight.SemiBold,
-                    fontFamily = Outfit
+                    fontFamily = RobotSlab
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 PrimaryTextField(
@@ -128,7 +130,7 @@ fun RegisterScreen(
                     fontSize = 18.sp,
                     color = HeadingTextColor,
                     fontWeight = FontWeight.SemiBold,
-                    fontFamily = Outfit
+                    fontFamily = RobotSlab
                 )
                 Spacer(modifier = Modifier.height(5.dp))
                 PrimaryTextField(

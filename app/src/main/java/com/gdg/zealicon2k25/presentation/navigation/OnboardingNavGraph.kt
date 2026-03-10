@@ -21,7 +21,7 @@ fun NavGraphBuilder.onboardingNavGraph(navHostController: NavHostController ,
 ) {
     navigation(
         route = NavRoutes.Onboarding.route,
-        startDestination = Auth.WelcomeScreen.route
+        startDestination = Auth.Register.route
     ) {
         composable(route = Auth.WelcomeScreen.route) {
             WelcomeScreen(

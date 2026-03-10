@@ -92,12 +92,12 @@ fun RegisterButton(
 
         Image(
             alignment = Alignment.BottomEnd,
-            painter = painterResource(R.drawable.button_grahics_1),
+            painter = painterResource(R.drawable.button_graphics_1),
             contentDescription = "button_graphics"
         )
         Image(
             modifier = Modifier.align(Alignment.TopEnd).rotate(180f),
-            painter = painterResource(R.drawable.button_grahics_1),
+            painter = painterResource(R.drawable.button_graphics_1),
             contentDescription = "button_graphics"
         )
     }

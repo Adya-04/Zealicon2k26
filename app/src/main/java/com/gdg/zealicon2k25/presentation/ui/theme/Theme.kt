@@ -13,13 +13,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 
 
-val ButtonBackgroundColor = Color(0xFFF5387C)
+val ButtonBackgroundColor = Color(0xFFF5EEE3)
 val ButtonBorderColor = Color(0xFF942724)
-val ButtonRippleColor = Color.White
-val BackgroundColor = Color(0xFFFFF1CC)
+val ButtonRippleColor = Color.Black
+val BackgroundColor = Color(0xFF0D0E0F)
 val ButtonBackgroundColor2 = Color(0xFFFFF1CC)
 val ButtonBorderColor2 = Color(0xFF4DF5387C)
-val HeadingTextColor = Color(0xFF942724)
+val HeadingTextColor = Color(0xFFF5EEE3)
 val TextFieldBackgroundColor = Color.White
 val TextFieldBorderColor = Color(0xFFFFE1E0)
 val TextFieldPlaceholderColor = Color(0xFFB2942724)

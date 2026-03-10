@@ -22,7 +22,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.rotate
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
@@ -68,14 +67,14 @@ fun ViewTicketButton(
     ) {
         Image(
             alignment = Alignment.BottomEnd,
-            painter = painterResource(R.drawable.button_grahics_1),
+            painter = painterResource(R.drawable.button_graphics_1),
             contentDescription = "button_graphics"
         )
         Image(
             modifier = Modifier
                 .align(Alignment.TopEnd)
                 .rotate(180f),
-            painter = painterResource(R.drawable.button_grahics_1),
+            painter = painterResource(R.drawable.button_graphics_1),
             contentDescription = "button_graphics"
         )
         Image(
